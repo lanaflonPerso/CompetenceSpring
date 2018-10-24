@@ -4,19 +4,38 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
+@Entity
 public class StudentClass implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7164089657595567541L;
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	private String name;
+	
+	@Temporal(TemporalType.DATE)
 	private Date startDate;
+	
+	@Temporal(TemporalType.DATE)
 	private Date endDate;
-	@OneToMany
+	
+	@OneToMany(mappedBy="studentClass", cascade = { CascadeType.ALL })
 	List<User> students;
+	
+	@Version
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -58,4 +77,11 @@ public class StudentClass implements Serializable {
 		this.students = students;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

@@ -4,25 +4,49 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
+@Entity
 public class User implements Serializable {
-	private static final long serialVersionUID = -7775915140540299810L;
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	private UserType type;
+	
 	private String firstName;
+	
 	private String lastName;
-	private String password;
-	private String token;
+	
 	@Temporal(TemporalType.DATE)
-	private Date Birthdate;
-	UserType type;
-	@OneToMany
+	private Date birthdate;
+
+	private String email;
+	
+	private String password;
+	
+	private String token;
+	
+	@OneToMany(mappedBy = "user",cascade = { CascadeType.ALL })
 	private List<Skill> skills;
-	@ManyToOne
+	
+	@ManyToOne(cascade = { CascadeType.ALL })
 	StudentClass studentClass;
+	
+	@Version
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -30,6 +54,14 @@ public class User implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
 	}
 
 	public String getFirstName() {
@@ -46,6 +78,14 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -65,19 +105,11 @@ public class User implements Serializable {
 	}
 
 	public Date getBirthdate() {
-		return Birthdate;
+		return birthdate;
 	}
 
 	public void setBirthdate(Date birthdate) {
-		Birthdate = birthdate;
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
+		this.birthdate = birthdate;
 	}
 
 	public List<Skill> getSkills() {
@@ -96,4 +128,11 @@ public class User implements Serializable {
 		this.studentClass = studentClass;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

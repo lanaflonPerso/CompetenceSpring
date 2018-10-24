@@ -2,20 +2,32 @@ package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
+@Entity
 public class Quiz implements Serializable {
 
-	private static final long serialVersionUID = -2094818590398320844L;
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	private String name;
-	@ManyToOne({cascade="all"})
+
+	@ManyToOne(cascade = { CascadeType.ALL })
 	private Skill skill;
+	
+	private int scoreToAcquireSkill;
+	
+	@Version
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -40,5 +52,20 @@ public class Quiz implements Serializable {
 	public void setSkill(Skill skill) {
 		this.skill = skill;
 	}
+	
+	public int getScoreToAcquireSkill() {
+		return scoreToAcquireSkill;
+	}
 
+	public void setScoreToAcquireSkill(int scoreToAcquireSkill) {
+		this.scoreToAcquireSkill = scoreToAcquireSkill;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

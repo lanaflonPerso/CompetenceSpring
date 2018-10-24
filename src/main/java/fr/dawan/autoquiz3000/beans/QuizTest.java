@@ -4,25 +4,42 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
+@Entity
 public class QuizTest implements Serializable {
 
-	private static final long serialVersionUID = -574979381726301067L;
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.ALL })
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.ALL })
 	private Quiz quiz;
 
 	private int score;
 
+	@Temporal(TemporalType.DATE)
 	private Date creationDate;
 
+	@OneToMany(cascade = { CascadeType.ALL })
 	private List<QuizResponse> responses;
+	
+	@Version
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -72,4 +89,11 @@ public class QuizTest implements Serializable {
 		this.responses = responses;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }
