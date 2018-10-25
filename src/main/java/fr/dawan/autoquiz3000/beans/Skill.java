@@ -20,8 +20,6 @@ public class Skill implements Serializable {
 	private Long id;
 
 	private String name;
-	
-	private SkillLevel level;
 
 	private SkillStatus status;
 
@@ -45,14 +43,6 @@ public class Skill implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public SkillLevel getLevel() {
-		return level;
-	}
-
-	public void setLevel(SkillLevel level) {
-		this.level = level;
 	}
 
 	public SkillStatus getStatus() {
