@@ -17,4 +17,9 @@ public class QuizDao {
 	public void save(Quiz quiz) {
 		hibernateTemplate.save(quiz);
 	}
+	
+	@Transactional(readOnly=true)
+	public Quiz findById(long id){
+		return hibernateTemplate.get(Quiz.class, id);
+	}
 }

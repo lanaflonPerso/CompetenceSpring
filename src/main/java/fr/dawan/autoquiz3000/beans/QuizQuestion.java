@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,7 +27,7 @@ public class QuizQuestion implements Serializable {
 	@ManyToOne(cascade = { CascadeType.ALL })
 	private Quiz quiz;
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<QuizResponse> quizResponses;
+	private List<QuizResponse> quizResponses= new ArrayList<>();
 	
 	@Version
 	private int version;

@@ -1,11 +1,13 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,8 +36,8 @@ public class Quiz implements Serializable {
 	private Date startDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<QuizQuestion> quizQuestions;
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<QuizQuestion> quizQuestions= new ArrayList<>();
 	@ManyToOne
 	private StudentClass stClass;
 	
