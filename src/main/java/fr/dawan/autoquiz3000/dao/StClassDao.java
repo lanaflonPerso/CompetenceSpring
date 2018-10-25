@@ -27,6 +27,11 @@ public class StClassDao {
 	}
 	
 	@Transactional(readOnly=true)
+	public StudentClass findById(long id){
+		return hibernateTemplate.get(StudentClass.class, id);
+	}
+	
+	@Transactional(readOnly=true)
 	public StudentClass findByName(String name) {
 		StudentClass result= null;
 		@SuppressWarnings("unchecked")

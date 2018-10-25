@@ -34,6 +34,9 @@ public class Quiz implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 	
+	@ManyToOne
+	private StudentClass stClass;
+	
 	@Version
 	private int version;
 
@@ -79,5 +82,11 @@ public class Quiz implements Serializable {
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	public StudentClass getStClass() {
+		return stClass;
+	}
+	public void setStClass(StudentClass stClass) {
+		this.stClass = stClass;
 	}
 }

@@ -16,8 +16,8 @@
 			<div class="col-md-8">
 				<form method="post" action="">
 					<div class="form-group">
-						<label for="classe">Example select</label>
-						<select class="form-control" id="classe" name="classe">
+						<label for="stClassName">Example select</label>
+						<select class="form-control" id="stClassName" name="stClassName">
 							<c:forEach var="classe" items="${ classes }">
 								<option value="${ classe.id }">${ classe.name }</option>
 							</c:forEach>
@@ -30,18 +30,18 @@
 					</div>
 
 					<div class="form-group">
-						<label for="competence">Compétence: </label> <input type="text"
-							class="form-control" id="competence" name="competence" />
+						<label for="skill">Compétence: </label> <input type="text"
+							class="form-control" id="skill" name="skill" />
 					</div>
 
 					<div class="form-group">
-						<label for="dateDebut">Date de début: </label> <input type="date"
-							class="form-control" id="dateDebut" name="dateDebut" />
+						<label for="startDebut">Date de début: </label> <input type="date"
+							class="form-control" id="startDebut" name="startDebut" />
 					</div>
 
 					<div class="form-group">
-						<label for="dateFin">Date de fin: </label> <input type="date"
-							class="form-control" id="dateFin" name="dateFin" />
+						<label for="endDate">Date de fin: </label> <input type="date"
+							class="form-control" id="endDate" name="endDate" />
 					</div>
 
 					<button class="btn btn-primary" type="submit">Continuer</button>

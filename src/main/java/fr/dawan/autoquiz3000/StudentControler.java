@@ -13,4 +13,12 @@ public class StudentControler {
 	public ModelAndView getDashboard() {
 		return new ModelAndView("viewDashboard");
 	}
+	
+	
+	//***************************************************************A effacer
+	@GetMapping("/test")
+	public ModelAndView getQuiz() {
+		System.out.println("je suis ici");
+		return new ModelAndView("student/home");
+	}
 }
