@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class StudentClass implements Serializable {
 	private Date endDate;
 	
 	@OneToMany(mappedBy="studentClass", cascade = { CascadeType.ALL })
-	List<User> students;
+	List<User> students=new ArrayList<>();
 	
 	@Version
 	private int version;

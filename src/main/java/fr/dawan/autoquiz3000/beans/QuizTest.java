@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class QuizTest implements Serializable {
 	private Date endDate;
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private List<QuizResponse> responses;
+	private List<QuizResponse> responses=new ArrayList<>();
 	
 	@Version
 	private int version;
