@@ -2,6 +2,7 @@ package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,13 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
 public class Quiz implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,7 +34,8 @@ public class Quiz implements Serializable {
 	private Date startDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
-	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<QuizQuestion> quizQuestions;
 	@ManyToOne
 	private StudentClass stClass;
 	
@@ -88,5 +90,16 @@ public class Quiz implements Serializable {
 	}
 	public void setStClass(StudentClass stClass) {
 		this.stClass = stClass;
+	}
+	public List<QuizQuestion> getQuizQuestions() {
+		return quizQuestions;
+	}
+	public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
+		this.quizQuestions = quizQuestions;
+	}
+	
+	// **********GETTER/SETTER PERSO**********
+	public void setQuizQuestion(QuizQuestion quizQuestion) {
+		this.quizQuestions.add(quizQuestion);
 	}
 }
