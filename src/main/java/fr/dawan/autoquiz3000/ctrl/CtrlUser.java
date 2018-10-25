@@ -6,10 +6,14 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.dao.UserDao;
 
 public class CtrlUser extends Ctrl {
+	
+	private UserDao uDao;
 
 	private final LocalDate NOW= LocalDate.now(); 
 	private final Pattern VALID_BITHDAY_REGEX= Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", Pattern.CASE_INSENSITIVE);
@@ -26,11 +30,13 @@ public class CtrlUser extends Ctrl {
 	private String msgToken;
 	private User user;
 	
-	public CtrlUser() {
-		
+	public CtrlUser(UserDao uDao) {
+		this.uDao= uDao;
+		user= new User();
 	}
 	
-	public CtrlUser(String firstname, String lastname, String email, String birthDate) {
+	public CtrlUser(String firstname, String lastname, String email, String birthDate, UserDao uDao) {
+		this.uDao= uDao;
 		user= new User();
 		ctrlFirstname(firstname);
 		user.setFirstName(firstname);
@@ -46,12 +52,13 @@ public class CtrlUser extends Ctrl {
 		ctrlToken(token);
 		ctrlPassword(password);
 		ctrlPasswordEqual(password, confirm);
+		System.out.println("user= "+user);
+		System.out.println("password= "+password);
 		user.setPassword(MySQLPassword(password));
 	}
 	
 	public void ctrlEmailAndPassword(String email, String password) {
-		UserDao dao= new UserDao();
-		User user= dao.findByEmailAndPassword(email, MySQLPassword(password));
+		User user= uDao.findByEmailAndPassword(email, MySQLPassword(password));
 		if (user == null) {
 			this.user= new User();
 			this.user.setEmail(email);
@@ -123,13 +130,13 @@ public class CtrlUser extends Ctrl {
 	}
 	
 	public void ctrlToken(String token) {
-		UserDao dao= new UserDao();
-		User student= dao.findByToken(token);
-		if (student == null) {
+		System.out.println("uDao= "+uDao);
+		User user= uDao.findByToken(token);
+		if (user == null) {
 			msgToken= "le token ne correspont a aucun compte";
 			error= true;
 		} else {
-			this.user= student;
+			this.user= user;
 		}
 	}
 	
@@ -157,6 +164,9 @@ public class CtrlUser extends Ctrl {
 	}
 	public String getMsgConnection() {
 		return msgConnection;
+	}
+	public void setuDao(UserDao uDao) {
+		this.uDao = uDao;
 	}
 
 	@Override

@@ -18,6 +18,7 @@
 	<a href="authenticate">Formulaire (authentification)</a><br />
 	<a href="public/connection">Connection</a><br />
 	<a href="public/inscription">Inscription</a><br />
+	<a href="public/token">Inscription</a><br />
 
 </body>
 </html>

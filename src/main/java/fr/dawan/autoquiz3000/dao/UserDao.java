@@ -33,6 +33,14 @@ public class UserDao {
 	
 	@Transactional(readOnly=true)
 	public User findByToken(String token) {
-		return (User) hibernateTemplate.find("FROM User u WHERE u.token=?", token);
+		User result= null;
+		System.out.println("token= "+token);
+		System.out.println("hibernateTemplate= "+ hibernateTemplate);
+		@SuppressWarnings("unchecked")
+		List<User> users= (List<User>) hibernateTemplate.find("FROM User u WHERE u.token=?", token);
+		if(users != null && users.size() > 0) {
+			result= users.get(0);
+		}
+		return result;
 	}
 }
