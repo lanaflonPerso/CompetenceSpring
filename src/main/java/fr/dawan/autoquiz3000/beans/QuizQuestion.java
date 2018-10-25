@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,16 +21,14 @@ public class QuizQuestion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String text;
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Quiz quiz;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<QuizResponse> quizResponses= new ArrayList<>();
-	
 	@Version
 	private int version;
+	
 	//**************************************SETTERS / GETTERS******************************************
 	public Long getId() {
 		return id;

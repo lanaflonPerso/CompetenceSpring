@@ -2,4 +2,15 @@
 target/
 .project
 .settings/
-
+src/main/java/fr/dawan/springmvc/*
+src/main/resources/theme-blue.properties
+src/main/resources/theme-default.properties
+src/main/webapp/WEB-INF/views/basket-content.jsp
+src/main/webapp/WEB-INF/views/training-subscribe.jsp
+src/main/webapp/resources/css/
+src/main/webapp/WEB-INF/views/contacts.jsp
+src/main/webapp/WEB-INF/views/shopping.jsp
+src/main/webapp/WEB-INF/views/shopping.jsp
+src/main/webapp/WEB-INF/views/contacts.jsp
+src/main/java/fr/dawan/autoquiz3000/dao/ProductDb.java
+src/main/webapp/resources/jquery-ui/*

@@ -50,6 +50,19 @@ public class ProfessorController {
 		return new ModelAndView("professor/createQuestion");
 	}
 	
+	@GetMapping("/view_quiz")
+	public ModelAndView getViewQuiz(Model model, HttpServletRequest request) {
+		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
+		if(quiz != null) {
+			model.addAttribute("nbQuestion", quiz.getQuizQuestions().size());
+			model.addAttribute("quiz", quiz);
+			return new ModelAndView("professor/viewQuiz");
+		} else {
+			// TODO rediriger vers une 404
+		}
+		return new ModelAndView("professor/viewQuiz");
+	}
+	
 	@PostMapping("/create_quiz")
 	public RedirectView postQuiz(@RequestParam String stClassName,
 			@RequestParam String name, 
