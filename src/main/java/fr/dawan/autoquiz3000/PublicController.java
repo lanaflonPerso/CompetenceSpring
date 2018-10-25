@@ -1,12 +1,14 @@
 package fr.dawan.autoquiz3000;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -24,22 +26,34 @@ public class PublicController {
 	
 	@GetMapping("/connection")
 	public ModelAndView getConnection() {
-		return new ModelAndView("viewConnexion");
+		return new ModelAndView("public/viewConnexion");
+	}
+	
+	@GetMapping("/inscription")
+	public ModelAndView getInscription() {
+		return new ModelAndView("public/viewInscription");
 	}
 	
 	@PostMapping("/connection")
-	public RedirectView postConnection(@RequestBody User user, Model model) {
-		
-		User u= uDao.findByEmailAndPassword(user.getEmail(), Ctrl.MySQLPassword(user.getPassword()));
+	public RedirectView postConnection(@RequestParam String password, @RequestParam String email, Model model, HttpServletRequest request) {
+		System.out.println(Ctrl.MySQLPassword(password)+" "+email);
+		User u= uDao.findByEmailAndPassword(email, Ctrl.MySQLPassword(password));
 		if(u != null) {
 			if (u.getType() == UserType.PROFESSOR) {
-				model.addAttribute("isProfessor", true);
+				request.getSession().setAttribute("isProfessor", true);
 			}else if (u.getType() == UserType.ADMINISTRATOR) {
-				model.addAttribute("isAdmin", true);
+				request.getSession().setAttribute("isProfessor", true);
+				request.getSession().setAttribute("isAdmin", true);
 			}
-			model.addAttribute("user", user);
+			request.getSession().setAttribute("user", u);
+			model.addAttribute("user", u);
+			return new RedirectView(request.getContextPath()+"/student");
+		} else {
+			User user= new User();
+			user.setEmail(email);
+			model.addAttribute("user", u);
+			return new RedirectView(request.getContextPath()+"/public/connection");
 		}
-		return new RedirectView("/student");
 	}
 
 	public void setuDao(UserDao uDao) {

@@ -15,8 +15,9 @@
 	AutoQuiz
 </h1>
 
-	<a href="authenticate">Formulaire (authentification)</a>
-	<br />
+	<a href="authenticate">Formulaire (authentification)</a><br />
+	<a href="public/connection">Connection</a><br />
+	<a href="public/inscription">Inscription</a><br />
 
 </body>
 </html>
