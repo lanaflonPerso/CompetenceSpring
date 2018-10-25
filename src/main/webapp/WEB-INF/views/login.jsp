@@ -12,9 +12,9 @@
 	Authentication
 </h1>
 
-<a href="${requestScope['javax.servlet.forward.request_uri']}?lang=fr">FRANCAIS</a>
+<%-- <a href="${requestScope['javax.servlet.forward.request_uri']}?lang=fr">FRANCAIS</a>
 <a href="${requestScope['javax.servlet.forward.request_uri']}?lang=en">ENGLISH</a>
-
+ --%>
 <form:form method="post" action="check-login" modelAttribute="login-form">
 	<form:label path="username">
 		<spring:message code="login.usernameLabel" />

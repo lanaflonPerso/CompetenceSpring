@@ -1,7 +1,15 @@
-package fr.dawan.autoquiz3000.dao;
+package fr.dawan.springmvc.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
+
+import fr.dawan.springmvc.beans.Product;
 
 public class ProductDb {
-/*
+
 	private HibernateTemplate hibernateTemplate;
 
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
@@ -48,7 +56,7 @@ public class ProductDb {
 		.setParameter(":search", search+"%")
 		.list();
 	}
-	*/
+	
 
 	
 	

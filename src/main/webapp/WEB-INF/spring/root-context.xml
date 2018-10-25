@@ -74,16 +74,13 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-
-
 	<!-- surcouche de l'entityManager => HibernateTemplate -->
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
 	<!-- DAO -->
-	<bean id="productDb" class="fr.dawan.autoquiz3000.dao.ProductDb">
+	<bean id="UserDao" class="fr.dawan.autoquiz3000.dao.UserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
 </beans>
