@@ -83,4 +83,13 @@
 	<bean id="UserDao" class="fr.dawan.autoquiz3000.dao.UserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	<bean id="QuizDao" class="fr.dawan.autoquiz3000.dao.QuizDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="SkillDao" class="fr.dawan.autoquiz3000.dao.SkillDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="stClassDao" class="fr.dawan.autoquiz3000.dao.StClassDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 </beans>
