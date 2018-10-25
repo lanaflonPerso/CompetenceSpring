@@ -1,6 +1,6 @@
 package fr.dawan.autoquiz3000.beans;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
