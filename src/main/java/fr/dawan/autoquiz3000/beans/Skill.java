@@ -12,59 +12,50 @@ import javax.persistence.Version;
 
 @Entity
 public class Skill implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
 
 	private SkillStatus status;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = CascadeType.ALL)
 	private User user;
 	
 	@Version
 	private int version;
 
+	//**************************************SETTERS / GETTERS******************************************
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public SkillStatus getStatus() {
 		return status;
 	}
-
 	public void setStatus(SkillStatus status) {
 		this.status = status;
 	}
-
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 	public int getVersion() {
 		return version;
 	}
-
 	public void setVersion(int version) {
 		this.version = version;
 	}

@@ -22,7 +22,7 @@ public class Quiz implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
@@ -44,7 +44,7 @@ public class Quiz implements Serializable {
 	@Version
 	private int version;
 
-	
+	//**************************************SETTERS / GETTERS******************************************
 	public Long getId() {
 		return id;
 	}
@@ -100,7 +100,7 @@ public class Quiz implements Serializable {
 		this.quizQuestions = quizQuestions;
 	}
 	
-	// **********GETTER/SETTER PERSO**********
+	//**************************************SETTERS / GETTERS PERSO************************************
 	public void setQuizQuestion(QuizQuestion quizQuestion) {
 		this.quizQuestions.add(quizQuestion);
 	}

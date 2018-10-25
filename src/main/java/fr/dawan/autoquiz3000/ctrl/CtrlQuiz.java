@@ -78,7 +78,7 @@ public class CtrlQuiz extends Ctrl {
 	}
 	
 	public StudentClass ctrlStClass(String id) {
-		StudentClass sc= cDao.findById(Integer.valueOf(id));
+		StudentClass sc= cDao.findById(Long.valueOf(id));
 		if(sc == null) {
 			sc= new StudentClass();
 			error= true;

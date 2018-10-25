@@ -17,7 +17,7 @@ public class UserDao {
 	
 	@Transactional
 	public void save(User user) {
-		hibernateTemplate.save(user);
+		hibernateTemplate.saveOrUpdate(user);
 	}
 	
 	@Transactional(readOnly=true)

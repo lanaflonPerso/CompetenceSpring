@@ -15,7 +15,7 @@ public class QuizDao {
 	
 	@Transactional
 	public void save(Quiz quiz) {
-		hibernateTemplate.save(quiz);
+		hibernateTemplate.saveOrUpdate(quiz);
 	}
 	
 	@Transactional(readOnly=true)

@@ -15,24 +15,22 @@ import javax.persistence.Version;
 
 @Entity
 public class QuizQuestion implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String text;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Quiz quiz;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<QuizResponse> quizResponses= new ArrayList<>();
 	
 	@Version
 	private int version;
-	
-	
+	//**************************************SETTERS / GETTERS******************************************
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +61,8 @@ public class QuizQuestion implements Serializable {
 	public void setQuizResponse(List<QuizResponse> quizResponses) {
 		this.quizResponses = quizResponses;
 	}
+	
+	//**************************************SETTERS / GETTERS PERSO************************************
 	public void setQuizResponse(QuizResponse quizResponse) {
 		this.quizResponses.add(quizResponse);
 	}
