@@ -31,7 +31,7 @@ public class ProfessorFilter implements Filter {
 		}
 		
 		if(!isProfessor) {
-			String url= req.getContextPath()+"/public/connection/professor";
+			String url= req.getContextPath()+"/public/connection";
 			res.sendRedirect( url );
 			return;
 		}

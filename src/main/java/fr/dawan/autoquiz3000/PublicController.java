@@ -31,6 +31,12 @@ public class PublicController {
 		return new ModelAndView("public/viewConnexion");
 	}
 	
+	@GetMapping("/deconnection")
+	public ModelAndView getDeconnection(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return new ModelAndView("public/viewConnexion");
+	}
+	
 	@GetMapping("/inscription")
 	public ModelAndView getInscription() {
 		return new ModelAndView("public/viewInscription");

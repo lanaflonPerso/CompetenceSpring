@@ -29,7 +29,7 @@ public class AdminFilter implements Filter {
 		}
 		
 		if(!isAdmin) {
-			String url= req.getContextPath()+"/public/connection/professor";
+			String url= req.getContextPath()+"/public/connection";
 			res.sendRedirect( url );
 			return;
 		}

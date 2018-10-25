@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.beans;
 
-import java.io.Serializable; 
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
@@ -26,46 +29,55 @@ public class Quiz implements Serializable {
 	
 	private int scoreToAcquireSkill;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date startDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
+	
 	@Version
 	private int version;
 
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public Skill getSkill() {
 		return skill;
 	}
-
 	public void setSkill(Skill skill) {
 		this.skill = skill;
 	}
-	
 	public int getScoreToAcquireSkill() {
 		return scoreToAcquireSkill;
 	}
-
 	public void setScoreToAcquireSkill(int scoreToAcquireSkill) {
 		this.scoreToAcquireSkill = scoreToAcquireSkill;
 	}
-
 	public int getVersion() {
 		return version;
 	}
-
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 }
