@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class User implements Serializable {
 	private String token;
 	
 	@OneToMany(mappedBy = "user",cascade = { CascadeType.ALL })
-	private List<Skill> skills;
+	private List<Skill> skills=new ArrayList<>();
 	
 	@ManyToOne(cascade = { CascadeType.ALL })
 	StudentClass studentClass;
