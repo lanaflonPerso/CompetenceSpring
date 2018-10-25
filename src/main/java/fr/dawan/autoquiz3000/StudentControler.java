@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/student")
-public class StudentController {
+public class StudentControler {
 
 	@GetMapping("/")
 	public ModelAndView getDashboard() {
