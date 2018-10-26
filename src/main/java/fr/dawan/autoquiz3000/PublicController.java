@@ -18,6 +18,7 @@ import fr.dawan.autoquiz3000.ctrl.Ctrl;
 import fr.dawan.autoquiz3000.ctrl.CtrlUser;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.helper.Token;
+import fr.dawan.autoquiz3000.tools.EmailTools;
 
 @Controller
 @RequestMapping("/public")
@@ -73,6 +74,14 @@ public class PublicController {
 			User u= ctrl.getUser();
 			u.setToken(Token.getToken());
 			uDao.save(u);
+			StringBuilder sb= new StringBuilder();
+			sb.append(u.getToken());
+			try {
+				EmailTools.sendEmail(u.getEmail(), "inscription", sb.toString());
+			} catch (Exception e) {
+				// TODO logger l'erreur
+				e.printStackTrace();
+			}
 			// TODO envoyer un mail
 			return new RedirectView(request.getContextPath()+"/public/token");
 		} else {
