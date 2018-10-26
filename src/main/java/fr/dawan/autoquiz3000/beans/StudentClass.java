@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,8 +34,20 @@ public class StudentClass implements Serializable {
 	private Date endDate;
 	
 	@OneToMany(mappedBy="studentClass", cascade = { CascadeType.ALL })
-	List<User> students=new ArrayList<>();
+	private List<User> students=new ArrayList<>();
 	
+	
+	@ManyToMany(mappedBy="stClasses", cascade=CascadeType.ALL)
+	private List<Quiz> quizzes;
+	
+	public List<Quiz> getQuizzes() {
+		return quizzes;
+	}
+
+	public void setQuizzes(List<Quiz> quizzes) {
+		this.quizzes = quizzes;
+	}
+
 	@Version
 	private int version;
 

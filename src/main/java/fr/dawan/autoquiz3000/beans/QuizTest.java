@@ -36,8 +36,7 @@ public class QuizTest implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
-	@Temporal(TemporalType.DATE)
-	private Date endDate;
+
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<QuizResponse> responses=new ArrayList<>();
@@ -85,13 +84,7 @@ public class QuizTest implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+	
 
 	public List<QuizResponse> getResponses() {
 		return responses;

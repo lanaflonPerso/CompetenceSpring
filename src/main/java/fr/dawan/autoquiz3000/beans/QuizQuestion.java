@@ -26,6 +26,10 @@ public class QuizQuestion implements Serializable {
 	private Quiz quiz;
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<QuizResponse> quizResponses= new ArrayList<>();
+	
+	
+	private int orderNum;
+	
 	@Version
 	private int version;
 	
@@ -65,4 +69,11 @@ public class QuizQuestion implements Serializable {
 	public void setQuizResponse(QuizResponse quizResponse) {
 		this.quizResponses.add(quizResponse);
 	}
+	public int getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+	
 }

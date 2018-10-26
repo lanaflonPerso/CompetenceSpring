@@ -23,18 +23,26 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private UserType type;
 	private String firstName;
 	private String lastName;
+	
 	@Temporal(TemporalType.DATE)
 	private Date birthdate;
+	
 	private String email;
 	private String password;
 	private String token;
+	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private List<Skill> skills=new ArrayList<>();
+	
 	@ManyToOne(cascade = CascadeType.ALL)
-	StudentClass studentClass;
+	private StudentClass studentClass;
+	
+	
+	
 	@Version
 	private int version;
 

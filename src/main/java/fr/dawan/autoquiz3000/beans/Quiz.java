@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -38,8 +39,10 @@ public class Quiz implements Serializable {
 	private Date endDate;
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<QuizQuestion> quizQuestions= new ArrayList<>();
-	@ManyToOne
-	private StudentClass stClass;
+	
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	private List<StudentClass> stClasses;
 	
 	@Version
 	private int version;
@@ -87,11 +90,12 @@ public class Quiz implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public StudentClass getStClass() {
-		return stClass;
+	
+	public List<StudentClass> getStClasses() {
+		return stClasses;
 	}
-	public void setStClass(StudentClass stClass) {
-		this.stClass = stClass;
+	public void setStClasses(List<StudentClass> stClasses) {
+		this.stClasses = stClasses;
 	}
 	public List<QuizQuestion> getQuizQuestions() {
 		return quizQuestions;
