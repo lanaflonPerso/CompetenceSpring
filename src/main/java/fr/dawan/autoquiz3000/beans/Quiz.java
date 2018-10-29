@@ -49,7 +49,7 @@ public class Quiz implements Serializable {
 	private List<QuizQuestion> quizQuestions= new ArrayList<>();
 	
 	@ManyToMany(cascade=CascadeType.ALL)
-	private List<StudentClass> stClasses;
+	private List<StudentClass> stClasses= new ArrayList<>();
 	
 	@Version
 	private int version;

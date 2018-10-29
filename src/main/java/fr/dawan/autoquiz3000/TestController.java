@@ -65,7 +65,7 @@ public class TestController {
 		List<User> listStudent= new ArrayList<>();
 		listStudent.add(halford);
 		listStudent.add(matos);
-		listStudent.add(matos);
+		listStudent.add(dickinson);
 		
 		StudentClass premierA= new StudentClass();
 		premierA.setName(" classe de première");
@@ -81,7 +81,8 @@ public class TestController {
 		
 		Skill javaSkill= new Skill();
 		javaSkill.setName("Java");
-
+		
+		javaQuiz.getStClasses().add(premierA);
 		javaQuiz.setSkill(javaSkill);
 		
 		// Question 1

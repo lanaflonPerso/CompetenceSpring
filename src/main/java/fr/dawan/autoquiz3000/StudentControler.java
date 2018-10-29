@@ -22,6 +22,7 @@ import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuizTest;
 import fr.dawan.autoquiz3000.dao.QuizDao;
 import fr.dawan.autoquiz3000.dao.QuizTestDao;
+import fr.dawan.autoquiz3000.dao.UserDao;
 
 @Controller
 @RequestMapping("/student")
@@ -32,6 +33,9 @@ public class StudentControler {
 	
 	@Autowired
 	private QuizTestDao qtDao;
+	
+	@Autowired
+	private UserDao uDao;
 
 	@GetMapping("/")
 	public ModelAndView getDashboard() {
@@ -95,6 +99,7 @@ public class StudentControler {
 		String[] responseStudent= request.getParameterValues("response");
 		HttpSession session = request.getSession();
 		QuizTest quizTest = (QuizTest)session.getAttribute("quizTest");
+		Quiz quiz= (Quiz)session.getAttribute("quiz");
 		int orderNum = (Integer)session.getAttribute("orderNum");
 		long quizId = (Long)session.getAttribute("quizId");
 		long qstNb = (Long)session.getAttribute("qstNb");
@@ -111,6 +116,11 @@ public class StudentControler {
 			score= (quizTest.getCorrectResponse()*100)/(quizTest.getCorrectResponse()+quizTest.getErrorResponse());
 			quizTest.setScore(score);
 			
+			if (quiz.getScoreToAcquireSkill() < quizTest.getScore()) {
+				User user= (User) session.getAttribute("user");
+				user.getSkills().add(quiz.getSkill());
+				uDao.save(user);
+			}
 			qtDao.save(quizTest);
 			return new ModelAndView("student/quiz-result");
 		}
