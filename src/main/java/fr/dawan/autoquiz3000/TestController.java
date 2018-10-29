@@ -19,6 +19,8 @@ import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.ctrl.Ctrl;
 import fr.dawan.autoquiz3000.dao.QuizDao;
+import fr.dawan.autoquiz3000.dao.StClassDao;
+import fr.dawan.autoquiz3000.dao.UserDao;
 
 @Controller
 @RequestMapping("/test")
@@ -26,6 +28,12 @@ public class TestController {
 	
 	@Autowired
 	private QuizDao qDao;
+	
+	@Autowired
+	private UserDao uDao;
+	
+	@Autowired
+	private StClassDao scDao;
 
 	@GetMapping("/user")
 	public ModelAndView writeUser() {
@@ -171,5 +179,70 @@ public class TestController {
 		
 		return null;
 		
+	}
+	
+	@GetMapping("/studentclass")
+	public String  writestudenclass() {
+		User  al = new User();
+		al.setBirthdate(new Date());
+		al.setFirstName("Al");
+		al.setLastName("Jourgensen");
+		al.setEmail("al.jourgensen@laposte.net");
+		al.setType(UserType.PROFESSOR);
+		al.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(al);
+
+		User jaz= new User();
+		jaz.setBirthdate(new Date());
+		jaz.setFirstName("Jaz");
+		jaz.setLastName("Coleman");
+		jaz.setEmail("jaz.coleman@laposte.net");
+		jaz.setType(UserType.PROFESSOR);
+		jaz.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(jaz);
+
+		User lyndon= new User();
+		lyndon.setBirthdate(new Date());
+		lyndon.setFirstName("John");
+		lyndon.setLastName("Lydon");
+		lyndon.setEmail("john.lydon@zeposte.co.uk");
+		lyndon.setType(UserType.STUDENT);
+		lyndon.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(lyndon);
+		
+		User ratner= new User();
+		ratner.setBirthdate(new Date());
+		ratner.setFirstName("Rachel");
+		ratner.setLastName("Ratner");
+		ratner.setEmail("rachel.ratner@laposte.net");
+		ratner.setType(UserType.STUDENT);
+		ratner.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(ratner);
+		
+		User dwyer= new User();
+		dwyer.setBirthdate(new Date());
+		dwyer.setFirstName("John");
+		dwyer.setLastName(" Dwyer");
+		dwyer.setEmail("john.dwyer@laposte.net");
+		dwyer.setType(UserType.STUDENT);
+		dwyer.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(dwyer);
+		
+		StudentClass sc1=new StudentClass();
+		sc1.setName("Te2");
+		sc1.setStartDate(new Date());
+		sc1.setEndDate(new Date());
+		scDao.save(sc1);
+		StudentClass sc2=new StudentClass();
+		sc2.setName("DUT Info");
+		sc2.setStartDate(new Date());
+		sc2.setEndDate(new Date());
+		scDao.save(sc2);
+		StudentClass sc3=new StudentClass();
+		sc3.setName("BTS Mai");
+		sc3.setStartDate(new Date());
+		sc3.setEndDate(new Date());
+		scDao.save(sc3);
+		return "home";
 	}
 }

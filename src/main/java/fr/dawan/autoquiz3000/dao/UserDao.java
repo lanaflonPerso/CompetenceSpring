@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 
 public class UserDao {
@@ -24,6 +25,11 @@ public class UserDao {
 	@Transactional(readOnly=true)
 	public List<User> findAll(){
 		return (List<User>)hibernateTemplate.find("FROM User");
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		hibernateTemplate.delete(hibernateTemplate.get(User.class, id));
 	}
 	
 	@SuppressWarnings("unchecked")

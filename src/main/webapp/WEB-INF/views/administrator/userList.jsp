@@ -9,7 +9,6 @@
 <head>
 <meta charset="utf-8" />
 <title></title>
-	<base href="/AutoQuiz3000/administrator">
 </head>
 <body>
 	<h1>Gestion des utilisateurs</h1>

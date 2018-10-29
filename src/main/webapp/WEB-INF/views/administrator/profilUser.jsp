@@ -36,7 +36,7 @@
   		</div>	
   		<form:input type="hidden" path="id"/>
 		<input type="submit" value="Modifier" class="btn btn-primary"/>
-		<a href="/AutoQuiz3000/administrator/user?page=1&max=20">Annuler</a>
+		<a href="/AutoQuiz3000/administrator/user?page=1&max=20" class="btn btn-secondary">Annuler</a>
 	</form:form>
 		
 </body>

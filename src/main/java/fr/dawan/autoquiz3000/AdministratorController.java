@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.dawan.autoquiz3000.beans.StudentClass;
+import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
@@ -116,9 +117,9 @@ public class AdministratorController {
 	}
 
 	@RequestMapping(value = "/administrator/user/{id}/delete")
-	public String deleteUser(Model model) {
-		model.addAttribute("users", userDao.findAll());
-		return "administrator/userList";
+	public String deleteUser(@PathVariable("id") Long id,Model model) {
+		userDao.delete(id);
+		return "redirect:/administrator/user?page=1&max=20";
 	}
 	
 	@RequestMapping(value = "/administrator/user/{id}/update")
@@ -131,9 +132,18 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/user", method = RequestMethod.POST)
 	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model) {
-		
-		
-		return "";
+		if(result.hasErrors()) {
+			model.addAttribute("errors",result);
+			return "administrator/userList";
+		}
+		User u=userDao.findById(form.getId());
+		u.setFirstName(form.getFirstName());
+		u.setLastName(form.getLastName());
+		u.setBirthdate(form.getBirthdate());
+		u.setEmail(form.getEmail());
+		u.setType(form.getType());
+		userDao.save(u);	
+		return "administrator/userList";
 	}
 
 }
