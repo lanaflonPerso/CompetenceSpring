@@ -40,7 +40,7 @@ public class CtrlQuiz extends Ctrl {
 		Skill objectSkill= ctrlSkill(skill);
 		quiz.setSkill(objectSkill);
 		StudentClass stClass= ctrlStClass(stClassName);
-		quiz.setStClass(stClass);
+	//	quiz.setStClass(stClass);
 	}
 	
 	private Skill ctrlSkill(String name) {

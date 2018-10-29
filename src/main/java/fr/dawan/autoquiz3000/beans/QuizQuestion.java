@@ -10,11 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
-@Entity
+@Entity(name = "QuizQuestion")
+@Table(name = "quiz_question")
 public class QuizQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +25,13 @@ public class QuizQuestion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String text;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Quiz quiz;
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<QuizResponse> quizResponses= new ArrayList<>();
 	
+	@ManyToOne
+	private Quiz quiz;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name = "question_id", referencedColumnName="id")
+	private List<QuizResponse> quizResponses= new ArrayList<>();
 	
 	private int orderNum;
 	
@@ -76,4 +81,52 @@ public class QuizQuestion implements Serializable {
 		this.orderNum = orderNum;
 	}
 	
+	//**************************************OVERRIDE******************************************
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + orderNum;
+		result = prime * result + ((quiz == null) ? 0 : quiz.hashCode());
+		result = prime * result + ((quizResponses == null) ? 0 : quizResponses.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		result = prime * result + version;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuizQuestion other = (QuizQuestion) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (orderNum != other.orderNum)
+			return false;
+		if (quiz == null) {
+			if (other.quiz != null)
+				return false;
+		} else if (!quiz.equals(other.quiz))
+			return false;
+		if (quizResponses == null) {
+			if (other.quizResponses != null)
+				return false;
+		} else if (!quizResponses.equals(other.quizResponses))
+			return false;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
+	}	
 }
