@@ -41,8 +41,6 @@ public class User implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private StudentClass studentClass;
 	
-	
-	
 	@Version
 	private int version;
 

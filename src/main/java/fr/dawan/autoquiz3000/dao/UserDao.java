@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 
 public class UserDao {
@@ -17,7 +18,24 @@ public class UserDao {
 	
 	@Transactional
 	public void save(User user) {
-		hibernateTemplate.saveOrUpdate(user);
+		hibernateTemplate.save(user);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<User> findAll(){
+		return (List<User>)hibernateTemplate.find("FROM User");
+	}
+
+	@Transactional(readOnly=true)
+	public User findById(long id){
+		return hibernateTemplate.get(User.class, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional()
+	public List<User> findByStudentClass(StudentClass sc){
+		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=?",sc);
 	}
 	
 	@Transactional(readOnly=true)
