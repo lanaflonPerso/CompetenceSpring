@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.dawan.autoquiz3000.beans.StudentClass;
+import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.formbeans.StudentClassForm;
@@ -124,6 +125,7 @@ public class AdministratorController {
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("user", userDao.findById(id));
 		model.addAttribute("user-form", new UserForm());
+		model.addAttribute("lstTypeUser",UserType.values());
 		return "administrator/profilUser";
 	}
 	

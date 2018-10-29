@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import fr.dawan.autoquiz3000.beans.UserType;
+
 public class UserForm {
 		private Long id;
 
@@ -26,7 +28,9 @@ public class UserForm {
 		@NotNull(message = "La date de début ne peut pas être vide")
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private Date birthdate;
-	
+		
+		private UserType type;
+
 		public UserForm(Long id, String firstName, String lastName, String email, Date birthdate) {
 			super();
 			this.id = id;
@@ -80,5 +84,15 @@ public class UserForm {
 		public void setBirthdate(Date birthdate) {
 			this.birthdate = birthdate;
 		}
+		
+		
+		public UserType getType() {
+			return type;
+		}
+
+		public void setType(UserType type) {
+			this.type = type;
+		}
+
 		
 }

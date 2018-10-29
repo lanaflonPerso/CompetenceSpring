@@ -28,12 +28,15 @@
 			<form:input class="col-md-5" path="email"  type="text" placeholder="Entrer l'email" value="${user.email}"/>
 			<small id="emailHelp" class="form-text text-danger"><form:errors path="email" /></small>
 		</div>
-<!-- 		<div class="form-group"> -->
-<%-- 			<form:label  path="type" class="col-md-2">Type</form:label> --%>
-<%-- 	 		<form:select  path="type"> --%>
-<%--     			<form:options items="${lstTypeUser}"></form:options> --%>
-<%--   			</form:select> --%>
-<!--   		</div>	 -->
+		<div class="form-group">
+			<form:label  path="type" class="col-md-2">Type</form:label>
+	 		<form:select  path="type">
+    			<form:options items="${lstTypeUser}"></form:options>
+  			</form:select>
+  		</div>	
+  		<form:input type="hidden" path="id"/>
+		<input type="submit" value="Modifier" class="btn btn-primary"/>
+		<a href="/AutoQuiz3000/administrator/user?page=1&max=20">Annuler</a>
 	</form:form>
 		
 </body>
