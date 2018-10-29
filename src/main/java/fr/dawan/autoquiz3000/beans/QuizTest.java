@@ -33,7 +33,7 @@ public class QuizTest implements Serializable {
 	
 	@OneToMany
 	@JoinColumn(name = "question_id")
-	private List<QuizQuestion> QuizQuestions= new ArrayList<>();
+	private List<QuizQuestion> quizQuestions= new ArrayList<>();
 	
 	@OneToMany(cascade= CascadeType.ALL)
 	@JoinColumn(name = "QuizTest_id", referencedColumnName="id")
@@ -51,7 +51,7 @@ public class QuizTest implements Serializable {
 	
 	//**************************************SETTERS / GETTERS PERSO************************************
 	public void addQuizQuestion(QuizQuestion quizQuestion) {
-		this.QuizQuestions.add(quizQuestion);
+		this.quizQuestions.add(quizQuestion);
 	}
 	public void addStResponse(StudentResponse stResponse) {
 		this.stResponse.add(stResponse);
@@ -115,9 +115,9 @@ public class QuizTest implements Serializable {
 		this.stResponse = stResponse;
 	}
 	public List<QuizQuestion> getQuizQuestions() {
-		return QuizQuestions;
+		return quizQuestions;
 	}
 	public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
-		QuizQuestions = quizQuestions;
+		quizQuestions = quizQuestions;
 	}
 }

@@ -67,6 +67,7 @@ public class StudentControler {
 			HttpSession session = request.getSession();
 			Quiz quiz = qDao.findById(Long.valueOf(id));
 			
+			session.setAttribute("quiz", quiz);
 			QuizTest quizTest= new QuizTest();
 			quizTest.setStartDate(new Date());
 			quizTest.setUser((User)session.getAttribute("user"));
@@ -111,9 +112,8 @@ public class StudentControler {
 			quizTest.setScore(score);
 			
 			qtDao.save(quizTest);
-			new ModelAndView("quiz-result"); //pour afficher le score ${sessionScope.score}
+			return new ModelAndView("student/quiz-result");
 		}
-		return null;
 	}
 	
 	//***************************************************************A effacer

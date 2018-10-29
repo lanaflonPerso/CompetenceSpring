@@ -37,4 +37,8 @@ public class StudentResponse {
 	public void setAnswered(boolean answered) {
 		this.answered = answered;
 	}
+	@Override
+	public String toString() {
+		return "StudentResponse [id=" + id + ", idResponse=" + idResponse + ", answered=" + answered + "]";
+	}
 }

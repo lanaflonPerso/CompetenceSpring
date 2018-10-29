@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h1>Quiz : ${sessionScope.quizName}</h1> 
+		<h1>Quiz : ${ sessionScope.quizName }</h1> 
 	
 		<p>${ sessionScope.orderNum }/${ sessionScope.qstNb } - ${ currentQst.text }</p>
 		
