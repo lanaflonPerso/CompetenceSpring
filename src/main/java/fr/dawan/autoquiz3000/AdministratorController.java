@@ -123,6 +123,7 @@ public class AdministratorController {
 	@RequestMapping(value = "/administrator/user/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("user", userDao.findById(id));
+		model.addAttribute("user-form", new UserForm());
 		return "administrator/profilUser";
 	}
 	
