@@ -57,5 +57,4 @@ public class QuizDao {
 	public void saveQuizTest(QuizTest quizTest) {
 		hibernateTemplate.saveOrUpdate(quizTest);
 	}
-	
 }
