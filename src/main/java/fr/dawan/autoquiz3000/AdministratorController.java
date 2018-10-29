@@ -1,7 +1,5 @@
 package fr.dawan.autoquiz3000;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.dawan.autoquiz3000.beans.StudentClass;
-import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.formbeans.StudentClassForm;
+import fr.dawan.autoquiz3000.formbeans.UserForm;
 
 @Controller
 public class AdministratorController {
@@ -33,13 +31,14 @@ public class AdministratorController {
 	public String manageStudentClass(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
 		try {
 			if(max==0)
-				max = 50;
+				max = 20;
 			if (page==0)
 				page = 1;
-			int start =(page-1)*max;
-			model.addAttribute("stclasses", scDao.findAll(start, max));
-			boolean suivExist = (page*max)< scDao.count();
-			model.addAttribute("suivExist", suivExist);
+			int pagemax=1+(int)scDao.count()/max;
+			if(page>pagemax)
+				page=pagemax;
+			model.addAttribute("stclasses", scDao.findAll((page-1)*max, max));
+			model.addAttribute("maxpage", pagemax);
 			model.addAttribute("studentclass-form", new StudentClassForm());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +72,7 @@ public class AdministratorController {
 					scDao.save(sc);
 				else
 					scDao.update(sc);
-				return "redirect:/administrator/studentclass?page=1&max=50";
+				return "redirect:/administrator/studentclass?page=1&max=20";
 			}
 		}
 		model.addAttribute("studentclass-form", form);
@@ -85,7 +84,7 @@ public class AdministratorController {
 	public String deleteStudentClass(@PathVariable("id") Long id, Model model) {
 		//TODO ajouter un test si classe vide et sur Id?
 		scDao.delete(id);
-		return "redirect:/administrator/studentclass?page=1&max=50";
+		return "redirect:/administrator/studentclass?page=1&max=20";
 	}
 	
 	@RequestMapping(value = "/administrator/studentclass/{id}/update")
@@ -101,22 +100,37 @@ public class AdministratorController {
 		return "administrator/studentclass";
 	}
 	
-	@RequestMapping(value = "/professor/studentclass/{id}")
-	public String dashboardStudentClass(@PathVariable("id") Long id, Model model) {
-		StudentClass sc=scDao.findById(id);
-		List<User> userAssigned=userDao.findByStudentClass(sc);
-		model.addAttribute("userAssigned", userAssigned);
-		model.addAttribute("classe", sc);
-		return "professor/studentclassDashboard";
+	@RequestMapping(value = "/administrator/user" , method=RequestMethod.GET)
+	public String displayUserList(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
+		if(max==0)
+			max = 20;
+		if (page==0)
+			page = 1;
+		int pagemax=1+(int)userDao.count()/max;
+		if(page>pagemax)
+			page=pagemax;
+		model.addAttribute("users", userDao.findAll((page-1)*max, max));
+		model.addAttribute("maxpage",pagemax);
+		return "administrator/userList";
+	}
+
+	@RequestMapping(value = "/administrator/user/{id}/delete")
+	public String deleteUser(Model model) {
+		model.addAttribute("users", userDao.findAll());
+		return "administrator/userList";
 	}
 	
-	@RequestMapping(value = "/administrator/assignStudent/{id}")
-	public String assignStudentClass(@PathVariable("id") Long id, Model model) {
-		StudentClass sc=scDao.findById(id);
-		List<User> user=userDao.findAll(); //TODO a modifier
-		model.addAttribute("user", user);
-		model.addAttribute("classe", sc);
-		return "administrator/assignStudent";
+	@RequestMapping(value = "/administrator/user/{id}/update")
+	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
+		model.addAttribute("user", userDao.findById(id));
+		return "administrator/profilUser";
 	}
 	
+	@RequestMapping(value = "/administrator/user", method = RequestMethod.POST)
+	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model) {
+		
+		
+		return "";
+	}
+
 }

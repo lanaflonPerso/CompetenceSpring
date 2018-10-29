@@ -12,14 +12,13 @@
 
 </head>
 <body>
-
 		<h1>Gestion des classes</h1>
 		<table class="table table-hover table-sm">
 			<thead class="thead-dark">
 				<tr>
 					<th>Nom</th>
 					<th>Date début</th>
-					<th>date fin</th>
+					<th>Date fin</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -31,36 +30,42 @@
 						<td><fmt:formatDate type="date" value="${classe.endDate}" /></td>
 						<spring:url value="studentclass/${classe.id}/delete" var="delUrl" />
 						<spring:url value="studentclass/${classe.id}/update" var="updateUrl" />
-						<spring:url value="/professor/studentclass/${classe.id}" var="viewUrl" />
+						<spring:url value="assignStudent/${classe.id}" var="assignUrl" />
 						<td class="col-4">
-							<a href="${viewUrl}" class="btn btn-secondary" role="button">Visualiser</a>
+							<a href="${assignUrl}" class="btn btn-secondary" role="button">Assigner</a>
 							<a href="${updateUrl}" class="btn btn-success" role="button">Modifier</a>
 							<a href="${delUrl}" class="btn btn-danger" role="button">Supprimer</a>
 						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>	
-		<c:if test="${param.page>1}">
-			<a href="studentclass?page=${param.page-1}&max=${param.max}" class="btn btn-secondary" role="button">Précédent</a>
-		</c:if>
- 		<span> ${param.page}</span> 
-		<c:if test="${suivExist}">
-			<a href="studentclass?page=${param.page+1}&max=${param.max}" class="btn btn-secondary" role="button">Suivant</a>
-		</c:if>
+		</table>
+		
+		<c:if test="${maxpage gt 1}">
+			<ul class="pagination justify-content-center">
+				<li class="page-item <c:if test="${param.page eq 1}">disabled</c:if>">
+		      		<a class="page-link" href="/AutoQuiz3000/administrator/studentclass/?page=${param.page-1}&max=${param.max}">Précédent</a>
+		    	</li>
+		    	<c:forEach var = "i" begin = "1" end = "${maxpage}">
+		    		<li class="page-item <c:if test="${param.page eq i}">active</c:if>">
+		      			<a class="page-link" href="/AutoQuiz3000/administrator/studentclass/?page=${i}&max=${param.max}">${i}</a>
+		    		</li>
+		    	</c:forEach>
+		    	<li class="page-item <c:if test="${param.page eq maxpage}">disabled</c:if>">
+			      <a class="page-link" href="/AutoQuiz3000/administrator/studentclass/?page=${param.page+1}&max=${param.max}">Suivant</a>
+		    	</li>
+		  	</ul>
+  		</c:if>
 		<c:if test="${not empty message}">
-		<div class="alert alert-danger" role="alert">
-			<c:out value="${message}"></c:out>
-		</div>
+			<div class="alert alert-danger" role="alert">
+				<c:out value="${message}"></c:out>
+			</div>
 		</c:if>
 		<form:form method="POST" action="/AutoQuiz3000/administrator/studentclass" modelAttribute="studentclass-form">
 			<div class="form-group">
-				<form:label  path="name" class="col-md-2">
-					Nom
-				</form:label>
+				<form:label  path="name" class="col-md-2">Nom</form:label>
 				<form:input class="col-md-5" path="name"  type="text" placeholder="Entrer le nom de la classe"/>
 				<small id="emailHelp" class="form-text text-danger"><form:errors path="name" /></small>
-				
 			</div>
 			<div class="form-group">
 				<form:label path="startDate" class="col-md-2">Date de début</form:label>
@@ -70,7 +75,7 @@
 			<div class="form-group">
 				<form:label path="endDate" class="col-2">Date de fin</form:label>
 				<form:input type="date" path="endDate" class="col-md-2" />
-					<small id="emailHelp" class="form-text text-danger"><form:errors path="endDate" /></small>
+				<small id="emailHelp" class="form-text text-danger"><form:errors path="endDate" /></small>
 			</div>
 			<form:input type="hidden" path="id"/>
 			<input type="submit" value="Ajouter" class="btn btn-primary"/>

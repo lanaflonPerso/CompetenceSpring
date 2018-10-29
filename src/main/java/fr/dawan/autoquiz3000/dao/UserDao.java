@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 
 public class UserDao {
@@ -18,7 +17,7 @@ public class UserDao {
 	
 	@Transactional
 	public void save(User user) {
-		hibernateTemplate.save(user);
+		hibernateTemplate.saveOrUpdate(user);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -26,16 +25,22 @@ public class UserDao {
 	public List<User> findAll(){
 		return (List<User>)hibernateTemplate.find("FROM User");
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<User> findAll(int start, int max){
+		return (List<User>) hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("FROM User")
+		.setFirstResult(start).setMaxResults(max).list();
+	}
+	
 	@Transactional(readOnly=true)
 	public User findById(long id){
 		return hibernateTemplate.get(User.class, id);
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Transactional()
-	public List<User> findByStudentClass(StudentClass sc){
-		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=?",sc);
+	@Transactional(readOnly=true)
+	public long count() {
+		return (Long)hibernateTemplate.find("SELECT COUNT(u.id) FROM User u").get(0);
 	}
 	
 	@Transactional(readOnly=true)

@@ -36,11 +36,6 @@ public class StClassDao {
 		return (List<StudentClass>)hibernateTemplate.find("FROM StudentClass");
 	}
 	
-	@Transactional(readOnly=true)
-	public StudentClass findById(long id){
-		return hibernateTemplate.get(StudentClass.class, id);
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<StudentClass> findAll(int start, int max){
@@ -48,6 +43,11 @@ public class StClassDao {
 		.setFirstResult(start).setMaxResults(max).list();
 	}
 	
+	@Transactional(readOnly=true)
+	public StudentClass findById(long id){
+		return hibernateTemplate.get(StudentClass.class, id);
+	}
+
 	@Transactional(readOnly=true)
 	public long count() {
 		return (Long)hibernateTemplate.find("SELECT COUNT(c.id) FROM StudentClass c").get(0);
