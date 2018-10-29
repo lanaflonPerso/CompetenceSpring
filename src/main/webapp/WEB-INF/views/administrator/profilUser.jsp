@@ -10,7 +10,7 @@
 	<title>Profil de <c:out value="${user.firstName}"></c:out> <c:out value="${user.lastName}"></c:out></title>
 </head>
 <body>
-	<h1>Profil de <c:out value="${user.firstName}"></c:out><c:out value="${user.lastName}"></c:out></h1>
+	<h1>Profil de <c:out value="${user.firstName}"></c:out> <c:out value="${user.lastName}"></c:out></h1>
 
 	<form:form method="POST" action="/AutoQuiz3000/administrator/user" modelAttribute="user-form">
 		<div class="form-group">
