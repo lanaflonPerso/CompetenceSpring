@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,15 +18,15 @@ public class UserForm {
 		@Size(max = 50,message = "Le pr�nom ne peut pas être vide") 
 		private String firstName;
 		
-		@NotEmpty(message = "Le pr�nom ne peut pas être vide")
-		@Size(max = 50,message = "Le pr�nom ne peut pas être vide") 
+		@NotEmpty(message = "Le nom ne peut pas être vide")
+		@Size(max = 50,message = "Le nom ne peut pas être vide") 
 		private String lastName;
 		
-		@NotEmpty(message = "Le pr�nom ne peut pas être vide")
-		@Size(max = 50,message = "Le pr�nom ne peut pas être vide") 
+		@NotEmpty(message = "Le email ne peut pas être vide")
+		@Pattern(regexp="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b", message="L' email n'ai pas valide")
 		private String email;
 		
-		@NotNull(message = "La date de début ne peut pas être vide")
+		@NotNull(message = "La date de naissance ne peut pas être vide")
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private Date birthdate;
 		
@@ -42,7 +43,6 @@ public class UserForm {
 
 		public UserForm() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 		public Long getId() {

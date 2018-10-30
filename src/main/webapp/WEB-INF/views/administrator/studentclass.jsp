@@ -29,11 +29,11 @@
 						<td><fmt:formatDate type="date" value="${classe.startDate}" /></td>
 						<td><fmt:formatDate type="date" value="${classe.endDate}" /></td>
 						<spring:url value="studentclass/${classe.id}/delete" var="delUrl" />
-						<spring:url value="studentclass/${classe.id}/update" var="updateUrl" />
+						<spring:url value="/administrator/studentclass/${classe.id}/update" var="updateUrl" />
 						<spring:url value="assignStudent/${classe.id}" var="assignUrl" />
 						<td class="col-4">
-							<a href="${assignUrl}" class="btn btn-secondary" role="button">Assigner</a>
-							<a href="${updateUrl}" class="btn btn-success" role="button">Modifier</a>
+							<a href="${assignUrl}" class="btn btn-success" role="button">Assigner</a>
+							<a href="${updateUrl}" class="btn btn-info" role="button">Modifier</a>
 							<a href="${delUrl}" class="btn btn-danger" role="button">Supprimer</a>
 						</td>
 					</tr>
@@ -78,7 +78,8 @@
 				<small id="emailHelp" class="form-text text-danger"><form:errors path="endDate" /></small>
 			</div>
 			<form:input type="hidden" path="id"/>
-			<input type="submit" value="Ajouter" class="btn btn-primary"/>
+			<input type="submit" value="${actionButton}" class="btn btn-primary"/>
+			<a href="#" class="btn btn-secondary" role="button">Retour</a>
 		</form:form>
 </body>
 </html>

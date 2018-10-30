@@ -17,14 +17,9 @@ public class StClassDao {
 	
 	@Transactional
 	public void save(StudentClass stClass) {
-		hibernateTemplate.save(stClass);
-	}
-	
-	@Transactional
-	public void update(StudentClass stClass) {
 		hibernateTemplate.saveOrUpdate(stClass);
 	}
-	
+
 	@Transactional
 	public void delete(Long id) {
 		hibernateTemplate.delete(hibernateTemplate.get(StudentClass.class, id));

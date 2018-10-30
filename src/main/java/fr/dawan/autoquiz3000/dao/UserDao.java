@@ -72,4 +72,16 @@ public class UserDao {
 		}
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<User> findByAssignedStudentClass(StudentClass sc){
+		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=?", sc);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<User> findByUnAssignedStudentClass(){
+		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=null");
+	}
 }
