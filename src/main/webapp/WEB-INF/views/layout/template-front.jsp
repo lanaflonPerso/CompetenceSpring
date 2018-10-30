@@ -20,7 +20,7 @@
 					<c:when test="${ user.type == 'PROFESSOR' }">
 						<%@include file="/WEB-INF/views/layout/asideProfessor.jsp" %>
 					</c:when>
-					<c:when test="${ user.type == 'PROFESSOR' }">
+					<c:when test="${ user.type == 'STUDENT' }">
 						<%@include file="/WEB-INF/views/layout/asideStudent.jsp" %>
 					</c:when>
 				</c:choose>

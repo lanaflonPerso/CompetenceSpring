@@ -43,9 +43,6 @@ public class ProfessorController {
 	@Autowired
 	private QuizToDoDao qtdDao;
 	
-	@Autowired
-	private QuizQuestionDao qqDao;
-	
 	@GetMapping("/create_quiz")
 	public ModelAndView getQuiz(Model model) {
 		List<StudentClass> stclasses= stDao.findAll();
@@ -79,20 +76,17 @@ public class ProfessorController {
 	public ModelAndView getCloseQuiz(Model model, HttpServletRequest request) {
 		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
 		if(quiz != null) {
-			System.out.println("============================== quiz= "+ quiz);
-			System.out.println("============================== quiz diferrent de null!");
 			List<StudentClass> stclasses= quiz.getStClasses();
 			for (StudentClass stClass : stclasses) {
-				System.out.println("============================== stClass= "+ stClass.getName());
 				List<User> students= stClass.getStudents();
 				for (User student : students) {
-					System.out.println("============================== student= "+ student.getFirstName());
 					QuizToDo qtd= new QuizToDo();
 					qtd.setIdQuiz(quiz.getId());
 					qtd.setIdUser(student.getId());
 					qtdDao.save(qtd);
 				}
 			}
+			qDao.save(quiz);
 			return new ModelAndView("professor/viewQuiz");
 		} else {
 			// TODO rediriger vers une 404
@@ -127,7 +121,7 @@ public class ProfessorController {
 		HttpSession session= request.getSession();
 		Quiz quiz= (Quiz) session.getAttribute("quiz");
 		if(quiz != null) {
-			CtrlQuizQuestion ctrl= new CtrlQuizQuestion(request, quiz, qqDao);
+			CtrlQuizQuestion ctrl= new CtrlQuizQuestion(request, quiz);
 			if(!ctrl.isError()) {
 				System.out.println("=============================== on enregistre le quiz");
 			}

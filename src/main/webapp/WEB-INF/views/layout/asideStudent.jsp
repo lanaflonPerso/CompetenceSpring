@@ -1,7 +1,7 @@
 <div class="btn-group btn-group-vertical">
-<%-- 	<a href="<c:url value="/professor/create_quiz" />">
+ 	<a href="<c:url value="/student/list_quiz" />">
 		<button class="btn btn-primary">
-			Créer un formulaire
+			${ sessionScope.nbrQuiz } Quiz
 		</button>
-	</a> --%>
+	</a>
 </div>

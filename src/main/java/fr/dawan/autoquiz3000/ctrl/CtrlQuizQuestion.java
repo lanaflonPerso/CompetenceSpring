@@ -17,7 +17,7 @@ public class CtrlQuizQuestion extends Ctrl {
 	private String msgTitleQuestion;
 	private String msgQuestion;
 
-	public CtrlQuizQuestion(HttpServletRequest request, Quiz quiz, QuizQuestionDao qqDao) {
+	public CtrlQuizQuestion(HttpServletRequest request, Quiz quiz) {
 		question= new QuizQuestion();
 		this.quiz= quiz;
 		ctrlTitleQuestion(request.getParameter("titleQuestion"));
@@ -25,10 +25,7 @@ public class CtrlQuizQuestion extends Ctrl {
 		ctrlChoix(request);
 		int nbQestion= quiz.countQuestion();
 		question.setOrderNum(nbQestion+1);
-		if(!error) {
-			qqDao.save(question);
-			this.quiz.setQuizQuestion(question);
-		}
+		this.quiz.setQuizQuestion(question);
 	}
 	
 	private void ctrlChoix(HttpServletRequest request) {
