@@ -24,6 +24,7 @@ import fr.dawan.autoquiz3000.dao.QuizDao;
 import fr.dawan.autoquiz3000.dao.QuizTestDao;
 import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
+import fr.dawan.autoquiz3000.tools.StatStudentBo;
 
 @Controller
 @RequestMapping("/student")
@@ -70,6 +71,9 @@ public class StudentControler {
 		User user= (User) session.getAttribute("user");
 		List<QuizTest> qizs= qtDao.findByStudent(user.getId());
 		session.setAttribute("hQuizs", qizs);
+		
+		new StatStudentBo(qizs, request);		
+		
 		return new ModelAndView("student/list_quiz_history");
 	}
 	
