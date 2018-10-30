@@ -18,6 +18,8 @@ public class CtrlQuizTest extends Ctrl {
 	
 	public void ctrlResponse(String[] responseStudent, int orderNum, long quizId) {
 		QuizQuestion currentQst = qDao.findQuestion(quizId, orderNum);
+		System.out.println("================ currentQst= "+currentQst);
+		System.out.println("================ quizTest= "+quizTest);
 		quizTest.addQuizQuestion(currentQst);
 		
 		for (QuizResponse responseForm: currentQst.getQuizResponses()) {

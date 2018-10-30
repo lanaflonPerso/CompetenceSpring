@@ -1,8 +1,8 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class QuizQuestion implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "question_id", referencedColumnName="id")
-	private List<QuizResponse> quizResponses= new ArrayList<>();
+	private Set<QuizResponse> quizResponses= new LinkedHashSet<>();
 	
 	private int orderNum;
 	
@@ -63,10 +63,10 @@ public class QuizQuestion implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	public List<QuizResponse> getQuizResponses() {
+	public Set<QuizResponse> getQuizResponses() {
 		return quizResponses;
 	}
-	public void setQuizResponse(List<QuizResponse> quizResponses) {
+	public void setQuizResponse(Set<QuizResponse> quizResponses) {
 		this.quizResponses = quizResponses;
 	}
 	

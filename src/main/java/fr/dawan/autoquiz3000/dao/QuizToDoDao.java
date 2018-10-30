@@ -3,6 +3,7 @@ package fr.dawan.autoquiz3000.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,15 @@ public class QuizToDoDao {
 	
 	@Transactional
 	public int findNbQuizByStudent(long idUser) {
-		System.out.println("====================hibernateTemplate= "+hibernateTemplate);
 		@SuppressWarnings("unchecked")
 		List<Long> quizIds= (List<Long>) hibernateTemplate.find("FROM QuizToDo qtd WHERE qtd.idUser= ?", idUser);
 		return quizIds.size();
+	}
+	
+	@Transactional
+	@Modifying
+	public void DeleteQuizByQuizAndStudent(long idUser, long idQuiz) {
+		hibernateTemplate.find("DELETE FROM QuizToDo qtd WHERE qtd.idUser=? AND qtd.idQuiz=?", idUser, idQuiz);
 	}
 	
 	@SuppressWarnings("unchecked")

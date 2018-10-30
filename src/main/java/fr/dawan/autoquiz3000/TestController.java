@@ -114,7 +114,7 @@ public class TestController {
 		rOneFour.setText("awt");
 		rOneFour.setCorrect(false);
 		
-		List<QuizResponse> listROne= new ArrayList<>();
+		Set<QuizResponse> listROne= new LinkedHashSet<>();
 		listROne.add(rOneOne);
 		listROne.add(rOneTwo);
 		listROne.add(rOneThree);
@@ -139,7 +139,7 @@ public class TestController {
 		rTwoFour.setText("Non, c'est interdit");
 		rTwoFour.setCorrect(false);
 		
-		List<QuizResponse> listRTwo= new ArrayList<>();
+		Set<QuizResponse> listRTwo= new LinkedHashSet<>();
 		listRTwo.add(rTwoOne);
 		listRTwo.add(rTwoTwo);
 		listRTwo.add(rTwoThree);
@@ -164,7 +164,7 @@ public class TestController {
 		rThreeFour.setText("smartphone, desktop, web");
 		rThreeFour.setCorrect(false);
 		
-		List<QuizResponse> listRThree= new ArrayList<>();
+		Set<QuizResponse> listRThree= new LinkedHashSet<>();
 		listRThree.add(rThreeOne);
 		listRThree.add(rThreeTwo);
 		listRThree.add(rThreeThree);

@@ -91,6 +91,7 @@ public class StudentControler {
 			
 			session.setAttribute("quiz", quiz);
 			QuizTest quizTest= new QuizTest();
+			quizTest.setQuiz(quiz);
 			quizTest.setStartDate(new Date());
 			quizTest.setUser((User)session.getAttribute("user"));
 			
@@ -130,15 +131,16 @@ public class StudentControler {
 			session.setAttribute("orderNum", orderNum);
 			return displayQuestion(quizId, orderNum, model);
 		}else {
+			User user= (User) session.getAttribute("user");
 			score= (quizTest.getCorrectResponse()*100)/(quizTest.getCorrectResponse()+quizTest.getErrorResponse());
 			quizTest.setScore(score);
 			
 			if (quiz.getScoreToAcquireSkill() < quizTest.getScore()) {
-				User user= (User) session.getAttribute("user");
 				user.getSkills().add(quiz.getSkill());
 				uDao.save(user);
 			}
 			qtDao.save(quizTest);
+			qtdDao.DeleteQuizByQuizAndStudent(user.getId(), quiz.getId());
 			return new ModelAndView("student/quiz-result");
 		}
 	}
