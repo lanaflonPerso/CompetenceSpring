@@ -79,14 +79,16 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/studentclass/{id}/delete")
 	public String deleteStudentClass(@PathVariable("id") Long id, Model model) {
-		//TODO ajouter vérification id
-		scDao.delete(id);
+		//TODO ajouter vï¿½rification id
+		StudentClass sc=scDao.findById(id);
+		if(sc.getStudents().size()==0)
+			scDao.delete(id);
 		return "redirect:/administrator/studentclass?page=1&max=20";
 	}
 	
 	@RequestMapping(value = "/administrator/studentclass/{id}/update")
 	public String updateStudentClass(@PathVariable("id") Long id, Model model) {
-		//TODO ajouter vérification id
+		//TODO ajouter vï¿½rification id
 		StudentClass sc=scDao.findById(id);
 		StudentClassForm scf = new StudentClassForm();
 		scf.setId(sc.getId());
@@ -101,7 +103,7 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/assignStudent/{id}")
 	public String assignStudentClass(@PathVariable("id") Long id, Model model) {
-		//TODO ajouter vérification id
+		//TODO ajouter vï¿½rification id
 		StudentClass sc=scDao.findById(id);
 		model.addAttribute("assignedusers",userDao.findByAssignedStudentClass(sc));
 		model.addAttribute("unasssignedusers",userDao.findByUnAssignedStudentClass());
@@ -112,6 +114,8 @@ public class AdministratorController {
 	@RequestMapping(value = "/administrator/assignStudent/{iduser}/delete/{idclass}")
 	public String assignStudentClassDelete(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		User u=userDao.findById(iduser);
+		StudentClass sc=scDao.findById(idclass);
+		sc.getStudents().remove(u);
 		u.setStudentClass(null);
 		userDao.save(u);
 		return "redirect:/administrator/assignStudent/"+idclass;
@@ -122,6 +126,7 @@ public class AdministratorController {
 		StudentClass sc=scDao.findById(idclass);
 		User u=userDao.findById(iduser);
 		u.setStudentClass(sc);
+		sc.getStudents().add(u);
 		userDao.save(u);
 		return "redirect:/administrator/assignStudent/"+idclass;
 	}
@@ -144,7 +149,7 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/user/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
-		//TODO ajouter vérification id
+		//TODO ajouter vï¿½rification id
 		User user=userDao.findById(id);
 		UserForm form=new UserForm(user);
 		
@@ -167,7 +172,7 @@ public class AdministratorController {
 			return "administrator/profilUser";
 		}
 		User u=userDao.findById(form.getId());
-		// test unicité de l'email
+		// test unicitï¿½ de l'email
 		u.setFirstName(form.getFirstName());
 		u.setLastName(form.getLastName());
 		u.setBirthdate(form.getBirthdate());

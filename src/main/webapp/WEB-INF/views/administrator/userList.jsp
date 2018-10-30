@@ -34,8 +34,8 @@
 				<spring:url value="user/${user.id}/delete" var="delUrl" />
 				<spring:url value="user/${user.id}/update" var="updtaeUrl" />
 				<td>
-					<a href="${updtaeUrl}" class="btn btn-primary" role="button">Modifier</a>
-					<a href="${delUrl}" class="btn btn-danger" role="button">Supprimer</a>
+					<a href="${updtaeUrl}" class="btn btn-primary btn-sm" role="button">Modifier</a>
+					<a href="${delUrl}" class="btn btn-danger btn-sm" role="button">Supprimer</a>
 				</td>
 			</tr>
 			</c:forEach>

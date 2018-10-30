@@ -32,9 +32,9 @@
 						<spring:url value="/administrator/studentclass/${classe.id}/update" var="updateUrl" />
 						<spring:url value="/administrator/assignStudent/${classe.id}" var="assignUrl" />
 						<td>
-							<a href="${assignUrl}" class="btn btn-success" role="button">Assigner</a>
-							<a href="${updateUrl}" class="btn btn-info" role="button">Modifier</a>
-							<a href="${delUrl}" class="btn btn-danger" role="button" disabled>Supprimer</a>
+							<a href="${assignUrl}" class="btn btn-success btn-sm" role="button">Assigner</a>
+							<a href="${updateUrl}" class="btn btn-info btn-sm" role="button">Modifier</a>
+							<a href="${delUrl}" class="btn btn-danger btn-sm" role="button" disabled>Supprimer</a>
 						</td>					</tr>
 				</c:forEach>
 			</tbody>
@@ -64,17 +64,17 @@
 			<div class="form-group ">
 				<form:label  path="name" class="col-md-3">Nom</form:label>
 				<form:input path="name"  type="text" placeholder="Entrer le nom de la classe" class="col-md-6"/>
-				<small id="emailHelp" class="form-text text-danger"><form:errors path="name" /></small>
+				<small class="form-text text-danger offset-3"><form:errors path="name" /></small>
 			</div>
 			<div class="form-group">
 				<form:label path="startDate" class="col-md-3">Date de début</form:label>
 				<form:input type="date" path="startDate" />
-				<small id="emailHelp" class="form-text text-danger"><form:errors path="startDate" /></small>
+				<small class="form-text text-danger offset-3"><form:errors path="startDate" /></small>
 			</div>
 			<div class="form-group">
 				<form:label path="endDate" class="col-md-3">Date de fin</form:label>
 				<form:input type="date" path="endDate" />
-				<small id="emailHelp" class="form-text text-danger"><form:errors path="endDate" /></small>
+				<small class="form-text text-danger offset-3"><form:errors path="endDate" /></small>
 			</div>
 			<form:input type="hidden" path="id"/>
 			<input type="submit" value="${actionButton}" class="btn btn-primary"/>
