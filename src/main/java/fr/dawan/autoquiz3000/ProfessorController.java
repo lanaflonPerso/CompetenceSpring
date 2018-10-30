@@ -100,7 +100,7 @@ public class ProfessorController {
 	}
 	
 	@PostMapping("/create_quiz")
-	public RedirectView postQuiz(@RequestParam String stClassName,
+	public ModelAndView postQuiz(@RequestParam String stClassName,
 			@RequestParam String name, 
 			@RequestParam String skill,
 			@RequestParam String startDebut,
@@ -116,9 +116,13 @@ public class ProfessorController {
 			qDao.save(ctrl.getQuiz());
 			session.setAttribute("quiz", ctrl.getQuiz());
 			session.setAttribute("nbQuestion", 0);
-			return new RedirectView(request.getContextPath()+"/professor/create_question");
+			return new ModelAndView("redirect:/professor/create_question");
 		}
-		return new RedirectView(request.getContextPath()+"/professor/create_quiz");
+		List<StudentClass> stclasses= stDao.findAll();
+		model.addAttribute("classes", stclasses);
+		request.setAttribute("ctrl", ctrl);
+		System.out.println("=========================== ctrl= "+ctrl);
+		return new ModelAndView("professor/createQuiz");
 	}
 	
 	@PostMapping("/create_question")

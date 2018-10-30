@@ -49,6 +49,15 @@ public class TestController {
 		vianney.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
 		uDao.save(vianney);
 		
+		User marcel= new User();
+		marcel.setBirthdate(new Date());
+		marcel.setFirstName("marcel");
+		marcel.setLastName("mouton");
+		marcel.setEmail("mouton@free.fr");
+		marcel.setType(UserType.ADMINISTRATOR);
+		marcel.setPassword(Ctrl.MySQLPassword("aqwzsxedc"));
+		uDao.save(marcel);
+		
 		User halford= new User();
 		halford.setBirthdate(new Date());
 		halford.setFirstName("rob");

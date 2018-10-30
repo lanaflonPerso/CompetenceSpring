@@ -23,6 +23,7 @@ public class CtrlQuiz extends Ctrl {
 	private String msgCompetence;
 	private String msgStClass;
 	private String msgScoreToAcquireSkill;
+	private String msgSkill;
 	
 	public CtrlQuiz(SkillDao sDao, StClassDao cDao) {
 		this.sDao= sDao;
@@ -31,27 +32,32 @@ public class CtrlQuiz extends Ctrl {
 	
 	public void createQuiz(String name, String skill, String startDebut, String endDate, String stClassName, String scoreToAcquireSkill) {
 		quiz= new Quiz();
-		ctrlName(name);
-		quiz.setName(name);
+		ctrlName(name); //ok
+		quiz.setName(name); //ok
 		Date valDateDebut= ctrlDate(startDebut);
 		Date valDateFin= ctrlDate(endDate);
 		ctrlTwoDate(valDateDebut, valDateFin);
 		quiz.setStartDate(valDateDebut);
 		quiz.setEndDate(valDateFin);
-		Skill objectSkill= ctrlSkill(skill);
-		quiz.setSkill(objectSkill);
+		Skill objectSkill= ctrlSkill(skill); //ok
+		quiz.setSkill(objectSkill); //ok
 		StudentClass stClass= ctrlStClass(stClassName);
 		quiz.getStClasses().add(stClass);
-		int stas= ctrlScoreToAcquireSkill(scoreToAcquireSkill);
-		quiz.setScoreToAcquireSkill(stas);
+		int stas= ctrlScoreToAcquireSkill(scoreToAcquireSkill); //ok
+		quiz.setScoreToAcquireSkill(stas); //ok
 	}
 	
 	private Skill ctrlSkill(String name) {
-		System.out.println("sDao= "+sDao);
-		Skill result= sDao.findByName(name);
-		if (result == null) {
-			result= new Skill();
-			result.setName(name);
+		Skill result= null;
+		if( name.length() < 2 || name.length() > 100) {
+			this.msgSkill= "la compétence doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX+" caractéres";
+			error= true;
+		} else {	
+			result= sDao.findByName(name);
+			if (result == null) {
+				result= new Skill();
+				result.setName(name);
+			}
 		}
 		return result;
 	}
@@ -60,7 +66,7 @@ public class CtrlQuiz extends Ctrl {
 		int result= 0;
 		try {
 			result= Integer.valueOf(stringScoreToAcquireSkill);
-			if(result < 0 || result > 100) {
+			if(result < 10 || result > 100) {
 				error= true;
 				msgScoreToAcquireSkill= "Le score n'est pas cohérent!";
 			}
@@ -73,16 +79,18 @@ public class CtrlQuiz extends Ctrl {
 
 	public void ctrlName(String name) {
 		if (name.length() < LENGTH_NAME_MIN || name.length() > LENGTH_NAME_MAX) {
-			msgName= "l'intitulé doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX;
+			msgName= "l'intitulé doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX+" caractéres";
 			this.error= true;
 		}
 	}
 
 	public Date ctrlDate(String date) {
-		Date result= StringToDate( date);
-		if(result == null) {
-			error= true;	
-		} 	
+		Date result = null;
+		if(date == null || date.equals("")) {
+			error= true;
+		} else {
+			result= StringToDate(date);	
+		}
 		return result;
 	}
 
@@ -134,12 +142,14 @@ public class CtrlQuiz extends Ctrl {
 	public String getMsgScoreToAcquireSkill() {
 		return msgScoreToAcquireSkill;
 	}
+	public String getMsgSkill() {
+		return msgSkill;
+	}
 
 	@Override
 	public String toString() {
-		return "CtrlQuiz [sDao=" + sDao + ", cDao=" + cDao + ", LENGTH_NAME_MIN=" + LENGTH_NAME_MIN
-				+ ", LENGTH_NAME_MAX=" + LENGTH_NAME_MAX + ", quiz=" + quiz + ", msgDateDebut=" + msgDateDebut
-				+ ", msgDateFin=" + msgDateFin + ", msgName=" + msgName + ", msgCompetence=" + msgCompetence
-				+ ", msgStClass=" + msgStClass + ", isError()=" + isError() + "]";
+		return "CtrlQuiz [msgDateDebut=" + msgDateDebut + ", msgDateFin=" + msgDateFin + ", msgName=" + msgName
+				+ ", msgCompetence=" + msgCompetence + ", msgStClass=" + msgStClass + ", msgScoreToAcquireSkill="
+				+ msgScoreToAcquireSkill + ", msgSkill=" + msgSkill + "]";
 	}
 }
