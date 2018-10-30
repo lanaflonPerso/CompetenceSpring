@@ -98,4 +98,7 @@
 	<bean id="quizToDoDao" class="fr.dawan.autoquiz3000.dao.QuizToDoDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	<bean id="quizQuestionDao" class="fr.dawan.autoquiz3000.dao.QuizQuestionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 </beans>

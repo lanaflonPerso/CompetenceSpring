@@ -22,13 +22,14 @@ public class CtrlQuiz extends Ctrl {
 	private String msgName;
 	private String msgCompetence;
 	private String msgStClass;
+	private String msgScoreToAcquireSkill;
 	
 	public CtrlQuiz(SkillDao sDao, StClassDao cDao) {
 		this.sDao= sDao;
 		this.cDao= cDao;
 	}
 	
-	public void createQuiz(String name, String skill, String startDebut, String endDate, String stClassName) {
+	public void createQuiz(String name, String skill, String startDebut, String endDate, String stClassName, String scoreToAcquireSkill) {
 		quiz= new Quiz();
 		ctrlName(name);
 		quiz.setName(name);
@@ -40,7 +41,9 @@ public class CtrlQuiz extends Ctrl {
 		Skill objectSkill= ctrlSkill(skill);
 		quiz.setSkill(objectSkill);
 		StudentClass stClass= ctrlStClass(stClassName);
-	//	quiz.setStClass(stClass);
+		quiz.getStClasses().add(stClass);
+		int stas= ctrlScoreToAcquireSkill(scoreToAcquireSkill);
+		quiz.setScoreToAcquireSkill(stas);
 	}
 	
 	private Skill ctrlSkill(String name) {
@@ -49,6 +52,21 @@ public class CtrlQuiz extends Ctrl {
 		if (result == null) {
 			result= new Skill();
 			result.setName(name);
+		}
+		return result;
+	}
+	
+	private int ctrlScoreToAcquireSkill(String stringScoreToAcquireSkill) {
+		int result= 0;
+		try {
+			result= Integer.valueOf(stringScoreToAcquireSkill);
+			if(result < 0 || result > 100) {
+				error= true;
+				msgScoreToAcquireSkill= "Le score n'est pas cohérent!";
+			}
+		} catch (Exception e) {
+			error= true;
+			msgScoreToAcquireSkill= "Le score n'est pas cohérent!";
 		}
 		return result;
 	}
@@ -112,6 +130,9 @@ public class CtrlQuiz extends Ctrl {
 	}
 	public void setcDao(StClassDao cDao) {
 		this.cDao = cDao;
+	}
+	public String getMsgScoreToAcquireSkill() {
+		return msgScoreToAcquireSkill;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package fr.dawan.autoquiz3000;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.dawan.autoquiz3000.beans.Quiz;
+import fr.dawan.autoquiz3000.beans.QuizToDo;
 import fr.dawan.autoquiz3000.beans.StudentClass;
+import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuiz;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuizQuestion;
 import fr.dawan.autoquiz3000.dao.QuizDao;
+import fr.dawan.autoquiz3000.dao.QuizQuestionDao;
+import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.SkillDao;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 
@@ -35,6 +40,12 @@ public class ProfessorController {
 	@Autowired
 	private StClassDao stDao;
 	
+	@Autowired
+	private QuizToDoDao qtdDao;
+	
+	@Autowired
+	private QuizQuestionDao qqDao;
+	
 	@GetMapping("/create_quiz")
 	public ModelAndView getQuiz(Model model) {
 		List<StudentClass> stclasses= stDao.findAll();
@@ -44,9 +55,10 @@ public class ProfessorController {
 	
 	@GetMapping("/create_question")
 	public ModelAndView getQuestion(Model model, HttpServletRequest request) {
-		// ********************A EFFACER*************************************
-		Quiz q= qDao.findById(1);
-		request.getSession().setAttribute("quiz", q);
+		HttpSession session= request.getSession();
+		Quiz quiz= (Quiz) session.getAttribute("quiz");
+		
+		request.getSession().setAttribute("quiz", quiz);
 		return new ModelAndView("professor/createQuestion");
 	}
 	
@@ -63,20 +75,48 @@ public class ProfessorController {
 		return new ModelAndView("professor/viewQuiz");
 	}
 	
+	@GetMapping("/close_quiz")
+	public ModelAndView getCloseQuiz(Model model, HttpServletRequest request) {
+		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
+		if(quiz != null) {
+			System.out.println("============================== quiz= "+ quiz);
+			System.out.println("============================== quiz diferrent de null!");
+			List<StudentClass> stclasses= quiz.getStClasses();
+			for (StudentClass stClass : stclasses) {
+				System.out.println("============================== stClass= "+ stClass.getName());
+				List<User> students= stClass.getStudents();
+				for (User student : students) {
+					System.out.println("============================== student= "+ student.getFirstName());
+					QuizToDo qtd= new QuizToDo();
+					qtd.setIdQuiz(quiz.getId());
+					qtd.setIdUser(student.getId());
+					qtdDao.save(qtd);
+				}
+			}
+			return new ModelAndView("professor/viewQuiz");
+		} else {
+			// TODO rediriger vers une 404
+		}
+		return new ModelAndView("professor/viewQuiz");
+	}
+	
 	@PostMapping("/create_quiz")
 	public RedirectView postQuiz(@RequestParam String stClassName,
 			@RequestParam String name, 
 			@RequestParam String skill,
 			@RequestParam String startDebut,
 			@RequestParam String endDate,
+			@RequestParam String scoreToAcquireSkill,
 			Model model, 
 			HttpServletRequest request) {
 		CtrlQuiz ctrl= new CtrlQuiz(sDao, stDao);
-		ctrl.createQuiz(name, skill, startDebut, endDate, stClassName);
-		System.out.println(ctrl);
+		ctrl.createQuiz(name, skill, startDebut, endDate, stClassName, scoreToAcquireSkill);
 		if(!ctrl.isError()) {
+			HttpSession session= request.getSession();
+			
 			qDao.save(ctrl.getQuiz());
-			request.getSession().setAttribute("quiz", ctrl.getQuiz());
+			session.setAttribute("quiz", ctrl.getQuiz());
+			session.setAttribute("nbQuestion", 0);
 			return new RedirectView(request.getContextPath()+"/professor/create_question");
 		}
 		return new RedirectView(request.getContextPath()+"/professor/create_quiz");
@@ -84,19 +124,17 @@ public class ProfessorController {
 	
 	@PostMapping("/create_question")
 	public RedirectView postQestion(Model model, HttpServletRequest request) {
-		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
+		HttpSession session= request.getSession();
+		Quiz quiz= (Quiz) session.getAttribute("quiz");
 		if(quiz != null) {
-			CtrlQuizQuestion ctrl= new CtrlQuizQuestion(request, quiz);
-			System.out.println("=================================================================================");
-			System.out.println(ctrl);
+			CtrlQuizQuestion ctrl= new CtrlQuizQuestion(request, quiz, qqDao);
 			if(!ctrl.isError()) {
 				System.out.println("=============================== on enregistre le quiz");
-				qDao.save(quiz);
 			}
 			
 		}else {
 			//TODO faire redirection si il n'y a pas de quiz en session
-		}	
+		}
 		return new RedirectView(request.getContextPath()+"/professor/create_question");
 	}
 

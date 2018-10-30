@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.QuizQuestion;
 import fr.dawan.autoquiz3000.beans.QuizResponse;
+import fr.dawan.autoquiz3000.dao.QuizQuestionDao;
 
 public class CtrlQuizQuestion extends Ctrl {
 	private final int LENGTH_TITLE_QUESTION_MIN= 10;
@@ -16,14 +17,18 @@ public class CtrlQuizQuestion extends Ctrl {
 	private String msgTitleQuestion;
 	private String msgQuestion;
 
-	public CtrlQuizQuestion(HttpServletRequest request, Quiz quiz) {
+	public CtrlQuizQuestion(HttpServletRequest request, Quiz quiz, QuizQuestionDao qqDao) {
 		question= new QuizQuestion();
 		this.quiz= quiz;
 		ctrlTitleQuestion(request.getParameter("titleQuestion"));
 		question.setText(request.getParameter("titleQuestion"));
 		ctrlChoix(request);
-		System.out.println("================== quiz"+this.quiz); //=======================================================
-		this.quiz.setQuizQuestion(question);
+		int nbQestion= quiz.countQuestion();
+		question.setOrderNum(nbQestion+1);
+		if(!error) {
+			qqDao.save(question);
+			this.quiz.setQuizQuestion(question);
+		}
 	}
 	
 	private void ctrlChoix(HttpServletRequest request) {
@@ -66,7 +71,6 @@ public class CtrlQuizQuestion extends Ctrl {
 		}
 	}
 
-	
 	//********************Getters / Setters******************
 	public Quiz getQuiz() {
 		return quiz;
@@ -81,7 +85,6 @@ public class CtrlQuizQuestion extends Ctrl {
 		return msgQuestion;
 	}
 
-
 	//********************Override***************************
 	@Override
 	public String toString() {
@@ -89,5 +92,4 @@ public class CtrlQuizQuestion extends Ctrl {
 				+ ", msgTitleQuestion=" + msgTitleQuestion + ", msgQuestion=" + msgQuestion + ", isError()=" + isError()
 				+ "]";
 	}
-	
 }

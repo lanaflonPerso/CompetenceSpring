@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class StudentClass implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(fetch= FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "stClass_id", referencedColumnName="id")
 	private List<User> students=new ArrayList<>();
 	
@@ -160,5 +161,11 @@ public class StudentClass implements Serializable {
 		if (version != other.version)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentClass [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", students=" + students + ", version=" + version + "]";
 	}
 }

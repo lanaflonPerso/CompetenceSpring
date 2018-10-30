@@ -25,23 +25,28 @@
 					</div>
 
 					<div class="form-group">
-						<label for="name">Intitulé du formulaire: </label> <input
-							type="text" class="form-control" id="name" name="name" />
+						<label for="name">Intitulé du formulaire:</label>
+						<input type="text" class="form-control" id="name" name="name" />
 					</div>
 
 					<div class="form-group">
-						<label for="skill">Compétence: </label> <input type="text"
-							class="form-control" id="skill" name="skill" />
+						<label for="skill">Compétence:</label>
+						<input type="text" class="form-control" id="skill" name="skill" />
 					</div>
 
 					<div class="form-group">
-						<label for="startDebut">Date de début: </label> <input type="date"
-							class="form-control" id="startDebut" name="startDebut" />
+						<label for="startDebut">Date de début:</label>
+						<input type="date" class="form-control" id="startDebut" name="startDebut" />
 					</div>
 
 					<div class="form-group">
-						<label for="endDate">Date de fin: </label> <input type="date"
-							class="form-control" id="endDate" name="endDate" />
+						<label for="endDate">Date de fin:</label>
+						<input type="date" class="form-control" id="endDate" name="endDate" />
+					</div>
+					
+					<div class="form-group">
+						<label for="scoreToAcquireSkill">Score Minimum:</label>
+						<input type="number" class="form-control" id="scoreToAcquireSkill" name="scoreToAcquireSkill" />
 					</div>
 
 					<button class="btn btn-primary" type="submit">Continuer</button>

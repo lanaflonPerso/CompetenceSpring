@@ -2,7 +2,9 @@ package fr.dawan.autoquiz3000;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -169,7 +171,7 @@ public class TestController {
 		listRThree.add(rThreeFour);
 		qThree.setQuizResponse(listRThree);
 		
-		List<QuizQuestion> listQJava= new ArrayList<>();
+		Set<QuizQuestion> listQJava= new LinkedHashSet<>();
 		listQJava.add(qOne);
 		listQJava.add(qTwo);
 		listQJava.add(qThree);

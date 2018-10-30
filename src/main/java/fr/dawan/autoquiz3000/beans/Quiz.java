@@ -3,7 +3,9 @@ package fr.dawan.autoquiz3000.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,9 +48,9 @@ public class Quiz implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "quiz_id", referencedColumnName="id")
-	private List<QuizQuestion> quizQuestions= new ArrayList<>();
+	private Set<QuizQuestion> quizQuestions= new LinkedHashSet<>();
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<StudentClass> stClasses= new ArrayList<>();
 	
 	@Version
@@ -104,16 +106,20 @@ public class Quiz implements Serializable {
 	public void setStClasses(List<StudentClass> stClasses) {
 		this.stClasses = stClasses;
 	}
-	public List<QuizQuestion> getQuizQuestions() {
+	public Set<QuizQuestion> getQuizQuestions() {
 		return quizQuestions;
 	}
-	public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
+	public void setQuizQuestions(Set<QuizQuestion> quizQuestions) {
 		this.quizQuestions = quizQuestions;
 	}
 	
 	//**************************************SETTERS / GETTERS PERSO************************************
 	public void setQuizQuestion(QuizQuestion quizQuestion) {
 		this.quizQuestions.add(quizQuestion);
+	}
+	
+	public int countQuestion() {
+		return this.quizQuestions.size();
 	}
 	
 	//**************************************OVERRIDE******************************************
@@ -124,7 +130,6 @@ public class Quiz implements Serializable {
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((quizQuestions == null) ? 0 : quizQuestions.hashCode());
 		result = prime * result + scoreToAcquireSkill;
 		result = prime * result + ((skill == null) ? 0 : skill.hashCode());
 		result = prime * result + ((stClasses == null) ? 0 : stClasses.hashCode());
@@ -181,5 +186,11 @@ public class Quiz implements Serializable {
 		if (version != other.version)
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Quiz [id=" + id + ", name=" + name + ", skill=" + skill + ", scoreToAcquireSkill=" + scoreToAcquireSkill
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", quizQuestions=" + quizQuestions
+				+ ", stClasses=" + stClasses + ", version=" + version + "]";
 	}
 }
