@@ -51,3 +51,18 @@
 		</tbody>
 	</table>
 </div>
+
+<div class="col-md-12">
+	<h2>listes de compétences acquises</h2>
+	
+	<table class="table">
+		<tr>
+			<c:forEach var="skill" items="${ sessionScope.user.skills }" varStatus="status">
+				<td>${ skill.name }</td>
+				<c:if test="${ status.count%4 == 0 }">
+					</tr><tr>
+				</c:if>
+			</c:forEach>
+		</tr>
+	</table>
+</div>

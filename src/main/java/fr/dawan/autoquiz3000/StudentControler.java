@@ -69,6 +69,8 @@ public class StudentControler {
 	public ModelAndView getQuizHistory(HttpServletRequest request) {
 		HttpSession session= request.getSession();
 		User user= (User) session.getAttribute("user");
+		
+		session.setAttribute("user", uDao.findById(user.getId()));
 		List<QuizTest> qizs= qtDao.findByStudent(user.getId());
 		session.setAttribute("hQuizs", qizs);
 		
