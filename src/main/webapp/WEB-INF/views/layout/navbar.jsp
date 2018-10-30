@@ -24,6 +24,12 @@
 					<a class="nav-link" href="#">cree un formulaire</a>
 				</li>
 			</c:if>
+			
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'STUDENT' }">
+				<li class="nav-item">
+					<a class="nav-link" href='<c:url value="/student/list_quiz" />'>${ sessionScope.nbrQuiz } Quiz</a>
+				</li>
+			</c:if>
 		</ul>
 		
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-right">

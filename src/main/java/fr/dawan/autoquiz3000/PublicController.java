@@ -60,7 +60,7 @@ public class PublicController {
 				request.getSession().setAttribute("isAdmin", true);
 			}
 			request.getSession().setAttribute("user", ctrl.getUser());
-			return new RedirectView(request.getContextPath()+"/student");
+			return new RedirectView(request.getContextPath()+"/student/");
 		} else {
 			model.addAttribute("user", ctrl.getUser());
 			return new RedirectView(request.getContextPath()+"/public/connection");
@@ -101,7 +101,7 @@ public class PublicController {
 			u.setPassword(Ctrl.MySQLPassword(password));
 			uDao.save(u);
 			request.getSession().setAttribute("user", u);
-			return new RedirectView(request.getContextPath()+"/student");
+			return new RedirectView(request.getContextPath()+"/student/");
 		} else {
 			model.addAttribute("user", u);
 			return new RedirectView(request.getContextPath()+"/public/token");

@@ -14,8 +14,22 @@
 <body>
 	<%@include file="/WEB-INF/views/layout/navbar.jsp" %>
 	<div class="container">
-       <%-- <decorator:body /> --%>
-       <sitemesh:write property='body'/>
+		<div class="row">
+			<aside class="md-col-3">
+				<c:choose>
+					<c:when test="${ user.type == 'PROFESSOR' }">
+						<%@include file="/WEB-INF/views/layout/asideProfessor.jsp" %>
+					</c:when>
+					<c:when test="${ user.type == 'PROFESSOR' }">
+						<%@include file="/WEB-INF/views/layout/asideStudent.jsp" %>
+					</c:when>
+				</c:choose>
+			</aside>
+			
+			<div class="col-md-9">
+				<sitemesh:write property='body'/>
+			</div>
+		</div>
 	</div>
 	
 	<!-- Jquery CDN -->
