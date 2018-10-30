@@ -45,7 +45,12 @@ public class StudentControler {
 	public ModelAndView getDashboard(HttpServletRequest request) {
 		HttpSession session= request.getSession();
 		User user= (User) session.getAttribute("user");
-		int nbrQuiz= qtdDao.findNbQuizByStudent(user.getId());
+		int nbrQuiz=0;
+		
+		try {
+			nbrQuiz= qtdDao.findNbQuizByStudent(user.getId());	
+		} catch (Exception e) {	}
+		
 		session.setAttribute("nbrQuiz", nbrQuiz);
 		return new ModelAndView("student/home");
 	}
@@ -57,6 +62,15 @@ public class StudentControler {
 		List<Quiz> qizs= qtdDao.findByStudent(user.getId(), qDao);
 		session.setAttribute("quizs", qizs);
 		return new ModelAndView("student/list_quiz");
+	}
+	
+	@GetMapping("/quiz_history")
+	public ModelAndView getQuizHistory(HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		User user= (User) session.getAttribute("user");
+		List<QuizTest> qizs= qtDao.findByStudent(user.getId());
+		session.setAttribute("hQuizs", qizs);
+		return new ModelAndView("student/list_quiz_history");
 	}
 	
 	
