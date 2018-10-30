@@ -22,6 +22,7 @@ import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuizTest;
 import fr.dawan.autoquiz3000.dao.QuizDao;
 import fr.dawan.autoquiz3000.dao.QuizTestDao;
+import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 
 @Controller
@@ -35,12 +36,29 @@ public class StudentControler {
 	private QuizTestDao qtDao;
 	
 	@Autowired
+	private QuizToDoDao qtdDao; 
+	
+	@Autowired
 	private UserDao uDao;
 
 	@GetMapping("/")
-	public ModelAndView getDashboard() {
-		return new ModelAndView("viewDashboard");
+	public ModelAndView getDashboard(HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		User user= (User) session.getAttribute("user");
+		int nbrQuiz= qtdDao.findNbQuizByStudent(user.getId());
+		session.setAttribute("nbrQuiz", nbrQuiz);
+		return new ModelAndView("student/home");
 	}
+	
+	@GetMapping("/list_quiz")
+	public ModelAndView getListQuiz(HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		User user= (User) session.getAttribute("user");
+		List<Quiz> qizs= qtdDao.findByStudent(user.getId(), qDao);
+		session.setAttribute("quizs", qizs);
+		return new ModelAndView("student/list_quiz");
+	}
+	
 	
 	@GetMapping("/quiz/{id}")
 	public ModelAndView getQuiz(@PathVariable(value="id") String id, Model model) {
@@ -93,7 +111,6 @@ public class StudentControler {
 		return new ModelAndView("fourOFour");
 	}
 	
-	
 	@GetMapping("/quiz/next-question")
 	public ModelAndView NextQuestionInQuiz(Model model, HttpServletRequest request) {
 		String[] responseStudent= request.getParameterValues("response");
@@ -124,11 +141,5 @@ public class StudentControler {
 			qtDao.save(quizTest);
 			return new ModelAndView("student/quiz-result");
 		}
-	}
-	
-	//***************************************************************A effacer
-	@GetMapping("/test")
-	public ModelAndView getQuiz() {	
-		return new ModelAndView("student/home");
 	}
 }
