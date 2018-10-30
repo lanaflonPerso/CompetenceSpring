@@ -21,15 +21,15 @@ public class UserDao {
 		hibernateTemplate.saveOrUpdate(user);
 	}
 	
+	@Transactional
+	public void delete(Long id) {
+		hibernateTemplate.delete(hibernateTemplate.get(User.class, id));
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<User> findAll(){
 		return (List<User>)hibernateTemplate.find("FROM User");
-	}
-	
-	@Transactional
-	public void delete(Long id) {
-		hibernateTemplate.delete(hibernateTemplate.get(User.class, id));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -48,6 +48,18 @@ public class UserDao {
 	public long count() {
 		return (Long)hibernateTemplate.find("SELECT COUNT(u.id) FROM User u").get(0);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public User findByEmail(String email) {
+		User result= null;
+		List<User> users= (List<User>) hibernateTemplate.find("FROM User u WHERE u.email= ?", email);
+		if(users != null && users.size() > 0) {
+			result= users.get(0);
+		}
+		return result;
+	}
+	
 	
 	@Transactional(readOnly=true)
 	public User findByEmailAndPassword(String email, String password){

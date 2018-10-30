@@ -35,10 +35,20 @@
   			</form:select>
   		</div>	
   		<div class="form-group">
-				<form:label path="birthdate" class="col-md-2">Date de naissance</form:label>
-				<form:input type="date" path="birthdate" class="col-md-2" />
-				<small id="emailHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
+			<form:label path="birthdate" class="col-md-2">Date de naissance</form:label>
+			<form:input type="date" path="birthdate" />
+			<small id="emailHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
 		</div>
+		<div class="form-group">
+			<form:label path="password" class="col-md-2">Réinitailisation du mot de passe</form:label>
+			<form:input type="password" path="password" />
+			<small id="emailHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
+		</div>
+		<div class="form-group">
+			<form:input type="password" path="confirmPassword" class="offset-md-2" />
+			<small id="emailHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
+		</div>
+		
 		<form:input type="hidden" path="id"/>
 		<input type="submit" value="Modifier" class="btn btn-primary"/>
 		<a href="/AutoQuiz3000/administrator/user?page=1&max=20" class="btn btn-secondary">Annuler</a>

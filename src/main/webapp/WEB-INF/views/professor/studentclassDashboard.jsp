@@ -41,10 +41,6 @@
 		</c:forEach>
 	</tbody>
 	</table>
-	<div class="clearfix">
-		<spring:url value="/administrator/assignStudent/${classe.id}" var="addUrl" />
-		<a href="${addUrl}" class="btn btn-primary float-right" role="button">Ajouter des élèves</a>
-	</div>
 	<h2> Liste des questionnaires</h2>
 </body>
 </html>

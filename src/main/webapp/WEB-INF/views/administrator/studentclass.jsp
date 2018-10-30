@@ -28,15 +28,14 @@
 						<td class="col-4 "><c:out value="${classe.name}"></c:out></td>
 						<td><fmt:formatDate type="date" value="${classe.startDate}" /></td>
 						<td><fmt:formatDate type="date" value="${classe.endDate}" /></td>
-						<spring:url value="studentclass/${classe.id}/delete" var="delUrl" />
+						<spring:url value="/administrator/studentclass/${classe.id}/delete" var="delUrl" />
 						<spring:url value="/administrator/studentclass/${classe.id}/update" var="updateUrl" />
-						<spring:url value="assignStudent/${classe.id}" var="assignUrl" />
-						<td class="col-4">
+						<spring:url value="/administrator/assignStudent/${classe.id}" var="assignUrl" />
+						<td>
 							<a href="${assignUrl}" class="btn btn-success" role="button">Assigner</a>
 							<a href="${updateUrl}" class="btn btn-info" role="button">Modifier</a>
-							<a href="${delUrl}" class="btn btn-danger" role="button">Supprimer</a>
-						</td>
-					</tr>
+							<a href="${delUrl}" class="btn btn-danger" role="button" disabled>Supprimer</a>
+						</td>					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -62,19 +61,19 @@
 			</div>
 		</c:if>
 		<form:form method="POST" action="/AutoQuiz3000/administrator/studentclass" modelAttribute="studentclass-form">
-			<div class="form-group">
-				<form:label  path="name" class="col-md-2">Nom</form:label>
-				<form:input class="col-md-5" path="name"  type="text" placeholder="Entrer le nom de la classe"/>
+			<div class="form-group ">
+				<form:label  path="name" class="col-md-3">Nom</form:label>
+				<form:input path="name"  type="text" placeholder="Entrer le nom de la classe" class="col-md-6"/>
 				<small id="emailHelp" class="form-text text-danger"><form:errors path="name" /></small>
 			</div>
 			<div class="form-group">
-				<form:label path="startDate" class="col-md-2">Date de début</form:label>
-				<form:input type="date" path="startDate" class="col-md-2" />
+				<form:label path="startDate" class="col-md-3">Date de début</form:label>
+				<form:input type="date" path="startDate" />
 				<small id="emailHelp" class="form-text text-danger"><form:errors path="startDate" /></small>
 			</div>
 			<div class="form-group">
-				<form:label path="endDate" class="col-2">Date de fin</form:label>
-				<form:input type="date" path="endDate" class="col-md-2" />
+				<form:label path="endDate" class="col-md-3">Date de fin</form:label>
+				<form:input type="date" path="endDate" />
 				<small id="emailHelp" class="form-text text-danger"><form:errors path="endDate" /></small>
 			</div>
 			<form:input type="hidden" path="id"/>

@@ -9,6 +9,7 @@ import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.QuizQuestion;
 import fr.dawan.autoquiz3000.beans.QuizResponse;
 import fr.dawan.autoquiz3000.beans.QuizTest;
+import fr.dawan.autoquiz3000.beans.StudentClass;
 
 public class QuizDao {
 	
@@ -56,5 +57,11 @@ public class QuizDao {
 	@Transactional
 	public void saveQuizTest(QuizTest quizTest) {
 		hibernateTemplate.saveOrUpdate(quizTest);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<Quiz> findbyStudentClass(StudentClass sc){
+		return (List<Quiz>)hibernateTemplate.find("SELECT DISTINCT q FROM Quiz q INNER JOIN q.stClasses st WHERE st=?",sc);
 	}
 }

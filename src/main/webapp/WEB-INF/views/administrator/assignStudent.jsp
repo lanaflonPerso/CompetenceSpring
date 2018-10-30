@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Gestion de l'effectif de la classse <c:out value="${classe.name}"></c:out></h1>
-	<table class="table table-hover table-sm">
+	<table class="table table-hover  table-sm">
 	<thead class="thead-dark">
 		<tr>
 			<th>Prénom</th>
@@ -36,7 +36,7 @@
 		</tr>
 	</c:forEach>
 			<c:forEach items="${unasssignedusers}" var="useru">
-		<tr>
+		<tr  class="table-secondary">
 			<td><c:out value="${useru.firstName}"></c:out></td>
 			<td><c:out value="${useru.lastName}"></c:out></td>
 			<td><c:out value="${useru.email}"></c:out></td>

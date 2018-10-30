@@ -22,10 +22,10 @@ import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuiz;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuizQuestion;
 import fr.dawan.autoquiz3000.dao.QuizDao;
-import fr.dawan.autoquiz3000.dao.QuizQuestionDao;
 import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.SkillDao;
 import fr.dawan.autoquiz3000.dao.StClassDao;
+import fr.dawan.autoquiz3000.dao.UserDao;
 
 @Controller
 @RequestMapping("/professor")
@@ -42,6 +42,9 @@ public class ProfessorController {
 	
 	@Autowired
 	private QuizToDoDao qtdDao;
+	
+	@Autowired
+	private UserDao uDao;
 	
 	@GetMapping("/create_quiz")
 	public ModelAndView getQuiz(Model model) {
@@ -132,6 +135,13 @@ public class ProfessorController {
 		return new RedirectView(request.getContextPath()+"/professor/create_question");
 	}
 
+	@GetMapping("/studentClassDashboard")
+	public String viewStudentClassDashboard(Model model) {
+		StudentClass sc=stDao.findAll().get(0);
+		for(Quiz q:qDao.findbyStudentClass(sc))
+			System.out.println(q.getName());
+		return "studentclassDashboard";
+	}
 	public void setcDao(StClassDao stDao) {
 		this.stDao = stDao;
 	}
