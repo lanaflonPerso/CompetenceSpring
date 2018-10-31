@@ -44,15 +44,6 @@ public class StudentControler {
 
 	@GetMapping("/")
 	public ModelAndView getDashboard(HttpServletRequest request) {
-		HttpSession session= request.getSession();
-		User user= (User) session.getAttribute("user");
-		int nbrQuiz=0;
-		
-		try {
-			nbrQuiz= qtdDao.findNbQuizByStudent(user.getId());	
-		} catch (Exception e) {	}
-		
-		session.setAttribute("nbrQuiz", nbrQuiz);
 		return new ModelAndView("student/home");
 	}
 	

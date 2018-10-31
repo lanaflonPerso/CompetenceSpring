@@ -128,5 +128,11 @@ public class QuizQuestion implements Serializable {
 		if (version != other.version)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "QuizQuestion [id=" + id + ", text=" + text + ", quiz=" + quiz + ", quizResponses=" + quizResponses
+				+ ", orderNum=" + orderNum + ", version=" + version + "]";
 	}	
 }

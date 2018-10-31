@@ -16,6 +16,7 @@ public class CtrlQuizQuestion extends Ctrl {
 	private int nbrChoix;
 	private String msgTitleQuestion;
 	private String msgQuestion;
+	private String msgTiltleResponse;
 
 	public CtrlQuizQuestion(HttpServletRequest request, Quiz quiz) {
 		question= new QuizQuestion();
@@ -25,7 +26,9 @@ public class CtrlQuizQuestion extends Ctrl {
 		ctrlChoix(request);
 		int nbQestion= quiz.countQuestion();
 		question.setOrderNum(nbQestion+1);
-		this.quiz.setQuizQuestion(question);
+		if(!error) {
+			this.quiz.setQuizQuestion(question);
+		}
 	}
 	
 	private void ctrlChoix(HttpServletRequest request) {
@@ -35,7 +38,13 @@ public class CtrlQuizQuestion extends Ctrl {
 		if(!error) {
 			for (int i = 1; i < nbrChoix+1; i++) {
 				QuizResponse res= new QuizResponse();
-				res.setText(request.getParameter("choix"+i));
+				String titleResponse= request.getParameter("choix"+i);
+				if(titleResponse.length() > 1 || titleResponse.length() < 100 ) {
+					res.setText(request.getParameter("choix"+i));
+				} else {
+					error= true;
+					msgTiltleResponse= "une réponse ne peut être vide!";
+				}
 	
 				if(request.getParameter("checkChoix"+i) != null) {
 					res.setCorrect(true);
@@ -64,7 +73,7 @@ public class CtrlQuizQuestion extends Ctrl {
 	
 	private void ctrlTitleQuestion(String titleQuestion) {
 		if (titleQuestion.length() < LENGTH_TITLE_QUESTION_MIN || titleQuestion.length() > LENGTH_TITLE_QUESTION_MAX) {
-			msgTitleQuestion= "doit avoir entre "+LENGTH_TITLE_QUESTION_MIN+" et "+LENGTH_TITLE_QUESTION_MAX;
+			msgTitleQuestion= "doit avoir entre "+LENGTH_TITLE_QUESTION_MIN+" et "+LENGTH_TITLE_QUESTION_MAX+" caractéres";
 			error= true;
 		}
 	}
@@ -72,6 +81,9 @@ public class CtrlQuizQuestion extends Ctrl {
 	//********************Getters / Setters******************
 	public Quiz getQuiz() {
 		return quiz;
+	}
+	public QuizQuestion getQuestion() {
+		return question;
 	}
 	public int getNbrChoix() {
 		return nbrChoix;
@@ -86,8 +98,7 @@ public class CtrlQuizQuestion extends Ctrl {
 	//********************Override***************************
 	@Override
 	public String toString() {
-		return "CtrlQuizQuestion [question=" + question + ", quiz=" + quiz + ", nbrChoix=" + nbrChoix
-				+ ", msgTitleQuestion=" + msgTitleQuestion + ", msgQuestion=" + msgQuestion + ", isError()=" + isError()
+		return "CtrlQuizQuestion [msgTitleQuestion=" + msgTitleQuestion + ", msgQuestion=" + msgQuestion + ", isError()=" + isError()
 				+ "]";
 	}
 }

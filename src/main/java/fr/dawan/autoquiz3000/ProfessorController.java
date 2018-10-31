@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.QuizToDo;
@@ -54,7 +52,7 @@ public class ProfessorController {
 		model.addAttribute("classes", stclasses);
 		return new ModelAndView("professor/createQuiz");
 	}
-	
+		
 	@GetMapping("/create_question")
 	public ModelAndView getQuestion(Model model, HttpServletRequest request) {
 		HttpSession session= request.getSession();
@@ -120,27 +118,38 @@ public class ProfessorController {
 		}
 		List<StudentClass> stclasses= stDao.findAll();
 		model.addAttribute("classes", stclasses);
+		System.out.println("================== ctrl= "+ctrl);
 		request.setAttribute("ctrl", ctrl);
-		System.out.println("=========================== ctrl= "+ctrl);
 		return new ModelAndView("professor/createQuiz");
 	}
 	
 	@PostMapping("/create_question")
-	public RedirectView postQestion(Model model, HttpServletRequest request) {
+	public ModelAndView postQestion(Model model, HttpServletRequest request) {
 		HttpSession session= request.getSession();
 		Quiz quiz= (Quiz) session.getAttribute("quiz");
 		if(quiz != null) {
 			CtrlQuizQuestion ctrl= new CtrlQuizQuestion(request, quiz);
 			if(!ctrl.isError()) {
-				System.out.println("=============================== on enregistre le quiz");
+				return new ModelAndView("professor/createQuestion");
+			} else {
+				System.out.println("==================== ctrl= "+ctrl);
+				model.addAttribute("question", ctrl.getQuestion());
+				model.addAttribute("ctrl", ctrl);
+				return new ModelAndView("professor/createQuestion");	
 			}
-			
-		}else {
-			//TODO faire redirection si il n'y a pas de quiz en session
-		}
-		return new RedirectView(request.getContextPath()+"/professor/create_question");
-	}
 
+		}else {
+			return new ModelAndView("professor/create_quiz");
+		}
+	}
+	
+//	@GetMapping("/search_quiz")
+//	public ModelAndView postSearchQuiz(@RequestParam String quizName) {
+//		List<Quiz> qDao.findbyNameContaining("java"); //qDao.findbyNameContaining("java");
+//		
+//		return null;	
+//	}
+	
 	@GetMapping(value = "/studentClassDashboard/{id}")
 	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {
 		StudentClass sc=stDao.findById(id);

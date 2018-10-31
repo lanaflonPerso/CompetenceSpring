@@ -39,7 +39,7 @@
 					org.hibernate.dialect.MySQL5InnoDBDialect
 				</prop>
 
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<!-- <prop key="hibernate.generate_statistics">true</prop> -->
 
@@ -100,5 +100,10 @@
 	</bean>
 	<bean id="quizQuestionDao" class="fr.dawan.autoquiz3000.dao.QuizQuestionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	
+	<bean id="CountQuizStudent" class="fr.dawan.autoquiz3000.filter.CountQuizStudent">
+		<property name="quizToDoDao" ref="quizToDoDao" />
 	</bean>
 </beans>

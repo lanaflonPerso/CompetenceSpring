@@ -96,11 +96,13 @@ public class CtrlQuiz extends Ctrl {
 
 	public void ctrlTwoDate(Date begin, Date end) {
 		Date transit= null;
-		if (begin.compareTo(end) > 0) {
-            transit= end;
-            end= begin;
-            begin= transit;            
-        }
+		if(begin != null && end != null) {
+			if(begin.compareTo(end) > 0) {
+	            transit= end;
+	            end= begin;
+	            begin= transit;            
+	        }
+		}
 	}
 	
 	public StudentClass ctrlStClass(String id) {
