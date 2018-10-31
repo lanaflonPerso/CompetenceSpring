@@ -31,10 +31,13 @@ public class StatStudentBo {
 		for (QuizTest quizTest : qTest) {
 			scoreTotal+= quizTest.getScore();	
 		}
-		System.out.println("======================= scoreTotal= "+scoreTotal);
 		request.setAttribute("scoreTotal", scoreTotal);
 		
-		int average= scoreTotal/quizTotal;
+		int average=100;
+		if(quizTotal != 0) {
+			average= scoreTotal/quizTotal;	
+		}
+		
 		request.setAttribute("average", average);
 	}
 }

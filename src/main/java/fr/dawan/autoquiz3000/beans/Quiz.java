@@ -187,10 +187,4 @@ public class Quiz implements Serializable {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "Quiz [id=" + id + ", name=" + name + ", skill=" + skill + ", scoreToAcquireSkill=" + scoreToAcquireSkill
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", quizQuestions=" + quizQuestions
-				+ ", stClasses=" + stClasses + ", version=" + version + "]";
-	}
 }

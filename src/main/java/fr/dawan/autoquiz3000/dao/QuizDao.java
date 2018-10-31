@@ -68,6 +68,17 @@ public class QuizDao {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<Quiz> findbyNameContaining(String name){
-		return (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.name LIKE '%name%' AND q.endDate <  NOW()  ", name);
+		return (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.name LIKE '%?%' AND q.endDate <  NOW()  ", name);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public Quiz findbyName(String name){
+		Quiz result= null;
+		List<Quiz> lq= (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.name= ?", name);
+		if(lq != null && lq.size() > 0 ) {
+			result= lq.get(0);
+		}
+		return result;
 	}
 }

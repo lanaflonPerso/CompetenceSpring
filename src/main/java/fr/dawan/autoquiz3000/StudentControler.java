@@ -47,6 +47,11 @@ public class StudentControler {
 		return new ModelAndView("student/home");
 	}
 	
+	@GetMapping("/quiz-result")
+	public ModelAndView getQuizResult() {
+		return new ModelAndView("student/quiz_result");
+	}
+	
 	@GetMapping("/list_quiz")
 	public ModelAndView getListQuiz(HttpServletRequest request) {
 		HttpSession session= request.getSession();
@@ -151,7 +156,7 @@ public class StudentControler {
 			}
 			qtDao.save(quizTest);
 			qtdDao.DeleteQuizByQuizAndStudent(user.getId(), quiz.getId());
-			return new ModelAndView("student/quiz-result");
+			return new ModelAndView("redirect:/student/quiz-result"); //////////////////////////////////////////
 		}
 	}
 }
