@@ -68,7 +68,7 @@ public class PublicController {
 	}
 	
 	@PostMapping("/inscription")
-	public RedirectView postInscription(@RequestParam String firstName,	@RequestParam String lastName, @RequestParam String birthdate,	@RequestParam String email,	HttpServletRequest request, Model model) {
+	public ModelAndView postInscription(@RequestParam String firstName,	@RequestParam String lastName, @RequestParam String birthdate,	@RequestParam String email,	HttpServletRequest request, Model model) {
 		CtrlUser ctrl= new CtrlUser(firstName, lastName, email, birthdate, uDao);
 		if(!ctrl.isError()) {
 			User u= ctrl.getUser();
@@ -83,16 +83,17 @@ public class PublicController {
 				e.printStackTrace();
 			}
 			// TODO envoyer un mail
-			return new RedirectView(request.getContextPath()+"/public/token");
+			return new ModelAndView("redirect:/public/token");
 		} else {
+			System.out.println("==================== ctrl= "+ctrl);
 			model.addAttribute("ctrl", ctrl);
 			model.addAttribute("user", ctrl.getUser());
-			return new RedirectView(request.getContextPath()+"/public/inscription");
+			return new ModelAndView("/public/viewInscription");
 		}
 	}
 	
 	@PostMapping("/token")
-	public RedirectView postToken(@RequestParam String token, @RequestParam String password, @RequestParam String confirm,	HttpServletRequest request, Model model) {
+	public ModelAndView postToken(@RequestParam String token, @RequestParam String password, @RequestParam String confirm,	HttpServletRequest request, Model model) {
 		CtrlUser ctrl= new CtrlUser(uDao);
 		ctrl.ctrlTokenAndPassword(token, password, confirm);
 		User u= ctrl.getUser();
@@ -101,10 +102,11 @@ public class PublicController {
 			u.setPassword(Ctrl.MySQLPassword(password));
 			uDao.save(u);
 			request.getSession().setAttribute("user", u);
-			return new RedirectView(request.getContextPath()+"/student/");
+			return new ModelAndView("redirect:/student/");
 		} else {
+			model.addAttribute("ctrl", ctrl);
 			model.addAttribute("user", u);
-			return new RedirectView(request.getContextPath()+"/public/token");
+			return new ModelAndView("/public/viewToken");
 		}
 	}
 	public void setuDao(UserDao uDao) {

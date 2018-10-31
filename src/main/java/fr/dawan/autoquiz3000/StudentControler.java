@@ -79,7 +79,6 @@ public class StudentControler {
 		return new ModelAndView("student/list_quiz_history");
 	}
 	
-	
 	@GetMapping("/quiz/{id}")
 	public ModelAndView getQuiz(@PathVariable(value="id") String id, Model model) {
 		try {

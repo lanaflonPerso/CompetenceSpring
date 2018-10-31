@@ -50,10 +50,9 @@ public class CtrlUser extends Ctrl {
 	
 	public void ctrlTokenAndPassword(String token, String password, String confirm) {
 		ctrlToken(token);
+		user.setToken(token);
 		ctrlPassword(password);
 		ctrlPasswordEqual(password, confirm);
-		System.out.println("user= "+user);
-		System.out.println("password= "+password);
 		user.setPassword(MySQLPassword(password));
 	}
 	
@@ -70,7 +69,7 @@ public class CtrlUser extends Ctrl {
 	}
 	
 	public void ctrlPassword(String password) {
-		if(password.length() < 7 ) {
+		if(password.length() < 6) {
 			msgPassword= "le mot de passe doit comprendre 6 caractéres minimum";
 			error= true;
 		}
@@ -86,14 +85,14 @@ public class CtrlUser extends Ctrl {
 
 	public void ctrlFirstname(String firstname) {
 		if (firstname.length() < LENGTH_NAME_MIN || firstname.length() > LENGTH_NAME_MAX) {
-			msgFirstname= "le prénom doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX;
+			msgFirstname= "le prénom doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX +"caractères";
 			this.error= true;
 		}
 	}
 	
 	public void ctrlLastname(String lastname) {
 		if (lastname.length() < LENGTH_NAME_MIN || lastname.length() > LENGTH_NAME_MAX) {
-			msgLastname= "le nom doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX;
+			msgLastname= "le nom doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX +"caractères";
 			this.error= true;
 		}
 	}
@@ -130,8 +129,8 @@ public class CtrlUser extends Ctrl {
 	}
 	
 	public void ctrlToken(String token) {
-		System.out.println("uDao= "+uDao);
 		User user= uDao.findByToken(token);
+		System.out.println("==================== user= "+user);
 		if (user == null) {
 			msgToken= "le token ne correspont a aucun compte";
 			error= true;

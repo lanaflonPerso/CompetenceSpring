@@ -6,18 +6,24 @@
 	<aside class="col-md-4">
 	
 	</aside>
+	
+	<p>${ ctrl }
 	<div class="col-md-8">
 		<form method="post" action="">
 			<div class="form-group">
 				<label for="token">Token: </label>
-				<input type="text" class="form-control" id="token" name="token" /> 
-				<small id="tokenHelp" class="form-text text-muted text-danger">${ ctrl.msgToken }</small>
+				<input type="text" class="form-control" id="token" name="token" value="${ user.token }" />
+				<c:if test="${ ctrl.msgToken != null }">
+					<small id="tokenHelp" class="form-text text-danger">${ ctrl.msgToken }</small>
+				</c:if>
 			</div>
 			
 			<div class="form-group">
 				<label for="token">Password: </label>
 				<input type="password" class="form-control" id="password" name="password" />
-				<small id="passwordHelp" class="form-text text-muted text-danger">${ ctrl.msgPassword }</small>
+				<c:if test="${ ctrl.msgPassword != null }"> 
+					<small id="passwordHelp" class="form-text text-danger">${ ctrl.msgPassword }</small>
+				</c:if>
 			</div>
 			
 			<div class="form-group">

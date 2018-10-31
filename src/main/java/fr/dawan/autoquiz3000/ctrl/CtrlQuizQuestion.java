@@ -43,6 +43,7 @@ public class CtrlQuizQuestion extends Ctrl {
 				} else {
 					res.setCorrect(false);
 				}
+				System.out.println("======================== response= "+res );
 				question.setQuizResponse(res);
 			}
 		}

@@ -64,4 +64,10 @@ public class QuizDao {
 	public List<Quiz> findbyStudentClass(StudentClass sc){
 		return (List<Quiz>)hibernateTemplate.find("SELECT DISTINCT q FROM Quiz q INNER JOIN q.stClasses st WHERE st=?",sc);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<Quiz> findbyNameContaining(String name){
+		return (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.name LIKE '%name%' AND q.endDate <  NOW()  ", name);
+	}
 }
