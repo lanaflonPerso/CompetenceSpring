@@ -15,12 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.QuizQuestion;
 import fr.dawan.autoquiz3000.beans.QuizResponse;
+import fr.dawan.autoquiz3000.beans.QuizToDo;
 import fr.dawan.autoquiz3000.beans.Skill;
 import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.ctrl.Ctrl;
 import fr.dawan.autoquiz3000.dao.QuizDao;
+import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 
@@ -36,6 +38,9 @@ public class TestController {
 	
 	@Autowired
 	private StClassDao scDao;
+	
+	@Autowired
+	private QuizToDoDao qtdDao;
 
 	@GetMapping("/user")
 	public ModelAndView writeUser() {
@@ -189,8 +194,13 @@ public class TestController {
 		
 		qDao.save(javaQuiz);
 		
-		return null;
+		User matosWithId= uDao.findByEmail(matos.getEmail());
+		Quiz javaQuizWithId= qDao.findbyName(javaQuiz.getName());
 		
+		QuizToDo qtdJavaQuiz= new QuizToDo(matosWithId.getId(), javaQuizWithId.getId());
+		qtdDao.save(qtdJavaQuiz);
+		
+		return null;
 	}
 	
 	@GetMapping("/studentclass")

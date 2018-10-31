@@ -62,4 +62,8 @@ public class QuizResponse implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	@Override
+	public String toString() {
+		return "QuizResponse [id=" + id + ", text=" + text + ", correct=" + correct + " version=" + version + "]";
+	}
 }
