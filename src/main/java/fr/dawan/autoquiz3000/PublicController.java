@@ -73,6 +73,7 @@ public class PublicController {
 		if(!ctrl.isError()) {
 			User u= ctrl.getUser();
 			u.setToken(Token.getToken());
+			u.setType(UserType.STUDENT);
 			uDao.save(u);
 			StringBuilder sb= new StringBuilder();
 			sb.append(u.getToken());
@@ -82,10 +83,8 @@ public class PublicController {
 				// TODO logger l'erreur
 				e.printStackTrace();
 			}
-			// TODO envoyer un mail
 			return new ModelAndView("redirect:/public/token");
 		} else {
-			System.out.println("==================== ctrl= "+ctrl);
 			model.addAttribute("ctrl", ctrl);
 			model.addAttribute("user", ctrl.getUser());
 			return new ModelAndView("/public/viewInscription");
