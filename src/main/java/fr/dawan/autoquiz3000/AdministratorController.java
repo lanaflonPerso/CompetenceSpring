@@ -32,13 +32,9 @@ public class AdministratorController {
 	@RequestMapping(value="/administrator/studentclass", method=RequestMethod.GET)
 	public String manageStudentClass(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
 		try {
-			if(max==0)
-				max = 20;
-			if (page==0)
-				page = 1;
+			max=checkPageMax(max);
 			int pagemax=1+(int)scDao.count()/max;
-			if(page>pagemax)
-				page=pagemax;
+			page=checkPage(page,pagemax);
 			model.addAttribute("actionButton","Ajouter");
 			model.addAttribute("stclasses", scDao.findAll((page-1)*max, max));
 			model.addAttribute("maxpage", pagemax);
@@ -83,13 +79,16 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/studentclass/{id}/delete")
 	public String deleteStudentClass(@PathVariable("id") Long id, Model model) {
-		//TODO ajouter un test si classe vide et sur Id?
-		scDao.delete(id);
+		//TODO ajouter v�rification id
+		StudentClass sc=scDao.findById(id);
+		if(sc.getStudents().size()==0)
+			scDao.delete(id);
 		return "redirect:/administrator/studentclass?page=1&max=20";
 	}
 	
 	@RequestMapping(value = "/administrator/studentclass/{id}/update")
 	public String updateStudentClass(@PathVariable("id") Long id, Model model) {
+		//TODO ajouter v�rification id
 		StudentClass sc=scDao.findById(id);
 		StudentClassForm scf = new StudentClassForm();
 		scf.setId(sc.getId());
@@ -104,6 +103,7 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/assignStudent/{id}")
 	public String assignStudentClass(@PathVariable("id") Long id, Model model) {
+		//TODO ajouter v�rification id
 		StudentClass sc=scDao.findById(id);
 		model.addAttribute("assignedusers",userDao.findByAssignedStudentClass(sc));
 		model.addAttribute("unasssignedusers",userDao.findByUnAssignedStudentClass());
@@ -114,6 +114,8 @@ public class AdministratorController {
 	@RequestMapping(value = "/administrator/assignStudent/{iduser}/delete/{idclass}")
 	public String assignStudentClassDelete(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		User u=userDao.findById(iduser);
+		StudentClass sc=scDao.findById(idclass);
+		sc.getStudents().remove(u);
 		u.setStudentClass(null);
 		userDao.save(u);
 		return "redirect:/administrator/assignStudent/"+idclass;
@@ -124,19 +126,16 @@ public class AdministratorController {
 		StudentClass sc=scDao.findById(idclass);
 		User u=userDao.findById(iduser);
 		u.setStudentClass(sc);
+		sc.getStudents().add(u);
 		userDao.save(u);
 		return "redirect:/administrator/assignStudent/"+idclass;
 	}
 	
 	@RequestMapping(value = "/administrator/user" , method=RequestMethod.GET)
 	public String displayUserList(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
-		if(max==0)
-			max = 20;
-		if (page==0)
-			page = 1;
+		max=checkPageMax(max);
 		int pagemax=1+(int)userDao.count()/max;
-		if(page>pagemax)
-			page=pagemax;
+		page=checkPage(page,pagemax);
 		model.addAttribute("users", userDao.findAll((page-1)*max, max));
 		model.addAttribute("maxpage",pagemax);
 		return "administrator/userList";
@@ -150,14 +149,16 @@ public class AdministratorController {
 	
 	@RequestMapping(value = "/administrator/user/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
+		//TODO ajouter v�rification id
 		User user=userDao.findById(id);
-		UserForm form=new UserForm();
-		form.setId(user.getId());
-		form.setFirstName(user.getFirstName());
-		form.setLastName(user.getLastName());
-		form.setEmail(user.getEmail());
-		form.setBirthdate(user.getBirthdate());
-		form.setType(user.getType());
+		UserForm form=new UserForm(user);
+		
+//		form.setId(user.getId());
+//		form.setFirstName(user.getFirstName());
+//		form.setLastName(user.getLastName());
+//		form.setEmail(user.getEmail());
+//		form.setBirthdate(user.getBirthdate());
+//		form.setType(user.getType());
 		model.addAttribute("user-form", form);
 		model.addAttribute("lstTypeUser",UserType.values());
 		return "administrator/profilUser";
@@ -171,13 +172,37 @@ public class AdministratorController {
 			return "administrator/profilUser";
 		}
 		User u=userDao.findById(form.getId());
+		// test unicit� de l'email
 		u.setFirstName(form.getFirstName());
 		u.setLastName(form.getLastName());
 		u.setBirthdate(form.getBirthdate());
 		u.setEmail(form.getEmail());
 		u.setType(form.getType());
+		if(form.getPassword().length()>0) {
+			if(form.getPassword().equals(form.getConfirmPassword())) {
+				//reinit pssword
+			}
+			else {
+				//erreu
+			}
+		}
 		userDao.save(u);	
 		return "redirect:/administrator/user?page=1&max=20";
 	}
 
+	private int checkPageMax(int max) {
+		if(max==0)
+			max = 20;
+		if(max>100)
+			max=100;
+		return max;
+	}
+	
+	private int checkPage(int page,int maxPage) {
+		if (page==0)
+			page = 1;
+		if(page>maxPage)
+			page=maxPage-1;
+		return page;
+	}
 }

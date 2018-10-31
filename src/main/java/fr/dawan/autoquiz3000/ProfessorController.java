@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -22,10 +24,10 @@ import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuiz;
 import fr.dawan.autoquiz3000.ctrl.CtrlQuizQuestion;
 import fr.dawan.autoquiz3000.dao.QuizDao;
-import fr.dawan.autoquiz3000.dao.QuizQuestionDao;
 import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.SkillDao;
 import fr.dawan.autoquiz3000.dao.StClassDao;
+import fr.dawan.autoquiz3000.dao.UserDao;
 
 @Controller
 @RequestMapping("/professor")
@@ -42,6 +44,9 @@ public class ProfessorController {
 	
 	@Autowired
 	private QuizToDoDao qtdDao;
+	
+	@Autowired
+	private UserDao uDao;
 	
 	@GetMapping("/create_quiz")
 	public ModelAndView getQuiz(Model model) {
@@ -95,7 +100,7 @@ public class ProfessorController {
 	}
 	
 	@PostMapping("/create_quiz")
-	public RedirectView postQuiz(@RequestParam String stClassName,
+	public ModelAndView postQuiz(@RequestParam String stClassName,
 			@RequestParam String name, 
 			@RequestParam String skill,
 			@RequestParam String startDebut,
@@ -111,9 +116,13 @@ public class ProfessorController {
 			qDao.save(ctrl.getQuiz());
 			session.setAttribute("quiz", ctrl.getQuiz());
 			session.setAttribute("nbQuestion", 0);
-			return new RedirectView(request.getContextPath()+"/professor/create_question");
+			return new ModelAndView("redirect:/professor/create_question");
 		}
-		return new RedirectView(request.getContextPath()+"/professor/create_quiz");
+		List<StudentClass> stclasses= stDao.findAll();
+		model.addAttribute("classes", stclasses);
+		request.setAttribute("ctrl", ctrl);
+		System.out.println("=========================== ctrl= "+ctrl);
+		return new ModelAndView("professor/createQuiz");
 	}
 	
 	@PostMapping("/create_question")
@@ -132,6 +141,15 @@ public class ProfessorController {
 		return new RedirectView(request.getContextPath()+"/professor/create_question");
 	}
 
+	@GetMapping(value = "/studentClassDashboard/{id}")
+	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {
+		StudentClass sc=stDao.findById(id);
+		model.addAttribute("classe", sc);
+		model.addAttribute("usersAssigned", uDao.findByAssignedStudentClass(sc));
+		model.addAttribute("quizs",qDao.findbyStudentClass(sc));
+		return "professor/studentclassDashboard";
+	}
+		
 	public void setcDao(StClassDao stDao) {
 		this.stDao = stDao;
 	}

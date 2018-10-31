@@ -2,6 +2,7 @@ package fr.dawan.autoquiz3000.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -12,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.dawan.autoquiz3000.beans.User;
 
-
-
-public class UserFilter {
+public class UserFilter implements Filter {
 	
     public UserFilter() {
     }

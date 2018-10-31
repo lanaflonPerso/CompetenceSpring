@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 
 public class UserForm {
@@ -31,14 +32,18 @@ public class UserForm {
 		private Date birthdate;
 		
 		private UserType type;
+		@Size(min=0, max=40)
+		private String password;
+		@Size(min=0, max=40)
+		private String confirmPassword;
 
-		public UserForm(Long id, String firstName, String lastName, String email, Date birthdate) {
-			super();
-			this.id = id;
-			this.firstName = firstName;
-			this.lastName = lastName;
-			this.email = email;
-			this.birthdate = birthdate;
+		public UserForm(User user) {
+			this.id = user.getId();
+			this.firstName = user.getFirstName();
+			this.lastName = user.getLastName();
+			this.email = user.getEmail();
+			this.birthdate = user.getBirthdate();
+			this.type=user.getType();
 		}
 
 		public UserForm() {
@@ -93,6 +98,21 @@ public class UserForm {
 		public void setType(UserType type) {
 			this.type = type;
 		}
-
 		
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		
+
+		public String getConfirmPassword() {
+			return confirmPassword;
+		}
+
+		public void setConfirmPassword(String confirmPassword) {
+			this.confirmPassword = confirmPassword;
+		}
 }

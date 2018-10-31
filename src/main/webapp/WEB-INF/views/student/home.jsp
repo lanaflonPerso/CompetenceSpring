@@ -1,19 +1,24 @@
-<%@ page pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<title>Page d'acceuil</title>
 
-	<div class="container">
-	
-		<div class="row">
-			<aside class="col-md-4">
-				<p>type= ${ sessionScope.user.type }</p>
-				<p>classe= ${ sessionScope.user.studentClass.name }
-				<p>${ sessionScope.user.lastName }</p>
-				<p>${ sessionScope.isAdmin }</p>
-				<p>${ sessionScope.isProfessor }</p>
-				<a href='<c:url value="/professor/create_quiz" />'>Ajouter un formulaire</a>
-			</aside>
-			<div class="col-md-8">
-			</div>
-		</div>
+<div class="row">
+	<div class="col-md-8">
+		<c:choose>
+			<c:when test="${ user != null && user.type == 'PROFESSOR' }">
+				<p>salut le prof</p>
+			</c:when>
+			<c:when test="${ user != null && user.type == 'ADMINISTRATOR' }">
+				<p>salut l'administrateur</p>
+			</c:when>
+			<c:when test="${ user != null && user.type == 'STUDENT' }">
+				<p>salut l'etudiant</p>
+			</c:when>
+			<c:otherwise>
+				<p>salut l'inconnue</p>
+			</c:otherwise>
+		</c:choose>
 	</div>
+</div>
+
