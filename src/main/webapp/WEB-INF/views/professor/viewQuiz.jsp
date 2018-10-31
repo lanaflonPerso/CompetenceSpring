@@ -16,7 +16,7 @@
 			</aside>
 			
 			<div class="col-md-8">
-				<h1>${ quiz.name } (${ nbQuestion } questions)</h1>
+				<h1>${ quiz.name } (${ quiz.quizQuestions.size() } questions)</h1>
 
 				<c:forEach var="question" items="${ quiz.quizQuestions }">	
 					<h3>${ question.text }</h3>

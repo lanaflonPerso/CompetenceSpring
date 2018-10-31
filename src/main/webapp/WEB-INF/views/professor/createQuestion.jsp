@@ -4,8 +4,7 @@
 <title>Création Ajout d'une question</title>
 
 <h1>${ sessionScope.quiz.name }</h1>
-<p>${ ctrl }</p>
-<p>${ question }</p>
+
 <div class="row">
 	<div class="col-md-8">
 	
@@ -49,10 +48,11 @@
 			<button id="btnSubmit" class="btn btn-primary" type="submit">Enregistrement</button>
 		</form>
 	</div>
+	
 	<div class="col-md-4">
 		<ul class="list-group">
 		<c:forEach var="question" items="${ sessionScope.quiz.quizQuestions }">
-  			<li class="list-group-item">${ question.text }</li>
+  			<li class="list-group-item">${ question.introText() }</li>
 		</c:forEach>
 		</ul>
 	</div>

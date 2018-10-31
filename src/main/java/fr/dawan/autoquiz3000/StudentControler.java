@@ -82,8 +82,6 @@ public class StudentControler {
 		
 		Quiz quiz= qDao.findById(id);
 		QuizTest quizTest= qtDao.findByIdQuizAndIdUser(quiz.getId(), user.getId());
-		System.out.println("================= quiz= "+quiz);
-		System.out.println("================= quizTest= "+quizTest.getStResponse());
 		
 		session.setAttribute("quiz", quiz);
 		session.setAttribute("quizTest", quizTest);

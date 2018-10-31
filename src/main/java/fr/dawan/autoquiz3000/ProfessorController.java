@@ -64,9 +64,9 @@ public class ProfessorController {
 	
 	@GetMapping("/view_quiz")
 	public ModelAndView getViewQuiz(Model model, HttpServletRequest request) {
-		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
+		HttpSession session= request.getSession();
+		Quiz quiz= (Quiz) session.getAttribute("quiz");
 		if(quiz != null) {
-			model.addAttribute("nbQuestion", quiz.getQuizQuestions().size());
 			model.addAttribute("quiz", quiz);
 			return new ModelAndView("professor/viewQuiz");
 		} else {
@@ -77,8 +77,10 @@ public class ProfessorController {
 	
 	@GetMapping("/close_quiz")
 	public ModelAndView getCloseQuiz(Model model, HttpServletRequest request) {
-		Quiz quiz= (Quiz) request.getSession().getAttribute("quiz");
+		HttpSession session= request.getSession();
+		Quiz quiz= (Quiz) session.getAttribute("quiz");
 		if(quiz != null) {
+			qDao.save(quiz);
 			List<StudentClass> stclasses= quiz.getStClasses();
 			for (StudentClass stClass : stclasses) {
 				List<User> students= stClass.getStudents();
@@ -89,7 +91,6 @@ public class ProfessorController {
 					qtdDao.save(qtd);
 				}
 			}
-			qDao.save(quiz);
 			return new ModelAndView("professor/viewQuiz");
 		} else {
 			// TODO rediriger vers une 404
@@ -111,14 +112,12 @@ public class ProfessorController {
 		if(!ctrl.isError()) {
 			HttpSession session= request.getSession();
 			
-			qDao.save(ctrl.getQuiz());
 			session.setAttribute("quiz", ctrl.getQuiz());
 			session.setAttribute("nbQuestion", 0);
 			return new ModelAndView("redirect:/professor/create_question");
 		}
 		List<StudentClass> stclasses= stDao.findAll();
 		model.addAttribute("classes", stclasses);
-		System.out.println("================== ctrl= "+ctrl);
 		request.setAttribute("ctrl", ctrl);
 		return new ModelAndView("professor/createQuiz");
 	}
@@ -132,7 +131,6 @@ public class ProfessorController {
 			if(!ctrl.isError()) {
 				return new ModelAndView("professor/createQuestion");
 			} else {
-				System.out.println("==================== ctrl= "+ctrl);
 				model.addAttribute("question", ctrl.getQuestion());
 				model.addAttribute("ctrl", ctrl);
 				return new ModelAndView("professor/createQuestion");	
@@ -142,13 +140,6 @@ public class ProfessorController {
 			return new ModelAndView("professor/create_quiz");
 		}
 	}
-	
-//	@GetMapping("/search_quiz")
-//	public ModelAndView postSearchQuiz(@RequestParam String quizName) {
-//		List<Quiz> qDao.findbyNameContaining("java"); //qDao.findbyNameContaining("java");
-//		
-//		return null;	
-//	}
 	
 	@GetMapping(value = "/studentClassDashboard/{id}")
 	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {

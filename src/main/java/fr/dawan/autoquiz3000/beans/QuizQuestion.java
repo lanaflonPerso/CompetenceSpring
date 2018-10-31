@@ -81,6 +81,16 @@ public class QuizQuestion implements Serializable {
 		this.orderNum = orderNum;
 	}
 	
+	public String introText() {
+		String result;
+		if(this.text.length() > 50) {
+			result= this.text.substring(0, 50);
+		} else {
+			result= this.text;
+		}
+		return result;
+	}
+	
 	//**************************************OVERRIDE******************************************
 	@Override
 	public int hashCode() {
