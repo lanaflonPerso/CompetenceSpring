@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class QuizTest implements Serializable {
 	@JoinColumn(name = "question_id")
 	private List<QuizQuestion> quizQuestions= new ArrayList<>();
 	
-	@OneToMany(cascade= CascadeType.ALL)
+	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "QuizTest_id", referencedColumnName="id")
 	private Set<StudentResponse> stResponse= new LinkedHashSet<>();
 

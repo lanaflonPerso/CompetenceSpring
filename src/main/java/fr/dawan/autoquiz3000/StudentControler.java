@@ -75,6 +75,21 @@ public class StudentControler {
 		return new ModelAndView("student/list_quiz_history");
 	}
 	
+	@GetMapping("/quiz/history/{id}")
+	public ModelAndView getResultQuiz(@PathVariable(value="id") long id, Model model, HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		User user= (User) session.getAttribute("user");
+		
+		Quiz quiz= qDao.findById(id);
+		QuizTest quizTest= qtDao.findByIdQuizAndIdUser(quiz.getId(), user.getId());
+		System.out.println("================= quiz= "+quiz);
+		System.out.println("================= quizTest= "+quizTest.getStResponse());
+		
+		session.setAttribute("quiz", quiz);
+		session.setAttribute("quizTest", quizTest);
+		return new ModelAndView("redirect:/student/quiz-result");
+	}
+	
 	@GetMapping("/quiz/{id}")
 	public ModelAndView getQuiz(@PathVariable(value="id") String id, Model model) {
 		try {
@@ -156,7 +171,7 @@ public class StudentControler {
 			}
 			qtDao.save(quizTest);
 			qtdDao.DeleteQuizByQuizAndStudent(user.getId(), quiz.getId());
-			return new ModelAndView("redirect:/student/quiz-result"); //////////////////////////////////////////
+			return new ModelAndView("redirect:/student/quiz-result");
 		}
 	}
 }
