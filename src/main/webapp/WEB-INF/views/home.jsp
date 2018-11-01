@@ -19,6 +19,6 @@
 	<a href="public/token">Inscription</a><br />
 	<a href="administrator/studentclass?page=1&max=20">Gestion des classes</a><br />
 	<a href="administrator/user?page=1&max=20">Gestion des utilisateurs</a><br />
-	<a href="professor/studentClassDashboard">test dasboard</a><br />	
+	<a href="professor/studentClassDashboard/1">test dasboard</a><br />	
 </body>
 </html>

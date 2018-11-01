@@ -60,7 +60,6 @@ public class UserDao {
 		return result;
 	}
 	
-	
 	@Transactional(readOnly=true)
 	public User findByEmailAndPassword(String email, String password){
 		User result= null;

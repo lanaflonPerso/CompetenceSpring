@@ -15,12 +15,12 @@ import fr.dawan.autoquiz3000.beans.UserType;
 public class UserForm {
 		private Long id;
 
-		@NotEmpty(message = "Le pr�nom ne peut pas être vide")
-		@Size(max = 50,message = "Le pr�nom ne peut pas être vide") 
+		@NotEmpty(message = "Le pr�nom ne peut pas être vide")
+		@Size(min=2,max = 100,message = "Le pr�nom ne peut pas être vide") 
 		private String firstName;
 		
 		@NotEmpty(message = "Le nom ne peut pas être vide")
-		@Size(max = 50,message = "Le nom ne peut pas être vide") 
+		@Size(min=2,max = 50,message = "Le nom ne peut pas être vide") 
 		private String lastName;
 		
 		@NotEmpty(message = "Le email ne peut pas être vide")
@@ -31,10 +31,11 @@ public class UserForm {
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private Date birthdate;
 		
+		@NotNull
 		private UserType type;
-		@Size(min=0, max=40)
+
 		private String password;
-		@Size(min=0, max=40)
+
 		private String confirmPassword;
 
 		public UserForm(User user) {

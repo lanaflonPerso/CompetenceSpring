@@ -4,6 +4,7 @@
 <title>Inscription</title>
 
 <form method="post" action="">
+	<h1>Inscription</h1>
 	<div class="form-group">
 		<label for="firstName">Prénom: </label>
 		<input type="text" class="form-control" id="firstName" name="firstName" value="<c:out value="${ user.firstName }" />"/> 

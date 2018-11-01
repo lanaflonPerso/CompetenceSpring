@@ -12,8 +12,8 @@
 </head>
 <body>
 <h1>Gestion de l'effectif de la classse <c:out value="${classe.name}"></c:out></h1>
-	<table class="table table-hover  table-sm">
-	<thead class="thead-dark">
+	<table class="table table-hover table-sm table-responsive">
+	<thead class="thead-light">
 		<tr>
 			<th>Prénom</th>
 			<th>Nom</th>
@@ -29,18 +29,18 @@
 			<td><c:out value="${user.firstName}"></c:out></td>
 			<td><c:out value="${user.lastName}"></c:out></td>
 			<td><c:out value="${user.email}"></c:out></td>
-			<td><c:out value="${user.birthdate}"></c:out></td>
+			<td><fmt:formatDate type="date" value="${user.birthdate}"/></td>
 			<td><c:out value="${user.type}"></c:out></td>
 				<spring:url value="/administrator/assignStudent/${user.id}/delete/${classe.id}" var="delUrl" />
-			<td><a href="${delUrl}" class="btn btn-danger" role="button">Supprimer</a></td>
+			<td><a href="${delUrl}" class="btn btn-danger" role="button">Enlever</a></td>
 		</tr>
 	</c:forEach>
 			<c:forEach items="${unasssignedusers}" var="useru">
-		<tr  class="table-secondary">
+		<tr  class="table-warning">
 			<td><c:out value="${useru.firstName}"></c:out></td>
 			<td><c:out value="${useru.lastName}"></c:out></td>
 			<td><c:out value="${useru.email}"></c:out></td>
-			<td><c:out value="${useru.birthdate}"></c:out></td>
+			<td><fmt:formatDate type="date" value="${useru.birthdate}"/></td>
 			<td><c:out value="${useru.type}"></c:out></td>
 			 <spring:url value="/administrator/assignStudent/${useru.id}/add/${classe.id}" var="addUrl" />
 			<td><a href="${addUrl}" class="btn btn-success" role="button">Ajouter</a></td>

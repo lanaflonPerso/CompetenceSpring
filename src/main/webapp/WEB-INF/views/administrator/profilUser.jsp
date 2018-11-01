@@ -7,10 +7,10 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Profil de <c:out value="${user-form.firstName}"></c:out> <c:out value="${user-form.lastName}"></c:out></title>
+<%-- //	<title>Profil de <c:out value="${user-form.firstName}"></c:out> <c:out value="${user-form.lastName}"></c:out></title> --%>
 </head>
 <body>
-	<h1>Profil de <c:out value="${user-form.firstName}"></c:out> <c:out value="${user-form.lastName}"></c:out></h1>
+<%-- //	<h1>Profil de <c:out value="${user-form.firstName}"></c:out> <c:out value="${user-form.lastName}"></c:out></h1> --%>
 
 	<form:form method="POST" action="/AutoQuiz3000/administrator/user" modelAttribute="user-form">
 		<div class="form-group">
@@ -48,6 +48,11 @@
 			<form:input type="password" path="confirmPassword" class="offset-md-2" />
 			<small id="emailHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
 		</div>
+		<c:if test="${not empty message}">
+			<div class="alert alert-danger" role="alert">
+				<c:out value="${message}"></c:out>
+			</div>
+		</c:if>
 		
 		<form:input type="hidden" path="id"/>
 		<input type="submit" value="Modifier" class="btn btn-primary"/>

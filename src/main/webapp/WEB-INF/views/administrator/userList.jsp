@@ -12,8 +12,8 @@
 </head>
 <body>
 	<h1>Gestion des utilisateurs</h1>
-	<table class="table table-hover table-sm">
-		<thead class="thead-dark">
+	<table class="table table-hover table-sm table-responsive">
+		<thead class="thead-light">
 			<tr>
 				<th>Prénom</th>
 				<th>Nom</th>

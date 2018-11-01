@@ -26,6 +26,7 @@ import fr.dawan.autoquiz3000.dao.QuizToDoDao;
 import fr.dawan.autoquiz3000.dao.SkillDao;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
+import fr.dawan.autoquiz3000.tools.StatStudentClass;
 
 @Controller
 @RequestMapping("/professor")
@@ -141,12 +142,14 @@ public class ProfessorController {
 		}
 	}
 	
-	@GetMapping(value = "/studentClassDashboard/{id}")
+	@GetMapping("studentClassDashboard/{id}")
 	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {
 		StudentClass sc=stDao.findById(id);
+		List<StatStudentClass> statQuiz=stDao.getStatistic(sc);
+		model.addAttribute("nbStudent",sc.getStudents().size());
 		model.addAttribute("classe", sc);
 		model.addAttribute("usersAssigned", uDao.findByAssignedStudentClass(sc));
-		model.addAttribute("quizs",qDao.findbyStudentClass(sc));
+		model.addAttribute("StatQuiz",statQuiz);
 		return "professor/studentclassDashboard";
 	}
 		

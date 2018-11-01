@@ -1,11 +1,14 @@
 package fr.dawan.autoquiz3000.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.StudentClass;
+import fr.dawan.autoquiz3000.tools.StatStudentClass;
 
 public class StClassDao {
 
@@ -51,9 +54,9 @@ public class StClassDao {
 	@Transactional(readOnly=true)
 	public boolean isExist(StudentClass sct) {
 		if(sct.getId()!=null)
-			return !hibernateTemplate.find("FROM StudentClass sc where sc.name=? AND (sc.endDate>? AND sc.startDate<? )AND sc.id!=?",sct.getName(),sct.getStartDate(),sct.getEndDate(),sct.getId()).isEmpty();
+			return !hibernateTemplate.find("FROM StudentClass sc WHERE sc.name=? AND (sc.endDate>? AND sc.startDate<? )AND sc.id!=?",sct.getName(),sct.getStartDate(),sct.getEndDate(),sct.getId()).isEmpty();
 		else
-			return !hibernateTemplate.find("FROM StudentClass sc where sc.name=? AND (sc.endDate>? AND sc.startDate<? )",sct.getName(),sct.getStartDate(),sct.getEndDate()).isEmpty();
+			return !hibernateTemplate.find("FROM StudentClass sc WHERE sc.name=? AND (sc.endDate>? AND sc.startDate<? )",sct.getName(),sct.getStartDate(),sct.getEndDate()).isEmpty();
 	}
 	
 	@Transactional(readOnly=true)
@@ -66,4 +69,26 @@ public class StClassDao {
 		}
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<StatStudentClass> getStatistic(StudentClass sc){
+		List<StatStudentClass> result=new ArrayList<>();
+		List<Object[]> resultDb=(List<Object[]>) hibernateTemplate.find("SELECT q,COUNT(qt.id), AVG(qt.score),MIN(qt.score),MAX(qt.score) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? GROUP BY q",sc);
+		for(Object[] obj: resultDb) { 
+			long a=sc.getStudents().size()-((long)obj[1]);
+			 StatStudentClass stat=new StatStudentClass();
+			 stat.setQuiz((Quiz) obj[0]);
+			 stat.setCountQuizDO(a);
+			 stat.setAverangeScore((double) obj[2]);
+			 stat.setMinScore((int) obj[3]);
+			 stat.setMaxScore((int) obj[4]);
+			 Long countSkilByQuiz= (Long) hibernateTemplate.find("SELECT COUNT(qt.id) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? AND q=? AND qt.score>q.scoreToAcquireSkill",sc,(Quiz) obj[0]).get(0);
+			 stat.setCountSkill(countSkilByQuiz);
+			 stat.setCountFailSkill((long)sc.getStudents().size()-a-countSkilByQuiz);
+			 result.add(stat);
+		}
+		return result;
+	}
+	
 }

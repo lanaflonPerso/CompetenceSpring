@@ -1,26 +1,33 @@
 package fr.dawan.autoquiz3000;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
+import fr.dawan.autoquiz3000.ctrl.Ctrl;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.formbeans.StudentClassForm;
 import fr.dawan.autoquiz3000.formbeans.UserForm;
 
 @Controller
+@RequestMapping("/administrator")
 public class AdministratorController {
 	
 	@Autowired
@@ -29,11 +36,11 @@ public class AdministratorController {
 	@Autowired
 	private UserDao userDao;
 	
-	@RequestMapping(value="/administrator/studentclass", method=RequestMethod.GET)
+	@GetMapping("/studentclass")
 	public String manageStudentClass(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
 		try {
 			max=checkPageMax(max);
-			int pagemax=1+(int)scDao.count()/max;
+			int pagemax= ((userDao.count()%max>0?1:0)+(int)scDao.count()/max);
 			page=checkPage(page,pagemax);
 			model.addAttribute("actionButton","Ajouter");
 			model.addAttribute("stclasses", scDao.findAll((page-1)*max, max));
@@ -45,7 +52,7 @@ public class AdministratorController {
 		return "administrator/studentclass";
 	}
 	
-	@RequestMapping(value = "/administrator/studentclass", method = RequestMethod.POST)
+	@PostMapping("/studentclass")
 	public String addStudentClass(@Valid @ModelAttribute("studentclass-form") StudentClassForm form,BindingResult result, Model model) {
 		String msg=null;
 		if(result.hasErrors()) {
@@ -77,7 +84,7 @@ public class AdministratorController {
 		return "administrator/studentclass";
 	}
 	
-	@RequestMapping(value = "/administrator/studentclass/{id}/delete")
+	@GetMapping("/studentclass/{id}/delete")
 	public String deleteStudentClass(@PathVariable("id") Long id, Model model) {
 		//TODO ajouter v�rification id
 		StudentClass sc=scDao.findById(id);
@@ -86,7 +93,7 @@ public class AdministratorController {
 		return "redirect:/administrator/studentclass?page=1&max=20";
 	}
 	
-	@RequestMapping(value = "/administrator/studentclass/{id}/update")
+	@GetMapping("/studentclass/{id}/update")
 	public String updateStudentClass(@PathVariable("id") Long id, Model model) {
 		//TODO ajouter v�rification id
 		StudentClass sc=scDao.findById(id);
@@ -101,7 +108,7 @@ public class AdministratorController {
 		return "administrator/studentclass";
 	}
 	
-	@RequestMapping(value = "/administrator/assignStudent/{id}")
+	@GetMapping("/assignStudent/{id}")
 	public String assignStudentClass(@PathVariable("id") Long id, Model model) {
 		//TODO ajouter v�rification id
 		StudentClass sc=scDao.findById(id);
@@ -111,7 +118,7 @@ public class AdministratorController {
 		return "administrator/assignStudent";
 	}
 	
-	@RequestMapping(value = "/administrator/assignStudent/{iduser}/delete/{idclass}")
+	@GetMapping(value = "/assignStudent/{iduser}/delete/{idclass}")
 	public String assignStudentClassDelete(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		User u=userDao.findById(iduser);
 		StudentClass sc=scDao.findById(idclass);
@@ -121,7 +128,7 @@ public class AdministratorController {
 		return "redirect:/administrator/assignStudent/"+idclass;
 	}
 	
-	@RequestMapping(value = "/administrator/assignStudent/{iduser}/add/{idclass}")
+	@GetMapping("/administrator/assignStudent/{iduser}/add/{idclass}")
 	public String assignStudentClassAdd(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		StudentClass sc=scDao.findById(idclass);
 		User u=userDao.findById(iduser);
@@ -131,65 +138,83 @@ public class AdministratorController {
 		return "redirect:/administrator/assignStudent/"+idclass;
 	}
 	
-	@RequestMapping(value = "/administrator/user" , method=RequestMethod.GET)
+	@GetMapping("/user")
 	public String displayUserList(@RequestParam("page") int page, @RequestParam("max") int max,Model model) {
 		max=checkPageMax(max);
-		int pagemax=1+(int)userDao.count()/max;
+		int pagemax= ((userDao.count()%max>0?1:0)+(int)userDao.count()/max);
 		page=checkPage(page,pagemax);
 		model.addAttribute("users", userDao.findAll((page-1)*max, max));
 		model.addAttribute("maxpage",pagemax);
 		return "administrator/userList";
 	}
 
-	@RequestMapping(value = "/administrator/user/{id}/delete")
+	@GetMapping("/user/{id}/delete")
 	public String deleteUser(@PathVariable("id") Long id,Model model) {
 		userDao.delete(id);
 		return "redirect:/administrator/user?page=1&max=20";
 	}
 	
-	@RequestMapping(value = "/administrator/user/{id}/update")
+	@GetMapping("/user/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
 		//TODO ajouter v�rification id
 		User user=userDao.findById(id);
 		UserForm form=new UserForm(user);
-		
-//		form.setId(user.getId());
-//		form.setFirstName(user.getFirstName());
-//		form.setLastName(user.getLastName());
-//		form.setEmail(user.getEmail());
-//		form.setBirthdate(user.getBirthdate());
-//		form.setType(user.getType());
 		model.addAttribute("user-form", form);
 		model.addAttribute("lstTypeUser",UserType.values());
 		return "administrator/profilUser";
 	}
 	
-	@RequestMapping(value = "/administrator/user", method = RequestMethod.POST)
+	@PostMapping(value = "/user")
 	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model) {
+		String msg=null;
 		if(result.hasErrors()) {
 			model.addAttribute("errors",result);
-			model.addAttribute("user-form", form); //??
-			return "administrator/profilUser";
 		}
-		User u=userDao.findById(form.getId());
-		// test unicit� de l'email
-		u.setFirstName(form.getFirstName());
-		u.setLastName(form.getLastName());
-		u.setBirthdate(form.getBirthdate());
-		u.setEmail(form.getEmail());
-		u.setType(form.getType());
-		if(form.getPassword().length()>0) {
-			if(form.getPassword().equals(form.getConfirmPassword())) {
-				//reinit pssword
+		else{
+			// vérififer l'id
+			User u=userDao.findById(form.getId());
+			if(form.getBirthdate().before(Date.from(LocalDate.now().minusYears(62).atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
+				msg="La date de naissance n'est pas valide";
+				
 			}
 			else {
-				//erreu
+				User tstExist=userDao.findByEmail(form.getEmail());
+				if(tstExist==null || !tstExist.getId().equals(u.getId())) {
+					msg="L'email existe déjà";
+				}
+				else {
+					u.setFirstName(form.getFirstName());
+					u.setLastName(form.getLastName());
+					u.setBirthdate(form.getBirthdate());
+					u.setEmail(form.getEmail());
+					u.setType(form.getType());
+					if(form.getPassword().length()>0)
+					{
+						if(form.getPassword().length()<6) {
+							msg="Le mot de passe doit contenir au moins 6 caractères";
+							model.addAttribute("message", msg);
+							model.addAttribute("user-form", form);
+							return "administrator/profilUser";
+						}
+						else if(!form.getConfirmPassword().equals(form.getPassword())) {
+							msg="Le mot de passe est diférent de la confirmation";
+							model.addAttribute("message", msg);
+							model.addAttribute("user-form", form);
+							return "administrator/profilUser";
+						}
+						u.setPassword(Ctrl.MySQLPassword(form.getPassword()));
+					}
+					userDao.save(u);	
+					return "redirect:/administrator/user?page=1&max=20";
+				}
 			}
 		}
-		userDao.save(u);	
-		return "redirect:/administrator/user?page=1&max=20";
+		model.addAttribute("message", msg);
+		model.addAttribute("user-form", form);
+		return "administrator/profilUser";
 	}
 
+	
 	private int checkPageMax(int max) {
 		if(max==0)
 			max = 20;

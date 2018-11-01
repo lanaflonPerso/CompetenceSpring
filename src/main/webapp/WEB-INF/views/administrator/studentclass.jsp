@@ -14,7 +14,7 @@
 <body>
 		<h1>Gestion des classes</h1>
 		<table class="table table-hover table-sm">
-			<thead class="thead-dark">
+			<thead class="thead-light">
 				<tr>
 					<th>Nom</th>
 					<th>Date début</th>

@@ -15,9 +15,8 @@
 	<h1 class="text-center"><c:out value="${classe.name}"></c:out> <small class="text-muted">du 
 	 <fmt:formatDate type="date" dateStyle = "short" value="${classe.startDate}" /> au 
 	 <fmt:formatDate type="date" dateStyle = "short" value="${classe.endDate}" /></small></h1>
-	<h2> Liste des élèves</h2>
 	<table class="table table-hover table-sm">
-		<thead class="thead-dark">
+		<thead class="thead-light">
 			<tr>
 				<th>Prénom</th>
 				<th>Nom</th>
@@ -32,17 +31,50 @@
 				<td><c:out value="${user.firstName}"></c:out></td>
 				<td><c:out value="${user.lastName}"></c:out></td>
 				<td><c:out value="${user.email}"></c:out></td>
-				<td><c:out value="${user.birthdate}"></c:out></td>
+				<td><fmt:formatDate type="date" value="${user.birthdate}" /></td>
 				<td><c:out value="${user.type}"></c:out></td>
 			</tr>
 		</c:forEach>
 	</tbody>
 	</table>
-	<h2> Liste des questionnaires</h2>
-	<ul class="list-group list-group-flush"">
-	<c:forEach items="${quizs}" var="quiz">
-		<li class="list-group-item">quiz</li>
+	<h2> Questionnaires</h2>
+	<c:forEach items="${StatQuiz}" var="stat">
+		<div class="card">
+		  <div class="card-header">
+		  		<h4>${stat.quiz.name}</h4> 
+		  </div>
+  			<div class="card-body">
+				<c:if test="${ stat.countQuizDO gt 0}">
+		 			<div class="alert alert-info " role="alert">
+		 				Il reste ${ stat.countQuizDO} questionaire<c:if test="${ stat.countQuizDO gt 1}">s</c:if> à faire.
+					</div>
+				</c:if> 
+			<ul class="list-group list-group-flush">
+  				<li class="list-group-item">
+		    		<h5>Score moyen</h5>
+					<div class="progress">
+		  				<div class="progress-bar" role="progressbar" style="width: ${stat.averangeScore}%;" aria-valuenow="${stat.averangeScore}" aria-valuemin="0" aria-valuemax="100">${stat.averangeScore}%</div>
+					</div>
+					<div class="progress" style="height: 4px;">
+		  				<div class="progress-bar bg-danger" role="progressbar" style="width: ${stat.minScore}%;" aria-valuenow="${stat.minScore}" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+					<div class="progress" style="height: 4px;">
+		  				<div class="progress-bar bg-success" role="progressbar" style="width: ${stat.maxScore}%;" aria-valuenow="${stat.maxScore}" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+					<small>Minimun: ${stat.minScore}%</small>,<small> Maximum: ${stat.maxScore}%</small>
+				</li>
+				<li class="list-group-item">
+					<h5>Compétence acquise <span class="badge badge-secondary float-right">${stat.quiz.skill.name}</span></h5>
+					
+					<div class="progress">
+  						<div class="progress-bar bg-success" role="progressbar" style="width: <c:out value="${stat.countSkill*100/nbStudent }"></c:out>%" aria-valuenow="<c:out value="${stat.countSkill*100/nbStudent }"></c:out>" aria-valuemin="0" aria-valuemax="100">${stat.countSkill}</div>
+  						<div class="progress-bar bg-danger" role="progressbar" style="width: <c:out value="${stat.countFailSkill*100/nbStudent }"></c:out>%" aria-valuenow="<c:out value="${stat.countFailSkill*100/nbStudent }"></c:out>" aria-valuemin="0" aria-valuemax="100"><c:out value="${stat.countFailSkill}"></c:out></div>
+					</div>
+					<small class="float-right">Score minimal requis: ${stat.quiz.scoreToAcquireSkill}%</small>
+				</li>
+					</ul>
+	  		</div>
+		</div>
 	</c:forEach>
-	</ul>
 </body>
 </html>
