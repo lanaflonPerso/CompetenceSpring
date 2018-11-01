@@ -79,7 +79,7 @@ public class StClassDao {
 			long a=sc.getStudents().size()-((long)obj[1]);
 			 StatStudentClass stat=new StatStudentClass();
 			 stat.setQuiz((Quiz) obj[0]);
-			 stat.setCountQuizDO(a);
+			 stat.setCountQuizDone(a);
 			 stat.setAverangeScore((double) obj[2]);
 			 stat.setMinScore((int) obj[3]);
 			 stat.setMaxScore((int) obj[4]);

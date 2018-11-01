@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,7 +37,7 @@
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">
 					<li class="nav-item">
-						<a class="nav-link" href="<c:url value="/public/deconnection" />" >Déconnection</a>
+						<a class="nav-link" href="<c:url value="/public/deconnection" />" >DÃ©connection</a>
 					</li>
 				</c:when>
 				<c:otherwise>

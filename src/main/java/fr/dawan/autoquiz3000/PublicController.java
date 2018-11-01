@@ -104,6 +104,7 @@ public class PublicController {
 			return new ModelAndView("redirect:/student/");
 		} else {
 			model.addAttribute("ctrl", ctrl);
+			u.setType(null);
 			model.addAttribute("user", u);
 			return new ModelAndView("/public/viewToken");
 		}
