@@ -18,8 +18,6 @@ public class CtrlQuizTest extends Ctrl {
 	
 	public void ctrlResponse(String[] responseStudent, int orderNum, long quizId) {
 		QuizQuestion currentQst = qDao.findQuestion(quizId, orderNum);
-		System.out.println("================ currentQst= "+currentQst);
-		System.out.println("================ quizTest= "+quizTest);
 		quizTest.addQuizQuestion(currentQst);
 		
 		for (QuizResponse responseForm: currentQst.getQuizResponses()) {
@@ -28,6 +26,7 @@ public class CtrlQuizTest extends Ctrl {
 			stResponse.setIdResponse(responseForm.getId());
 			
 			for (String  stringResponse: responseStudent) {
+				System.out.println("============= numero de quiz= "+responseForm.getId());
 				long idResponse= Long.valueOf(stringResponse);
 
 				if(responseForm.getId() == idResponse) {
@@ -42,7 +41,7 @@ public class CtrlQuizTest extends Ctrl {
 					if (!oneResponse) {
 						stResponse.setAnswered(false);
 					}
-					this.quizTest.addStResponse(stResponse);
+//					this.quizTest.addStResponse(stResponse);
 					if (responseForm.isCorrect()) {
 						error= true;
 					}
@@ -54,8 +53,10 @@ public class CtrlQuizTest extends Ctrl {
 
 	public void save() {
 		if(!error) {
+			System.out.println("============= il n'y a pas d'erreur! ");
 			quizTest.addCorrectResponse();
 		} else {
+			System.out.println("============= il y a une d'erreur! ");
 			quizTest.addErrorResponse();
 		}
 	}

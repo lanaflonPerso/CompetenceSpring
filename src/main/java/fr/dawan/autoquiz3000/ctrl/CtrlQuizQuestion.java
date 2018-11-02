@@ -94,6 +94,9 @@ public class CtrlQuizQuestion extends Ctrl {
 	public String getMsgQuestion() {
 		return msgQuestion;
 	}
+	public String getMsgTiltleResponse() {
+		return msgTiltleResponse;
+	}
 
 	//********************Override***************************
 	@Override

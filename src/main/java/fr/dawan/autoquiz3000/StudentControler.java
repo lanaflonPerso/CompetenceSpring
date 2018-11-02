@@ -163,7 +163,7 @@ public class StudentControler {
 			score= (quizTest.getCorrectResponse()*100)/(quizTest.getCorrectResponse()+quizTest.getErrorResponse());
 			quizTest.setScore(score);
 			
-			if (quiz.getScoreToAcquireSkill() < quizTest.getScore()) {
+			if (quiz.getScoreToAcquireSkill() <= quizTest.getScore()) {
 				user.getSkills().add(quiz.getSkill());
 				uDao.save(user);
 			}

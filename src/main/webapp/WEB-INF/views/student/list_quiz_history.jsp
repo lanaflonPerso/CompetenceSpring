@@ -34,12 +34,12 @@
 			<c:forEach var="quiz" items="${ hQuizs }">
 				<tr>
 					<td><a href="<c:url value="/student/quiz/history/${ quiz.quiz.id }" />">${ quiz.quiz.name }</a></td>
-					<td>${ quiz.score }%</td>
+					<td>${ quiz.score }% (${ quiz.quiz.scoreToAcquireSkill }%)</td>
 					<td>${ quiz.correctResponse }</td>
 					<td>${ quiz.errorResponse }</td>
 					<td>${ quiz.quiz.skill.name }</td>
 					<c:choose>
-						<c:when test="${ quiz.score > quiz.quiz.scoreToAcquireSkill }">
+						<c:when test="${ quiz.score >= quiz.quiz.scoreToAcquireSkill }">
 							<td class="table-success">Obtenu</td>
 						</c:when>
 						<c:otherwise>
