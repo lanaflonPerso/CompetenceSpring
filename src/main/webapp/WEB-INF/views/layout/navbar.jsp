@@ -6,7 +6,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	
-	<a class="navbar-brand" href="#">Navbar</a>
+	<a class="navbar-brand" href="#">AutoQuiz</a>
 
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -33,7 +33,7 @@
 			</c:if>
 		</ul>
 		
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-right">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-right">
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">
 					<li class="nav-item">

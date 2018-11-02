@@ -44,9 +44,9 @@
 		  		<h4>${stat.quiz.name}</h4> 
 		  </div>
   			<div class="card-body">
-				<c:if test="${ stat.countQuizDO gt 0}">
+				<c:if test="${ stat.countQuizDone gt 0}">
 		 			<div class="alert alert-info " role="alert">
-		 				Il reste ${ stat.countQuizDO} questionaire<c:if test="${ stat.countQuizDO gt 1}">s</c:if> à faire.
+		 				Il reste ${ stat.countQuizDone} questionaire<c:if test="${ stat.countQuizDone gt 1}">s</c:if> à faire.
 					</div>
 				</c:if> 
 			<ul class="list-group list-group-flush">
