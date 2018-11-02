@@ -365,7 +365,6 @@ CREATE TABLE `user` (
   `token` varchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `version` int(11) NOT NULL,
-  `studentClass_id` bigint(20) DEFAULT NULL,
   `stClass_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -373,16 +372,16 @@ CREATE TABLE `user` (
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id`, `birthdate`, `email`, `firstName`, `lastName`, `password`, `token`, `type`, `version`, `studentClass_id`, `stClass_id`) VALUES
-(1, '1973-02-10', 'mouton@free.fr', 'marcel', 'mouton', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 2, 0, NULL, NULL),
-(2, '1979-06-07', 'vianneyba@free.fr', 'vianney', 'bailleux', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 1, 0, NULL, NULL),
-(3, '1978-12-19', 'dickinson@free.fr', 'bruce', 'dickinson', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, NULL, 1),
-(4, '1980-01-04', 'halford@free.fr', 'rob', 'halford', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, NULL, 1),
-(5, '1980-08-17', 'matos@free.fr', 'andré', 'matos', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, NULL, 1),
-(6, '2012-02-22', 'aylan@free.fr', 'aylan', 'debusy', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, NULL, 2),
-(7, '2012-03-12', 'clement@free.fr', 'clement', 'degrave', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, NULL, 2),
-(8, '2012-12-05', 'heleonorba@free.fr', 'héléonor', 'bailleux', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, NULL, 2),
-(9, '2003-08-05', 'martin@free.fr', 'henry', 'martin', '*D388CF13A8F188EF0217F210DBDC76BD7BA08DE4', '', 0, 1, NULL, NULL);
+INSERT INTO `user` (`id`, `birthdate`, `email`, `firstName`, `lastName`, `password`, `token`, `type`, `version`, `stClass_id`) VALUES
+(1, '1973-02-10', 'mouton@free.fr', 'marcel', 'mouton', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 2, 0, NULL),
+(2, '1979-06-07', 'vianneyba@free.fr', 'vianney', 'bailleux', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 1, 0, NULL),
+(3, '1978-12-19', 'dickinson@free.fr', 'bruce', 'dickinson', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, 1),
+(4, '1980-01-04', 'halford@free.fr', 'rob', 'halford', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, 1),
+(5, '1980-08-17', 'matos@free.fr', 'andré', 'matos', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 0, 1),
+(6, '2012-02-22', 'aylan@free.fr', 'aylan', 'debusy', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, 2),
+(7, '2012-03-12', 'clement@free.fr', 'clement', 'degrave', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, 2),
+(8, '2012-12-05', 'heleonorba@free.fr', 'héléonor', 'bailleux', '*ECE77E9BCD5AA891B90E588829789E56593784FD', NULL, 0, 2, 2),
+(9, '2003-08-05', 'martin@free.fr', 'henry', 'martin', '*D388CF13A8F188EF0217F210DBDC76BD7BA08DE4', '', 0, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -467,7 +466,6 @@ ALTER TABLE `student_response`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK1sw4l4qeuhq3rpq92it1dhmil` (`studentClass_id`),
   ADD KEY `FKnpgc5bj82d61sngq0ipxng4h4` (`stClass_id`);
 
 --
@@ -574,7 +572,6 @@ ALTER TABLE `student_response`
 -- Contraintes pour la table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `FK1sw4l4qeuhq3rpq92it1dhmil` FOREIGN KEY (`studentClass_id`) REFERENCES `Student_Class` (`id`),
   ADD CONSTRAINT `FKnpgc5bj82d61sngq0ipxng4h4` FOREIGN KEY (`stClass_id`) REFERENCES `Student_Class` (`id`);
 
 --
