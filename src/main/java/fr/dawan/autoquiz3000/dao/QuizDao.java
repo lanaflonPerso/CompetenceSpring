@@ -24,6 +24,12 @@ public class QuizDao {
 		hibernateTemplate.saveOrUpdate(quiz);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<Quiz> findAll(){
+		return (List<Quiz>) hibernateTemplate.find("From Quiz");
+	}
+	
 	@Transactional(readOnly=true)
 	public Quiz findById(long id){
 		return hibernateTemplate.get(Quiz.class, id);
