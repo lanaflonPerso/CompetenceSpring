@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package fr.dawan.autoquiz3000;
 
 import java.time.LocalDate;
@@ -276,3 +277,4 @@ public class AdministratorController {
 		return page;
 	}
 }
+
