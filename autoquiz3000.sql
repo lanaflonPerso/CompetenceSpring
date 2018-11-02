@@ -26,6 +26,12 @@ SET time_zone = "+00:00";
 -- Structure de la table `hibernate_sequence`
 --
 
+DROP DATABASE IF EXISTS autoquiz3000;
+CREATE DATABASE autoquiz3000
+	CHARACTER SET utf8
+	COLLATE utf8_general_ci;
+USE autoquiz3000;
+
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
