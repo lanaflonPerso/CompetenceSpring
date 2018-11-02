@@ -122,7 +122,7 @@ public class AdministratorController {
 		return "administrator/assignStudent";
 	}
 	
-	@GetMapping(value = "/assignStudent/{iduser}/delete/{idclass}")
+	@GetMapping("/assignStudent/{iduser}/delete/{idclass}")
 	public String assignStudentClassDelete(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		User u=userDao.findById(iduser);
 		StudentClass sc=scDao.findById(idclass);
@@ -132,7 +132,7 @@ public class AdministratorController {
 		return "redirect:/administrator/assignStudent/"+idclass;
 	}
 	
-	@GetMapping("/administrator/assignStudent/{iduser}/add/{idclass}")
+	@GetMapping("/assignStudent/{iduser}/add/{idclass}")
 	public String assignStudentClassAdd(@PathVariable("iduser") Long iduser,@PathVariable("idclass") Long idclass, Model model) {
 		StudentClass sc=scDao.findById(idclass);
 		User u=userDao.findById(iduser);
@@ -163,7 +163,7 @@ public class AdministratorController {
 		return "administrator/addStudents";
 	}
 	
-	@GetMapping("/user/{id}/update")
+	@GetMapping("/auser/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
 		//TODO ajouter v�rification id
 		User user=userDao.findById(id);
@@ -209,7 +209,7 @@ public class AdministratorController {
 		return "administrator/addStudents";
 	}
 	
-	@PostMapping(value = "/user")
+	@PostMapping("/user")
 	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model) {
 		String msg=null;
 		if(result.hasErrors()) {
