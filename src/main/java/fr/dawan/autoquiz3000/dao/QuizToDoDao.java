@@ -31,11 +31,14 @@ public class QuizToDoDao {
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public void DeleteQuizByQuizAndStudent(long idUser, long idQuiz) {
+	public boolean DeleteQuizByQuizAndStudent(long idUser, long idQuiz) {
+		boolean result= false;
 		List<QuizToDo> quizIds= (List<QuizToDo>) hibernateTemplate.find("FROM QuizToDo qtd WHERE qtd.idUser=? AND qtd.idQuiz=?", idUser, idQuiz);
 		if(quizIds != null && quizIds.size() > 0 ) {
 			hibernateTemplate.delete(quizIds.get(0));
+			return true;
 		}
+		return result;
 	}
 	
 	@SuppressWarnings("unchecked")
