@@ -6,9 +6,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
+import fr.dawan.autoquiz3000.beans.UserType;
+import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 
 public class CtrlUser extends Ctrl {
@@ -28,6 +29,8 @@ public class CtrlUser extends Ctrl {
 	private String msgBirthDate;
 	private String msgPassword;
 	private String msgToken;
+	private String msgStClass;
+	private String msgType;
 	private User user;
 	
 	public CtrlUser(UserDao uDao) {
@@ -95,6 +98,55 @@ public class CtrlUser extends Ctrl {
 			msgLastname= "le nom doit comprendre entre "+ LENGTH_NAME_MIN +" et "+ LENGTH_NAME_MAX +" caractères";
 			this.error= true;
 		}
+	}
+	
+	public void ctrlType(String stringType) {
+		try {
+			int type= Integer.valueOf(stringType.trim());
+			switch (type) {
+			case 0:
+				user.setType(UserType.STUDENT);
+				break;
+			case 1:
+				user.setType(UserType.PROFESSOR);
+				break;
+			case 2:
+				user.setType(UserType.PROFESSOR);
+				break;
+			default:
+				error= true;
+				msgType= "Le type 0= Student, 1=Professor, 2= Administrator";
+				break;
+			}
+		} catch (Exception e) {
+			error= true;
+			msgType= "Le type 0= Student, 1=Professor, 2= Administrator";
+		}
+	}
+	
+	public void ctrlStClass(String stringClass, StClassDao stDao) {
+		StudentClass st= null;
+		boolean isClassName= false;
+		long idClass= 0;
+		String nameClass= null;
+		try {
+			idClass= Long.valueOf(stringClass);
+		} catch (Exception e) {
+			isClassName= true;
+			nameClass= stringClass;
+		}
+		
+		if(!isClassName) {
+			st= stDao.findById(idClass);
+		} else {
+			st= stDao.findByName(nameClass);
+		}
+		
+		if(st == null) {
+			error=true;
+			msgStClass= "La classe n'existe pas";
+		}
+		user.setStudentClass(st);
 	}
 	
 	public void ctrlEmail(String email) {
@@ -170,6 +222,6 @@ public class CtrlUser extends Ctrl {
 	@Override
 	public String toString() {
 		return "CtrlStudent [msgFirstname=" + msgFirstname + ", msgLastname=" + msgLastname + ", msgEmail=" + msgEmail
-				+ ", msgBirthDate=" + msgBirthDate + "]";
+				+ ", msgBirthDate=" + msgBirthDate + ", msgStClass= "+msgStClass+", msgType=" +msgType+", error ="+ isError() +"]";
 	}
 }

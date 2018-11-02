@@ -2,7 +2,9 @@ package fr.dawan.autoquiz3000;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -21,10 +23,12 @@ import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.ctrl.Ctrl;
+import fr.dawan.autoquiz3000.ctrl.CtrlUser;
 import fr.dawan.autoquiz3000.dao.StClassDao;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.formbeans.StudentClassForm;
 import fr.dawan.autoquiz3000.formbeans.UserForm;
+import fr.dawan.autoquiz3000.helper.Token;
 
 @Controller
 @RequestMapping("/administrator")
@@ -154,6 +158,11 @@ public class AdministratorController {
 		return "redirect:/administrator/user?page=1&max=20";
 	}
 	
+	@GetMapping("/add_students")
+	public String AddStudent() {
+		return "administrator/addStudents";
+	}
+	
 	@GetMapping("/user/{id}/update")
 	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
 		//TODO ajouter v�rification id
@@ -162,6 +171,42 @@ public class AdministratorController {
 		model.addAttribute("user-form", form);
 		model.addAttribute("lstTypeUser",UserType.values());
 		return "administrator/profilUser";
+	}
+	
+	@PostMapping("/add_students")
+	public String AddStudent(@RequestParam String listStudent, Model model) {
+		List<User> usersOK= new ArrayList<>();
+		List<User> usersNoOK= new ArrayList<>();
+		String[] ligne= listStudent.split("\n");
+		for (String string : ligne) {
+			String[] tabUser= string.split(";");
+			CtrlUser ctrl= new CtrlUser(tabUser[0], tabUser[1], tabUser[2], tabUser[3], userDao);
+			ctrl.ctrlStClass(tabUser[4], scDao);
+			ctrl.ctrlType(tabUser[5]);
+			
+			User newUser=ctrl.getUser();
+			if(!ctrl.isError()) {
+				//ajouter token + envoie mail
+				newUser.setToken(Token.getToken());		
+				userDao.save(newUser);
+				
+//				try {
+//					StringBuilder sb= new StringBuilder();
+//					sb.append(newUser.getToken());
+//					EmailTools.sendEmail(newUser.getEmail(), "inscription", sb.toString());
+//				} catch (Exception e) {
+//					// TODO logger l'erreur
+//					e.printStackTrace();
+//				}
+				
+				usersOK.add(newUser);
+			} else {
+				usersNoOK.add(newUser);
+			}
+		}
+		model.addAttribute("usersOK", usersOK);
+		model.addAttribute("usersNoOK", usersNoOK);
+		return "administrator/addStudents";
 	}
 	
 	@PostMapping(value = "/user")
