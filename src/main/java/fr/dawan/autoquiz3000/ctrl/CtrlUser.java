@@ -155,6 +155,14 @@ public class CtrlUser extends Ctrl {
         	msgEmail= "l'adresse email n'ai pas valide";
         	this.error= true;
         }
+        
+        if(!error) {
+        	User newUser= uDao.findByEmail(email);
+        	if(newUser != null) {
+        		msgEmail= "l'adresse email est déja utiliser";
+            	this.error= true;
+        	}
+        }
 	}
 	
 	public Date ctrlBirthdate(String birthdate) {

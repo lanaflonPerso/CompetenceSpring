@@ -180,16 +180,16 @@ public class AdministratorController {
 		String[] ligne= listStudent.split("\n");
 		for (String string : ligne) {
 			String[] tabUser= string.split(";");
-			CtrlUser ctrl= new CtrlUser(tabUser[0], tabUser[1], tabUser[2], tabUser[3], userDao);
-			ctrl.ctrlStClass(tabUser[4], scDao);
-			ctrl.ctrlType(tabUser[5]);
-			
-			User newUser=ctrl.getUser();
-			if(!ctrl.isError()) {
-				//ajouter token + envoie mail
-				newUser.setToken(Token.getToken());		
-				userDao.save(newUser);
-				
+			if(tabUser.length >= 6) {
+				CtrlUser ctrl= new CtrlUser(tabUser[0], tabUser[1], tabUser[2], tabUser[3], userDao);
+				ctrl.ctrlStClass(tabUser[4], scDao);
+				ctrl.ctrlType(tabUser[5]);
+				User newUser=ctrl.getUser();
+				if(!ctrl.isError()) {
+					//ajouter token + envoie mail
+					newUser.setToken(Token.getToken());		
+					userDao.save(newUser);
+					
 //				try {
 //					StringBuilder sb= new StringBuilder();
 //					sb.append(newUser.getToken());
@@ -198,10 +198,11 @@ public class AdministratorController {
 //					// TODO logger l'erreur
 //					e.printStackTrace();
 //				}
-				
-				usersOK.add(newUser);
-			} else {
-				usersNoOK.add(newUser);
+					
+					usersOK.add(newUser);
+				} else {
+					usersNoOK.add(newUser);
+				}
 			}
 		}
 		model.addAttribute("usersOK", usersOK);
