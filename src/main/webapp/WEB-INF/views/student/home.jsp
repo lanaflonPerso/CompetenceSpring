@@ -7,13 +7,13 @@
 	<div class="col-md-8">
 		<c:choose>
 			<c:when test="${ user != null && user.type == 'PROFESSOR' }">
-				<p>salut le prof</p>
+				<c:redirect url = "/professor/professorDashboard"/>
 			</c:when>
 			<c:when test="${ user != null && user.type == 'ADMINISTRATOR' }">
 				<p>salut l'administrateur</p>
 			</c:when>
 			<c:when test="${ user != null && user.type == 'STUDENT' }">
-				<p>salut l'etudiant</p>
+				<c:redirect url = "/student/quiz_history"/>
 			</c:when>
 			<c:otherwise>
 				<p>salut l'inconnue</p>

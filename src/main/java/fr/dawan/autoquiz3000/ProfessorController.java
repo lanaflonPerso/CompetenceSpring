@@ -142,6 +142,20 @@ public class ProfessorController {
 		}
 	}
 	
+	
+	@GetMapping("viewQuizCs/{id}")
+	public String viewQuizzConsult(@PathVariable("id") Long id,Model model) {
+			model.addAttribute("quiz", qDao.findById(id));
+			return "professor/viewQuizdb";
+	}
+	
+	@GetMapping("professorDashboard")
+	public String viewProfessorDashboard(Model model) {
+		model.addAttribute("classes", stDao.findAll());
+		model.addAttribute("quizzes", qDao.findAll());
+		return "professor/professorDashboard";
+	}
+	
 	@GetMapping("studentClassDashboard/{id}")
 	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {
 		StudentClass sc=stDao.findById(id);

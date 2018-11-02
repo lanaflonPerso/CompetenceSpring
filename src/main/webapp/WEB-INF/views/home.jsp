@@ -10,15 +10,11 @@
 <body>
 
 <h1>
-	AutoQuiz
+	Bienvenue dans AutoQuiz
 </h1>
-
-	<a href="authenticate">Formulaire (authentification)</a><br />
-	<a href="public/connection">Connection</a><br />
-	<a href="public/inscription">Inscription</a><br />
-	<a href="public/token">Inscription</a><br />
-	<a href="administrator/studentclass?page=1&max=20">Gestion des classes</a><br />
-	<a href="administrator/user?page=1&max=20">Gestion des utilisateurs</a><br />
-	<a href="professor/studentClassDashboard/1">test dasboard</a><br />	
+	<p>L’application AutoQuiz3000 permet de gérer des établissements qui vont renseigner
+des cursus de formations associées à des QCMs de validation de compétences L’administrateur peut renseigner des QCMs ou en importer sous un format XML.
+Le participant se voit proposer des quizs pour valider son apprentissage de la thématique avec des
+statistiques d’évolution tout au long de son cursus.</p>
 </body>
 </html>

@@ -10,29 +10,57 @@
 
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
-			</li>
+<!-- 			<li class="nav-item"> -->
+<!-- 				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+<!-- 			</li> -->
+<!-- 			<li class="nav-item"> -->
+<!-- 				<a class="nav-link" href="#">Link</a> -->
+<!-- 			</li> -->
+<!-- 			<li class="nav-item"> -->
+<!-- 				<a class="nav-link disabled" href="#">Disabled</a> -->
+<!-- 			</li> -->
 			
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/administrator/studentclass?page=1&max=20" />">Gérer les utilisateurs</a>
+				</li>
+			</c:if>
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/administrator/user?page=1&max=20" />">Gérer les classes</a>
+				</li>
+			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'PROFESSOR' }">
 				<li class="nav-item">
-					<a class="nav-link" href="#">cree un formulaire</a>
+					<a class="nav-link" href="<c:url value="/professor/professorDashboard" />">Dashboard</a>
+				</li>
+			</c:if>	
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'PROFESSOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/professor/create_quiz" />">Créer un formulaire</a>
+				</li>
+			</c:if>
+			<c:if test="${ sessionScope.quiz.countQuestion() > 2 && sessionScope.user.type == 'PROFESSOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/professor/close_quiz" />">Cloture du formulaire</a>
 				</li>
 			</c:if>
 			
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'STUDENT' }">
 				<li class="nav-item">
-					<a class="nav-link" href='<c:url value="/student/list_quiz" />'>${ sessionScope.nbrQuiz } Quiz</a>
+					<a class="nav-link<c:if test="${sessionScope.nbrQuiz eq 0 }"> disabled</c:if>" href='<c:url value="/student/list_quiz" />'> Quiz <span class="badge badge-primary">${ sessionScope.nbrQuiz }</span></a>
+				</li>
+			</c:if>
+			
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'STUDENT' }">
+				<li class="nav-item">
+					<a class="nav-link" href='<c:url value="/student/quiz_history" />'>Historique Formulaire</a>
 				</li>
 			</c:if>
 		</ul>
-		
+		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-right">
+			<li><c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out> </li>
+		</ul>
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-right">
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">

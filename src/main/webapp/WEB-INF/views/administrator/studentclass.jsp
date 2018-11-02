@@ -9,7 +9,6 @@
 <head>
 <meta charset="utf-8" />
 <title>Gestion des classes</title>
-
 </head>
 <body>
 		<h1>Gestion des classes</h1>
@@ -35,7 +34,8 @@
 							<a href="${assignUrl}" class="btn btn-success btn-sm" role="button">Assigner</a>
 							<a href="${updateUrl}" class="btn btn-info btn-sm" role="button">Modifier</a>
 							<a href="${delUrl}" class="btn btn-danger btn-sm" role="button" disabled>Supprimer</a>
-						</td>					</tr>
+						</td>					
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
