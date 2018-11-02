@@ -87,4 +87,10 @@ public class QuizDao {
 		}
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<Quiz> findEndQuiz(){
+		return (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.endDate < NOW() ");
+	}
 }

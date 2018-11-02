@@ -102,8 +102,9 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
-	
 	<bean id="CountQuizStudent" class="fr.dawan.autoquiz3000.filter.CountQuizStudent">
 		<property name="quizToDoDao" ref="quizToDoDao" />
+		<property name="quizDao" ref="quizDao" />
+		<property name="quizTestDao" ref="quizTestDao" />
 	</bean>
 </beans>
