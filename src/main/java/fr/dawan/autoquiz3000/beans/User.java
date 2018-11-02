@@ -1,9 +1,9 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -42,7 +42,7 @@ public class User implements Serializable {
 	private String token;
 	
 	@OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Skill> skills=new ArrayList<>();
+	private Set<Skill> skills=new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "stClass_id", referencedColumnName="id")
@@ -100,10 +100,10 @@ public class User implements Serializable {
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 	public StudentClass getStudentClass() {

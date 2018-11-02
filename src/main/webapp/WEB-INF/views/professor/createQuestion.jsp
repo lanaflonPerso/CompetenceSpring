@@ -30,23 +30,38 @@
 			
 			<div class="form-inline">
 				<label for="choix1">Choix 1: </label>
-		                    <input type="text" class="form-control m-3" id="choix1" name="choix1" />
-		                    <input type="checkbox" id="choix1" name="checkChoix1" class= "m-3" />
-		                    <label for="checkChoix1">Est une reponse?</label>
+                    <input type="text" class="form-control m-3" id="choix1" name="choix1" />
+                    <input type="checkbox" id="choix1" name="checkChoix1" class= "m-3" />
+                    <label for="checkChoix1">Est une reponse?</label>
 			</div>
 			
 			<div class="form-inline">
 				<label for="choix2">Choix 2: </label>
-		                    <input type="text" class="form-control m-3" id="choix2" name="choix2" />
-		                    <input type="checkbox" id="choix2" name="checkChoix2" class= "m-3" />
-		                    <label for="checkChoix2">Est une reponse?</label>
-		                </div>
+                    <input type="text" class="form-control m-3" id="choix2" name="choix2" />
+                    <input type="checkbox" id="choix2" name="checkChoix2" class= "m-3" />
+                    <label for="checkChoix2">Est une reponse?</label>
+		    </div>
 		                
-		                <div id="newQuestionPack"></div>
-			<button id="addChoice" type="button" class="btn btn-primary btn-sm">Ajouter une réponse</button>
-			
-			<button id="btnSubmit" class="btn btn-primary" type="submit">Enregistrement</button>
+		    <div id="newQuestionPack"></div>
+		    <div class="row">
+		    	<div class="col-md-4">
+					<button id="addChoice" type="button" class="btn btn-primary btn-sm">Ajouter une réponse</button>
+		    	</div>
+		    	
+		    	<div class="col-md-4">
+					<button id="btnSubmit" class="btn btn-primary" type="submit">Enregistrement</button>
+				</div>
+				
+				<div class="col-md-4">
+					<c:if test="${ sessionScope.quiz.countQuestion() > 2 }">
+						<a href="<c:url value="/professor/close_quiz" />" class="btn btn-primary">
+								Cloture du formulaire
+						</a>
+					</c:if>
+				</div>
+		    </div>
 		</form>
+			
 	</div>
 	
 	<div class="col-md-4">

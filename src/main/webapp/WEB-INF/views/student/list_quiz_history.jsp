@@ -1,6 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<title>Résultat</title>
+
 <c:choose>
 	<c:when test="${ quizTotal < 2 } ">
 		<c:set value="qestionnaire" var="varQuestionnaire"/>
