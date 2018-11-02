@@ -150,7 +150,7 @@ INSERT INTO `quiz_response` (`id`, `correct`, `text`, `version`, `question_id`) 
 (21, b'1', 'Pour respecter le principe d\'inversion de dépendances, il est possible d\'utiliser des interfaces.', 0, 6),
 (22, b'1', 'ng generate', 0, 7),
 (23, b'0', 'ng new', 0, 7),
-(24, b'1', 'ng build', 0, 7),
+(24, b'0', 'ng build', 0, 7),
 (25, b'1', 'les doubles accolades {{}}', 0, 8),
 (26, b'0', 'les crochets []', 0, 8),
 (27, b'0', 'les parenthèses ()', 0, 8),
