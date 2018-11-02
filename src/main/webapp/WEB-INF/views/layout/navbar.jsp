@@ -22,12 +22,17 @@
 			
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/administrator/studentclass?page=1&max=20" />">Gérer les utilisateurs</a>
+					<a class="nav-link" href="<c:url value="/administrator/user?page=1&max=20" />">Gérer les utilisateurs</a>
 				</li>
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/administrator/user?page=1&max=20" />">Gérer les classes</a>
+					<a class="nav-link" href="<c:url value="/administrator/studentclass?page=1&max=20" />">Gérer les classes</a>
+				</li>
+			</c:if>
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/administrator//add_students" />">Ajouter des étudiants</a>
 				</li>
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'PROFESSOR' }">

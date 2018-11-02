@@ -78,7 +78,6 @@
 			</div>
 			<form:input type="hidden" path="id"/>
 			<input type="submit" value="${actionButton}" class="btn btn-primary"/>
-			<a href="#" class="btn btn-secondary" role="button">Retour</a>
 		</form:form>
 </body>
 </html>
