@@ -12,7 +12,7 @@
 </head>
 <body>
 	<h1>Gestion des utilisateurs</h1>
-	<table class="table table-hover table-sm table-responsive">
+	<table class="table table table-striped table-responsive">
 		<thead class="thead-light">
 			<tr>
 				<th>Prénom</th>
