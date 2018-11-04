@@ -13,32 +13,32 @@
 	<h1>Profil utilisateur</h1>
 	<form:form method="POST" action="/AutoQuiz3000/public/userprofil" modelAttribute="user-form">
 		<div class="form-group">
-			<form:label  path="firstName" class="col-md-2">Prénom</form:label>
-			<form:input class="col-md-5" path="firstName"  type="text" placeholder="Entrer le prénom "/>
+			<form:label path="firstName">Prénom</form:label>
+			<form:input class="form-control" path="firstName"  type="text" placeholder="Entrer le prénom "/>
 			<small id="firstNameHelp" class="form-text text-danger"><form:errors path="firstName" /></small>
 		</div>
 		<div class="form-group">
-			<form:label  path="lastName" class="col-md-2">Nom</form:label>
-			<form:input class="col-md-5" path="lastName"  type="text" placeholder="Entrer le nom"/>
+			<form:label path="lastName" >Nom</form:label>
+			<form:input class="form-control" path="lastName" type="text" placeholder="Entrer le nom"/>
 			<small id="lastNameHelp" class="form-text text-danger"><form:errors path="lastName" /></small>
 		</div>
 		<div class="form-group">
-			<form:label  path="email" class="col-md-2">Email</form:label>
-			<form:input class="col-md-5" path="email"  type="text" placeholder="Entrer l'email"/>
+			<form:label path="email" >Email</form:label>
+			<form:input class="form-control" path="email"  type="text" placeholder="Entrer l'email"/>
 			<small id="emailHelp" class="form-text text-danger"><form:errors path="email" /></small>
 		</div>
   		<div class="form-group">
-			<form:label path="birthdate" class="col-md-2">Date de naissance</form:label>
-			<form:input type="date" path="birthdate" />
+			<form:label path="birthdate" >Date de naissance</form:label>
+			<form:input type="date" path="birthdate" class="form-control"/>
 			<small id="birthdateHelp" class="form-text text-danger"><form:errors path="birthdate" /></small>
 		</div>
 		<div class="form-group">
-			<form:label path="password" class="col-md-2">Réinitialisation du mot de passe</form:label>
-			<form:input type="password" path="password" />
+			<form:label path="password" >Réinitialisation du mot de passe</form:label>
+			<form:input type="password" path="password" class="form-control" />
 			<small id="passwordHelp" class="form-text text-danger"><form:errors path="password" /></small>
 		</div>
 		<div class="form-group">
-			<form:input type="password" path="confirmPassword" class="offset-md-2" />
+			<form:input type="password" path="confirmPassword" class="form-control here" />
 			<small id="comfirmPasswordHelp" class="form-text text-danger"><form:errors path="confirmPassword" /></small>
 		</div>
 		<c:if test="${not empty message}">
