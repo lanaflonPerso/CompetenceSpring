@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import fr.dawan.autoquiz3000.beans.User;
+import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.dao.UserDao;
 import fr.dawan.autoquiz3000.formbeans.UserForm;
 
@@ -34,7 +35,7 @@ public class CtrlProfilUser extends Ctrl{
 	
 	public void ctrlEmail(String email) {
 		User tstExist=uDao.findByEmail(email);
-		if(tstExist==null || !tstExist.getId().equals(user.getId())) {
+		if(tstExist!=null && !tstExist.getId().equals(user.getId())) {
 			error=true;
 			msg="L'email existe déjà";
 		}
@@ -58,6 +59,13 @@ public class CtrlProfilUser extends Ctrl{
 			user.setPassword(Ctrl.MySQLPassword(form.getPassword()));
 
 		}
+	}
+	
+	public void ctrlCheckStillOneAdmin(UserType type) {
+		if(type!=UserType.ADMINISTRATOR && uDao.countByType(UserType.ADMINISTRATOR)<=1){
+			msg="Il doit rester un administrateur au minimum";
+			error=true;
+		}	
 	}
 
 	public String getMsg() {

@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>Mon titre HOME</title>
+	<title>Home</title>
 </head>
 <body>
 

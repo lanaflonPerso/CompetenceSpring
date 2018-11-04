@@ -14,7 +14,7 @@
 	<%@include file="/WEB-INF/views/layout/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
-			<aside class="md-col-3">
+<!-- 			<aside class="md-col-3"> -->
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${ user.type == 'PROFESSOR' }"> --%>
 <%-- 						<%@include file="/WEB-INF/views/layout/asideProfessor.jsp" %> --%>
@@ -23,9 +23,9 @@
 <%-- 						<%@include file="/WEB-INF/views/layout/asideStudent.jsp" %> --%>
 <%-- 					</c:when> --%>
 <%-- 				</c:choose> --%>
-			</aside>
+<!-- 			</aside> -->
 			
-			<div class="col-md-9">
+			<div class="col-md-12">
 				<sitemesh:write property='body'/>
 			</div>
 		</div>

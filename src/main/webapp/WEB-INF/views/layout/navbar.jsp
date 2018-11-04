@@ -53,7 +53,7 @@
 			
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'STUDENT' }">
 				<li class="nav-item">
-					<a class="nav-link<c:if test="${sessionScope.nbrQuiz eq 0 }"> disabled</c:if>" href='<c:url value="/student/list_quiz" />'> Quiz <span class="badge badge-primary">${ sessionScope.nbrQuiz }</span></a>
+					<a class="nav-link<c:if test="${sessionScope.nbrQuiz eq 0 }"> disabled</c:if>" href='<c:url value="/student/list_quiz" />' role="button" aria-disabled="true"> Quiz <span class="badge badge-primary">${ sessionScope.nbrQuiz }</span></a>
 				</li>
 			</c:if>
 			
@@ -66,7 +66,7 @@
 <!-- 		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-right"> -->
 <%-- 			<li><c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out> </li> --%>
 <!-- 		</ul> -->
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-right">
+		<ul class="navbar-nav mr-lg-5 mt-2 mt-lg-0 ">
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">
 <!-- 					<li class="nav-item"> -->

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.dawan.autoquiz3000.beans.StudentClass;
 import fr.dawan.autoquiz3000.beans.User;
+import fr.dawan.autoquiz3000.beans.UserType;
 
 public class UserDao {
 
@@ -82,6 +83,12 @@ public class UserDao {
 			result= users.get(0);
 		}
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public Long countByType(UserType type){
+		return (Long) hibernateTemplate.find("SELECT COUNT(u.id)FROM User u WHERE u.type=?",type).get(0);
 	}
 	
 	@SuppressWarnings("unchecked")

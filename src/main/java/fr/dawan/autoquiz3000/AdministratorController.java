@@ -167,6 +167,7 @@ public class AdministratorController {
 		page=checkPage(page,pagemax);
 		model.addAttribute("users", userDao.findAll((page-1)*max, max));
 		model.addAttribute("maxpage",pagemax);
+		model.addAttribute("countadmin",userDao.countByType(UserType.ADMINISTRATOR));
 		return "administrator/userList";
 	}
 
@@ -182,7 +183,7 @@ public class AdministratorController {
 	}
 	
 	@GetMapping("/user/{id}/update")
-	public String showUpdateUser(@PathVariable("id") Long id,Model model) {
+	public String displayUpdateUser(@PathVariable("id") Long id,Model model) {
 		try {
 			User user=userDao.findById(id);
 			UserForm form=new UserForm(user);
@@ -192,6 +193,38 @@ public class AdministratorController {
 			//TODO erreur 404
 		}
 		return "administrator/profilUser";
+	}
+	
+	@PostMapping("/user")
+	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model, HttpServletRequest request) {
+		if(result.hasErrors()) {
+			model.addAttribute("errors",result);
+			model.addAttribute("user-form",form);
+			return "administrator/profilUser";
+		}
+		else{
+			User u=userDao.findById(form.getId());
+			CtrlProfilUser ctrl=new CtrlProfilUser(form,u,userDao);
+			ctrl.ctrlBithDate(form.getBirthdate());
+			ctrl.ctrlEmail(form.getEmail());
+			ctrl.ctrlCheckStillOneAdmin(form.getType());
+			if(ctrl.isReinitPassword(form.getPassword())){
+				ctrl.ctrlReInitPassword(form.getPassword(), form.getConfirmPassword());
+			}
+			if(ctrl.isError()) {
+				model.addAttribute("message", ctrl.getMsg());
+				model.addAttribute("user-form", form);
+				return "administrator/profilUser";
+			}
+			u.setFirstName(form.getFirstName());
+			u.setLastName(form.getLastName());
+			u.setType(form.getType());
+			userDao.save(u);
+			if(((User)request.getSession().getAttribute("user")).getId()==u.getId())
+				request.getSession().setAttribute("user", u);
+			model.addAttribute("user",u);
+			return "redirect:/administrator/user?page=1&max=20";	
+		}
 	}
 	
 	@GetMapping("/add_students")
@@ -233,37 +266,6 @@ public class AdministratorController {
 		model.addAttribute("usersOK", usersOK);
 		model.addAttribute("usersNoOK", usersNoOK);
 		return "administrator/addStudents";
-	}
-	
-	@PostMapping("/user")
-	public String updateUser(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model, HttpServletRequest request) {
-		if(result.hasErrors()) {
-			model.addAttribute("errors",result);
-			model.addAttribute("user-form",form);
-			return "administrator/profilUser";
-		}
-		else{
-			User u=userDao.findById(form.getId());
-			CtrlProfilUser ctrl=new CtrlProfilUser(form,u,userDao);
-			ctrl.ctrlBithDate(form.getBirthdate());
-			ctrl.ctrlEmail(form.getEmail());
-			if(ctrl.isReinitPassword(form.getPassword())){
-				ctrl.ctrlReInitPassword(form.getPassword(), form.getConfirmPassword());
-			}
-			if(ctrl.isError()) {
-				model.addAttribute("message", ctrl.getMsg());
-				model.addAttribute("user-form", form);
-				return "administrator/profilUser";
-			}
-			u.setFirstName(form.getFirstName());
-			u.setLastName(form.getLastName());
-			u.setType(form.getType());
-			userDao.save(u);
-			if(((User)request.getSession().getAttribute("user")).getId()==u.getId())
-				request.getSession().setAttribute("user", u);
-			model.addAttribute("user",u);
-			return "redirect:/administrator/user?page=1&max=20";	
-		}
 	}
 	
 	@GetMapping("/configuresmtp")
