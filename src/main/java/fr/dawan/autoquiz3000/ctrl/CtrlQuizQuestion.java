@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import fr.dawan.autoquiz3000.beans.Quiz;
 import fr.dawan.autoquiz3000.beans.QuizQuestion;
 import fr.dawan.autoquiz3000.beans.QuizResponse;
-import fr.dawan.autoquiz3000.dao.QuizQuestionDao;
 
 public class CtrlQuizQuestion extends Ctrl {
 	private final int LENGTH_TITLE_QUESTION_MIN= 10;
@@ -33,17 +32,20 @@ public class CtrlQuizQuestion extends Ctrl {
 	
 	private void ctrlChoix(HttpServletRequest request) {
 		boolean goodResponse= false;
+		int nbResponse= 0;
 		
 		ctrlNbrChoix(request.getParameter("nbrChoix"));
 		if(!error) {
 			for (int i = 1; i < nbrChoix+1; i++) {
 				QuizResponse res= new QuizResponse();
 				String titleResponse= request.getParameter("choix"+i);
-				if(titleResponse.length() > 1 || titleResponse.length() < 100 ) {
-					res.setText(request.getParameter("choix"+i));
-				} else {
+				if(titleResponse.length() < 1 || titleResponse.length() > 100 ) {
 					error= true;
 					msgTiltleResponse= "une réponse ne peut être vide!";
+				} else {
+					System.out.println("============== titleResponse.length()= "+titleResponse);
+					res.setText(request.getParameter("choix"+i));
+					nbResponse++;
 				}
 	
 				if(request.getParameter("checkChoix"+i) != null) {
@@ -52,8 +54,11 @@ public class CtrlQuizQuestion extends Ctrl {
 				} else {
 					res.setCorrect(false);
 				}
-				System.out.println("======================== response= "+res );
 				question.setQuizResponse(res);
+			} 
+			if (nbResponse  < 2) {
+				msgTiltleResponse= "il ne peut pas y avoir qu'une réponse!";
+				error= true;
 			}
 		}
 		

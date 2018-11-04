@@ -13,6 +13,9 @@
 				<c:if test="${ ctrl.msgQuestion != null }">
 					<p>${ ctrl.msgQuestion }</p>
 				</c:if>
+				<c:if test="${ ctrl.msgTiltleResponse != null }">
+					<p>${ ctrl.msgTiltleResponse }</p>
+				</c:if>
 			</div>
 		</c:if>
 		
