@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" isELIgnored="false"
@@ -33,7 +34,8 @@
 						<td>
 							<a href="${assignUrl}" class="btn btn-success btn-sm" role="button">Assigner</a>
 							<a href="${updateUrl}" class="btn btn-info btn-sm" role="button">Modifier</a>
-							<a href="${delUrl}" class="btn btn-danger btn-sm" role="button" disabled>Supprimer</a>
+							
+								<a href="${delUrl}" class="btn btn-danger btn-sm <c:if test="${fn:length(classe.students) gt 0}">disabled</c:if>" role="button" aria-disabled="true">Supprimer</a>					
 						</td>					
 					</tr>
 				</c:forEach>

@@ -35,6 +35,11 @@
 					<a class="nav-link" href="<c:url value="/administrator/add_students" />">Ajouter des étudiants</a>
 				</li>
 			</c:if>
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/administrator/configuresmtp" />">Configurer Smtp</a>
+				</li>
+			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'PROFESSOR' }">
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/professor/professorDashboard" />">Dashboard</a>
