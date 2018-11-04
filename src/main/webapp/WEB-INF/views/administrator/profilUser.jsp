@@ -54,8 +54,8 @@
 			</div>
 		</c:if>
 		<form:input type="hidden" path="id"/>
-		<input type="submit" value="Modifier" class="btn btn-primary col-2"/>
-		<a href="/AutoQuiz3000/administrator/user?page=1&max=20" class="btn btn-secondary col-2">Annuler</a>
+		<input type="submit" value="Modifier" class="btn btn-primary"/>
+		<a href="/AutoQuiz3000/administrator/user?page=1&max=20" class="btn btn-secondary">Annuler</a>
 	</form:form>
 	</div>
 </body>
