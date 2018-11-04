@@ -117,7 +117,7 @@ public class AdministratorController {
 		}
 		return "administrator/studentclass";
 	}
-	
+
 	@GetMapping("/assignStudent/{id}")
 	public String assignStudentClass(@PathVariable("id") Long id, Model model) {
 		try {
@@ -136,7 +136,7 @@ public class AdministratorController {
 		try {
 			User u=userDao.findById(iduser);
 			StudentClass sc=scDao.findById(idclass);
-			sc.getStudents().remove(u);
+			sc.getStudents().remove(idclass);
 			u.setStudentClass(null);
 			userDao.save(u);
 		} catch (Exception e) {

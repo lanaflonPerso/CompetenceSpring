@@ -143,7 +143,6 @@ public class ProfessorController {
 		}
 	}
 	
-	
 	@GetMapping("viewQuizCs/{id}")
 	public String viewQuizzConsult(@PathVariable("id") Long id,Model model) {
 			model.addAttribute("quiz", qDao.findById(id));
@@ -173,6 +172,7 @@ public class ProfessorController {
 	public void setcDao(StClassDao stDao) {
 		this.stDao = stDao;
 	}
+	
 	public void setqDao(QuizDao qDao) {
 		this.qDao = qDao;
 	}

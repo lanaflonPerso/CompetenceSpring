@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8"%>
@@ -32,7 +33,7 @@
 			<td><fmt:formatDate type="date" value="${user.birthdate}"/></td>
 			<td><c:out value="${user.type}"></c:out></td>
 				<spring:url value="/administrator/assignStudent/${user.id}/delete/${classe.id}" var="delUrl" />
-			<td><a href="${delUrl}" class="btn btn-danger" role="button">Enlever</a></td>
+			<td><a href="${delUrl}" class="btn btn-danger <c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Enlever</a></td>
 		</tr>
 	</c:forEach>
 			<c:forEach items="${unasssignedusers}" var="useru">
@@ -43,7 +44,7 @@
 			<td><fmt:formatDate type="date" value="${useru.birthdate}"/></td>
 			<td><c:out value="${useru.type}"></c:out></td>
 			 <spring:url value="/administrator/assignStudent/${useru.id}/add/${classe.id}" var="addUrl" />
-			<td><a href="${addUrl}" class="btn btn-success" role="button">Ajouter</a></td>
+			<td><a href="${addUrl}" class="btn btn-success<c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Ajouter</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

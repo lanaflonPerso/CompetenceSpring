@@ -10,16 +10,7 @@
 
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-<!-- 			<li class="nav-item"> -->
-<!-- 				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-<!-- 			</li> -->
-<!-- 			<li class="nav-item"> -->
-<!-- 				<a class="nav-link" href="#">Link</a> -->
-<!-- 			</li> -->
-<!-- 			<li class="nav-item"> -->
-<!-- 				<a class="nav-link disabled" href="#">Disabled</a> -->
-<!-- 			</li> -->
-			
+		
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/administrator/user?page=1&max=20" />">Gérer les utilisateurs</a>
@@ -63,22 +54,16 @@
 				</li>
 			</c:if>
 		</ul>
-<!-- 		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-right"> -->
-<%-- 			<li><c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out> </li> --%>
-<!-- 		</ul> -->
 		<ul class="navbar-nav mr-lg-5 mt-2 mt-lg-0 ">
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">
-<!-- 					<li class="nav-item"> -->
-<%-- 						<a class="nav-link" href="<c:url value="/public/deconnection" />" >Déconnection</a> --%>
-<!-- 					</li> -->
 					<li class="nav-item dropdown">
-					     		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					       			<c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out>
+					     	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					       		<c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					  			<a class="dropdown-item" href="<c:url value="/public/userprofil" />">Profil</a>
-					 					<a class="dropdown-item" href="<c:url value="/public/deconnection" />">Déconnection</a>
+					 			<a class="dropdown-item" href="<c:url value="/public/deconnection" />">Déconnection</a>
 							</div>
 					</li>
 				</c:when>
