@@ -50,11 +50,6 @@
 					<a class="nav-link" href="<c:url value="/professor/create_quiz" />">Créer un formulaire</a>
 				</li>
 			</c:if>
-			<c:if test="${ sessionScope.quiz.countQuestion() > 2 && sessionScope.user.type == 'PROFESSOR' }">
-				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/professor/close_quiz" />">Cloture du formulaire</a>
-				</li>
-			</c:if>
 			
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'STUDENT' }">
 				<li class="nav-item">

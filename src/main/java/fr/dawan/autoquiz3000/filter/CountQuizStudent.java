@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000.filter;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -57,6 +58,7 @@ public class CountQuizStudent implements Filter {
 							qt.setErrorResponse(0);
 							qt.setUser(u);
 							qt.setQuiz(quiz);
+							qt.setStartDate(new Date());
 							quizTestDao.save(qt);
 						}
 					}
