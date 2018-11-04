@@ -21,9 +21,7 @@ public class QuizDao {
 	
 	@Transactional
 	public void save(Quiz quiz) {
-		hibernateTemplate.flush();
 		hibernateTemplate.saveOrUpdate(quiz);
-		hibernateTemplate.flush();
 	}
 	
 	@SuppressWarnings("unchecked")

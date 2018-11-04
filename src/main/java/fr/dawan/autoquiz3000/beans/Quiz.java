@@ -35,7 +35,7 @@ public class Quiz implements Serializable {
 	
 	private String name;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Skill skill;
 	
 	private int scoreToAcquireSkill;

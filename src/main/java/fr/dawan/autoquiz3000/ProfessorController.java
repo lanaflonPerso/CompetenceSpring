@@ -51,6 +51,10 @@ public class ProfessorController {
 	@GetMapping("/create_quiz")
 	public ModelAndView getQuiz(Model model) {
 		List<StudentClass> stclasses= stDao.findAll();
+		for (StudentClass st : stclasses) {
+			st.setQuizzes(null);
+			st.setStudents(null);
+		}
 		model.addAttribute("classes", stclasses);
 		return new ModelAndView("professor/createQuiz");
 	}

@@ -41,7 +41,7 @@ public class User implements Serializable {
 	private String password;
 	private String token;
 	
-	@OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch= FetchType.EAGER)
 	private Set<Skill> skills=new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -129,11 +129,8 @@ public class User implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((skills == null) ? 0 : skills.hashCode());
 		result = prime * result + ((studentClass == null) ? 0 : studentClass.hashCode());
-		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + version;
 		return result;
 	}
 	@Override
@@ -175,24 +172,10 @@ public class User implements Serializable {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (skills == null) {
-			if (other.skills != null)
-				return false;
-		} else if (!skills.equals(other.skills))
-			return false;
 		if (studentClass == null) {
 			if (other.studentClass != null)
 				return false;
 		} else if (!studentClass.equals(other.studentClass))
-			return false;
-		if (token == null) {
-			if (other.token != null)
-				return false;
-		} else if (!token.equals(other.token))
-			return false;
-		if (type != other.type)
-			return false;
-		if (version != other.version)
 			return false;
 		return true;
 	}

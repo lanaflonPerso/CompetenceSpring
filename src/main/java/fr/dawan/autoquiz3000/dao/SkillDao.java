@@ -6,7 +6,6 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.dawan.autoquiz3000.beans.Skill;
-import fr.dawan.autoquiz3000.beans.User;
 
 public class SkillDao {
 	private HibernateTemplate hibernateTemplate;
@@ -16,8 +15,8 @@ public class SkillDao {
 	}
 	
 	@Transactional
-	public void save(User user) {
-		hibernateTemplate.save(user);
+	public void save(Skill skill) {
+		hibernateTemplate.save(skill);
 	}
 	
 	@Transactional(readOnly=true)
