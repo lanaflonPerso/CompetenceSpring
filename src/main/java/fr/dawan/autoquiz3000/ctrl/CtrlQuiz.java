@@ -37,8 +37,6 @@ public class CtrlQuiz extends Ctrl {
 		Date valDateDebut= ctrlDate(startDebut);
 		Date valDateFin= ctrlDate(endDate);
 		ctrlTwoDate(valDateDebut, valDateFin);
-		quiz.setStartDate(valDateDebut);
-		quiz.setEndDate(valDateFin);
 		Skill objectSkill= ctrlSkill(skill); //ok
 		quiz.setSkill(objectSkill); //ok
 		StudentClass stClass= ctrlStClass(stClassName);
@@ -103,6 +101,8 @@ public class CtrlQuiz extends Ctrl {
 	            begin= transit;            
 	        }
 		}
+		quiz.setStartDate(begin);
+		quiz.setEndDate(end);
 	}
 	
 	public StudentClass ctrlStClass(String id) {
