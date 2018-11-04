@@ -111,7 +111,7 @@ public class CtrlUser extends Ctrl {
 				user.setType(UserType.PROFESSOR);
 				break;
 			case 2:
-				user.setType(UserType.PROFESSOR);
+				user.setType(UserType.ADMINISTRATOR);
 				break;
 			default:
 				error= true;

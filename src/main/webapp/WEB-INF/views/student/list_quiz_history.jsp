@@ -14,7 +14,7 @@
 
 
 <div class="col-md-12 alert alert-light">
-	<h2>Statistique</h2>
+	<h2>Statistique (${ sessionScope.user.studentClass.name })</h2>
 	<p>Vous avez répondu a ${ quizTotal } ${ varQuestionnaire } </p>
 	<p>vous avez une note moyenne de ${ average }%</p>	
 </div>
