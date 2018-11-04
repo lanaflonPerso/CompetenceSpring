@@ -3,6 +3,18 @@
 
 <title>Ajout d'utilisateurs</title>
 
+<p>le format est de type:</p>
+<ul>
+	<li>prénom;nom;email;dateDeNaissance;classe;type</li>
+</ul>
+
+<p>pour le type:</p>
+<ul>
+	<li>0= étudiant</li>
+	<li>1= professeur</li>
+	<li>2= administrateur</li>
+</ul>
+
 <form method="post" action="">
 	<div class="form-group">
 		<label for="listStudent">Liste d'étudiant: </label>

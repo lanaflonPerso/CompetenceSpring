@@ -1,0 +1,9 @@
+kai;hansen;hansen@free.fr;1962-10-10;1;0
+michael;weikath;weikath@free.fr;1980-08-05;3;0
+markus;grosskopf;grosskopf@free.fr;1978-12-15;4;0
+ingo;schwichtenberg;schwichtenberg@free.fr;1975-11-23;1;0
+andi;derris;derris@free.fr;1977-08-15;1;0
+roland;grapow;grapow@free.fr;1976-04-19;1;0
+uli;kusch;kusch@free.fr;1976-03-22;1;0
+piet;sielck;sielck@free.fr;1972-01-17;1;0
+hansi;kursch;kursch@free.fr;1979-06-21;3;0
