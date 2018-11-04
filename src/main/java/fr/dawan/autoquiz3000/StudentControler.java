@@ -96,7 +96,6 @@ public class StudentControler {
 		} catch (Exception e) {
 			// TODO: erreur 404 ou autre!
 		}
-		// TODO erreur 404
 		return new ModelAndView("fourOFour");
 	}
 	

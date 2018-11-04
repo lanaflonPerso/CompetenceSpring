@@ -15,15 +15,15 @@ import fr.dawan.autoquiz3000.beans.UserType;
 public class UserForm {
 		private Long id;
 
-		@NotEmpty(message = "Le pr�nom ne peut pas être vide")
-		@Size(min=2,max = 100,message = "Le pr�nom ne peut pas être vide") 
+		@NotEmpty(message = "Le prénom ne peut pas être vide")
+		@Size(min=2,max = 100,message = "Le prénom doit être compris entre 2 et 100 caractères") 
 		private String firstName;
 		
 		@NotEmpty(message = "Le nom ne peut pas être vide")
-		@Size(min=2,max = 50,message = "Le nom ne peut pas être vide") 
+		@Size(min=2,max = 50,message = "Le nom doit être compris entre 2 et 100 caractères") 
 		private String lastName;
 		
-		@NotEmpty(message = "Le email ne peut pas être vide")
+		@NotEmpty(message = "L' email ne peut pas être vide")
 		@Pattern(regexp="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b", message="L' email n'ai pas valide")
 		private String email;
 		
@@ -31,7 +31,6 @@ public class UserForm {
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private Date birthdate;
 		
-		@NotNull
 		private UserType type;
 
 		private String password;

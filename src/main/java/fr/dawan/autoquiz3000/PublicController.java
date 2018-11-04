@@ -1,11 +1,14 @@
 package fr.dawan.autoquiz3000;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,8 +18,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import fr.dawan.autoquiz3000.beans.User;
 import fr.dawan.autoquiz3000.beans.UserType;
 import fr.dawan.autoquiz3000.ctrl.Ctrl;
+import fr.dawan.autoquiz3000.ctrl.CtrlProfilUser;
 import fr.dawan.autoquiz3000.ctrl.CtrlUser;
 import fr.dawan.autoquiz3000.dao.UserDao;
+import fr.dawan.autoquiz3000.formbeans.UserForm;
 import fr.dawan.autoquiz3000.helper.Token;
 import fr.dawan.autoquiz3000.tools.EmailTools;
 
@@ -46,6 +51,41 @@ public class PublicController {
 	@GetMapping("/token")
 	public ModelAndView getToken() {
 		return new ModelAndView("public/viewToken");
+	}
+	
+	@GetMapping("/userprofil")
+	public String getUserProfil(Model model, HttpServletRequest request) {
+		model.addAttribute("user-form",new UserForm((User)request.getSession().getAttribute("user")));
+		return "public/profilUser";		
+	}
+	
+	@PostMapping("/userprofil")
+	public String postUserProfil(@Valid @ModelAttribute("user-form") UserForm form,BindingResult result, Model model, HttpServletRequest request) {
+		if(result.hasErrors()) {
+			model.addAttribute("errors",result);
+			model.addAttribute("user-form",form);
+			return "public/profilUser";
+		}
+		else{
+			User user=(User)request.getSession().getAttribute("user");
+			CtrlProfilUser ctrl=new CtrlProfilUser(form,user,uDao);
+			ctrl.ctrlBithDate(form.getBirthdate());
+			ctrl.ctrlEmail(form.getEmail());
+			if(ctrl.isReinitPassword(form.getPassword())){
+				ctrl.ctrlReInitPassword(form.getPassword(), form.getConfirmPassword());
+			}
+			if(ctrl.isError()) {
+				model.addAttribute("message", ctrl.getMsg());
+				model.addAttribute("user-form", form);
+				return "public/profilUser";
+			}
+			user.setFirstName(form.getFirstName());
+			user.setLastName(form.getLastName());
+			uDao.save(user);
+			request.getSession().setAttribute("user", user);
+			model.addAttribute("user",user);
+			return "student/home";	
+		}
 	}
 	
 	@PostMapping("/connection")
@@ -78,7 +118,7 @@ public class PublicController {
 			StringBuilder sb= new StringBuilder();
 			sb.append(u.getToken());
 			try {
-				EmailTools.sendEmail(u.getEmail(), "inscription", sb.toString());
+				EmailTools.getInstance().send(u.getEmail(), "inscription", sb.toString());
 			} catch (Exception e) {
 				// TODO logger l'erreur
 				e.printStackTrace();

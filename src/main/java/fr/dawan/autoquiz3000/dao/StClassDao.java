@@ -74,19 +74,26 @@ public class StClassDao {
 	@Transactional(readOnly=true)
 	public List<StatStudentClass> getStatistic(StudentClass sc){
 		List<StatStudentClass> result=new ArrayList<>();
-		List<Object[]> resultDb=(List<Object[]>) hibernateTemplate.find("SELECT q,COUNT(qt.id), AVG(qt.score),MIN(qt.score),MAX(qt.score) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? GROUP BY q",sc);
-		for(Object[] obj: resultDb) { 
-			long a=sc.getStudents().size()-((long)obj[1]);
-			 StatStudentClass stat=new StatStudentClass();
-			 stat.setQuiz((Quiz) obj[0]);
-			 stat.setCountQuizDone(a);
-			 stat.setAverangeScore((double) obj[2]);
-			 stat.setMinScore((int) obj[3]);
-			 stat.setMaxScore((int) obj[4]);
-			 Long countSkilByQuiz= (Long) hibernateTemplate.find("SELECT COUNT(qt.id) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? AND q=? AND qt.score>q.scoreToAcquireSkill",sc,(Quiz) obj[0]).get(0);
-			 stat.setCountSkill(countSkilByQuiz);
-			 stat.setCountFailSkill((long)sc.getStudents().size()-a-countSkilByQuiz);
-			 result.add(stat);
+		List<Quiz> lstQuiz=(List<Quiz>)hibernateTemplate.find("SELECT DISTINCT q FROM Quiz q INNER JOIN q.stClasses st WHERE st=?",sc);
+		for(Quiz quiz: lstQuiz) {
+			List<Object[]> resultDb=(List<Object[]>) hibernateTemplate.find("SELECT q,COUNT(qt.id), AVG(qt.score),MIN(qt.score),MAX(qt.score) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? AND q=? GROUP BY q",sc,quiz);
+			StatStudentClass stat=new StatStudentClass();
+			stat.setQuiz(quiz);
+			if(resultDb.size()>0) {
+				Object[] obj=resultDb.get(0);
+				long a=sc.getStudents().size()-((long)obj[1]);
+				stat.setCountQuizDone(a); 
+				 stat.setAverangeScore((double) obj[2]);
+				 stat.setMinScore((int) obj[3]);
+				 stat.setMaxScore((int) obj[4]);
+				 Long countSkilByQuiz= (Long) hibernateTemplate.find("SELECT COUNT(qt.id) FROM QuizTest qt INNER JOIN qt.quiz q INNER JOIN q.stClasses stc where stc=? AND q=? AND qt.score>q.scoreToAcquireSkill",sc,(Quiz) obj[0]).get(0);
+				 stat.setCountSkill(countSkilByQuiz);
+				 stat.setCountFailSkill((long)sc.getStudents().size()-a-countSkilByQuiz);
+			}
+			else {
+				stat.setCountQuizDone(sc.getStudents().size()); 
+			}
+			result.add(stat);
 		}
 		return result;
 	}

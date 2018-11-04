@@ -160,9 +160,11 @@ public class ProfessorController {
 	public String viewStudentClassDashboard(@PathVariable("id") Long id,Model model) {
 		StudentClass sc=stDao.findById(id);
 		List<StatStudentClass> statQuiz=stDao.getStatistic(sc);
+		List<Quiz> t=qDao.findbyStudentClass(sc);
 		model.addAttribute("nbStudent",sc.getStudents().size());
 		model.addAttribute("classe", sc);
 		model.addAttribute("usersAssigned", uDao.findByAssignedStudentClass(sc));
+		model.addAttribute("quizzes",t);
 		model.addAttribute("StatQuiz",statQuiz);
 		return "professor/studentclassDashboard";
 	}

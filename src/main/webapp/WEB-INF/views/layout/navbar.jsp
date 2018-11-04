@@ -32,7 +32,7 @@
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/administrator//add_students" />">Ajouter des étudiants</a>
+					<a class="nav-link" href="<c:url value="/administrator/add_students" />">Ajouter des étudiants</a>
 				</li>
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'PROFESSOR' }">
@@ -63,14 +63,23 @@
 				</li>
 			</c:if>
 		</ul>
-		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-right">
-			<li><c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out> </li>
-		</ul>
+<!-- 		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-right"> -->
+<%-- 			<li><c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out> </li> --%>
+<!-- 		</ul> -->
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-right">
 			<c:choose>
 				<c:when test="${ sessionScope.user != null }">
-					<li class="nav-item">
-						<a class="nav-link" href="<c:url value="/public/deconnection" />" >Déconnection</a>
+<!-- 					<li class="nav-item"> -->
+<%-- 						<a class="nav-link" href="<c:url value="/public/deconnection" />" >Déconnection</a> --%>
+<!-- 					</li> -->
+					<li class="nav-item dropdown">
+					     		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					       			<c:out value="${ sessionScope.user.firstName} ${sessionScope.user.lastName }"></c:out>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					  			<a class="dropdown-item" href="<c:url value="/public/userprofil" />">Profil</a>
+					 					<a class="dropdown-item" href="<c:url value="/public/deconnection" />">Déconnection</a>
+							</div>
 					</li>
 				</c:when>
 				<c:otherwise>
