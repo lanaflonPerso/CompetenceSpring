@@ -1,6 +1,7 @@
 package fr.dawan.autoquiz3000;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -84,7 +85,7 @@ public class ProfessorController {
 			qDao.save(quiz);
 			List<StudentClass> stclasses= quiz.getStClasses();
 			for (StudentClass stClass : stclasses) {
-				List<User> students= stClass.getStudents();
+				Set<User> students= stClass.getStudents();
 				for (User student : students) {
 					QuizToDo qtd= new QuizToDo();
 					qtd.setIdQuiz(quiz.getId());

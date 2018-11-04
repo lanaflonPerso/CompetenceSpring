@@ -1,9 +1,9 @@
 package fr.dawan.autoquiz3000.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -41,16 +41,16 @@ public class StudentClass implements Serializable {
 	
 	@OneToMany(fetch= FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "stClass_id", referencedColumnName="id")
-	private List<User> students=new ArrayList<>();
+	private Set<User> students=new HashSet<>();
 	
-	@ManyToMany(mappedBy="stClasses", cascade=CascadeType.ALL)
-	private List<Quiz> quizzes;
+	@ManyToMany(fetch= FetchType.EAGER, mappedBy="stClasses", cascade=CascadeType.ALL)
+	private Set<Quiz> quizzes= new HashSet<>();
 	
-	public List<Quiz> getQuizzes() {
+	public Set<Quiz> getQuizzes() {
 		return quizzes;
 	}
 
-	public void setQuizzes(List<Quiz> quizzes) {
+	public void setQuizzes(Set<Quiz> quizzes) {
 		this.quizzes = quizzes;
 	}
 
@@ -89,11 +89,11 @@ public class StudentClass implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public List<User> getStudents() {
+	public Set<User> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<User> students) {
+	public void setStudents(Set<User> students) {
 		this.students = students;
 	}
 
@@ -114,7 +114,6 @@ public class StudentClass implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((quizzes == null) ? 0 : quizzes.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((students == null) ? 0 : students.hashCode());
 		result = prime * result + version;
 		return result;
 	}
