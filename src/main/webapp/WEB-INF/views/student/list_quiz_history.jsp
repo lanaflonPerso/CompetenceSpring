@@ -5,10 +5,10 @@
 
 <c:choose>
 	<c:when test="${ quizTotal < 2 } ">
-		<c:set value="qestionnaire" var="varQuestionnaire"/>
+		<c:set value="questionnaire" var="varQuestionnaire"/>
 	</c:when>
 	<c:otherwise>
-		<c:set value="qestionnaires" var="varQuestionnaire"/>
+		<c:set value="questionnaires" var="varQuestionnaire"/>
 	</c:otherwise>
 </c:choose>
 

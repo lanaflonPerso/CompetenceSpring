@@ -11,11 +11,10 @@
 <base href="/AutoQuiz3000/professor/">
 </head>
 <body>
-
-	<h1 class="text-center"><c:out value="${classe.name}"></c:out> <small class="text-muted">du 
+	<h1 class="text-center pt-1"><c:out value="${classe.name}"></c:out> <small class="text-muted">du 
 	 <fmt:formatDate type="date" dateStyle = "short" value="${classe.startDate}" /> au 
 	 <fmt:formatDate type="date" dateStyle = "short" value="${classe.endDate}" /></small></h1>
-	<table class="table table-hover table-sm">
+	<table class="table table-striped table-sm my-5 shadow-sm p-3 mb-5 bg-white rounded">
 		<thead class="thead-light">
 			<tr>
 				<th>Prénom</th>
@@ -37,9 +36,10 @@
 		</c:forEach>
 	</tbody>
 	</table>
-	<h2> Questionnaires</h2>
+	<hr>
+	<h2 class="my-4"> Questionnaires</h2>
 	<c:forEach items="${StatQuiz}" var="stat">
-		<div class="card">
+		<div class="card my-3 shadow p-3 mb-5 bg-white rounded">
 		  <div class="card-header">
 		  		<h4>${stat.quiz.name}</h4> 
 		  </div>

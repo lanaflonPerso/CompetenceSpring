@@ -32,8 +32,8 @@
 				<td><c:out value="${user.email}"></c:out></td>
 				<td><fmt:formatDate type="date" value="${user.birthdate}" /></td>
 				<td><c:out value="${user.type}"></c:out></td>
-				<spring:url value="${user.id}/delete" var="delUrl" />
-				<spring:url value="${user.id}/update" var="updtaeUrl" />
+				<spring:url value="user/${user.id}/delete" var="delUrl" />
+				<spring:url value="user/${user.id}/update" var="updtaeUrl" />
 				<td>
 					<a href="${updtaeUrl}" class="btn btn-primary btn-sm" role="button">Modifier</a>
 					<a href="${delUrl}" class="btn btn-danger btn-sm <c:if test="${not empty user.studentClass || (countadmin <= 1 && user.type eq 'ADMINISTRATOR')}">disabled</c:if>" role="button" aria-disabled="true">Supprimer</a> 
