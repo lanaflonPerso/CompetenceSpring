@@ -79,7 +79,7 @@ public class AdministratorController {
 			}
 			else {
 				scDao.save(sc);
-				return "redirect:/administrator/studentclass?page=1&max=20";
+				return "redirect:/administrator/studentclass?page=1&max=5";
 			}
 		}
 		model.addAttribute("actionButton", form.getId()==null?"Ajouter":"Modifier");
@@ -97,7 +97,7 @@ public class AdministratorController {
 		} catch (Exception e) {
 			//TODO erreur 404
 		}
-		return "redirect:/administrator/studentclass?page=1&max=20";
+		return "redirect:/administrator/studentclass?page=1&max=5";
 	}
 	
 	@GetMapping("/studentclass/{id}/update")
@@ -179,7 +179,7 @@ public class AdministratorController {
 			//TODO erreur 404
 			e.printStackTrace();
 		}
-		return "redirect:/administrator/user?page=1&max=20";
+		return "redirect:/administrator/user?page=1&max=10";
 	}
 	
 	@GetMapping("/user/{id}/update")
@@ -223,7 +223,7 @@ public class AdministratorController {
 			if(((User)request.getSession().getAttribute("user")).getId()==u.getId())
 				request.getSession().setAttribute("user", u);
 			model.addAttribute("user",u);
-			return "redirect:/administrator/user?page=1&max=20";	
+			return "redirect:/administrator/user?page=1&max=10";	
 		}
 	}
 	

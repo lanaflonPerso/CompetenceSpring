@@ -150,7 +150,7 @@ public class ProfessorController {
 	@GetMapping("viewQuizCs/{id}")
 	public String viewQuizzConsult(@PathVariable("id") Long id,Model model) {
 			model.addAttribute("quiz", qDao.findById(id));
-			return "professor/viewQuizdb";
+			return "professor/viewQuiz";
 	}
 	
 	@GetMapping("professorDashboard")
