@@ -5,7 +5,7 @@
 
 <h1>Questionnaire: ${ sessionScope.quiz.name }</h1>
 
-<div class="alert alert-warning">
+<div class="alert alert-warning my-4">
 	<p>reponse correcte  = <span class="h3">${ sessionScope.quizTest.correctResponse }</span></p>
 	<p>reponse incorrect = <span class="h3">${ sessionScope.quizTest.errorResponse }</span></p>
 	<p>taux de réussite  = <span class="h3">${ sessionScope.quizTest.score }%</span></p>
@@ -14,7 +14,7 @@
 <c:forEach var="question" items="${ sessionScope.quiz.quizQuestions }">
 	<h4>${ question.text }</h4>
 	
-	<table class="table">
+	<table class="table shadow p-3 mb-5 bg-white rounded">
 	
 		<c:forEach var="response" items="${ question.quizResponses }">	
 			<c:forEach var="StResponse" items="${ sessionScope.quizTest.stResponse }">

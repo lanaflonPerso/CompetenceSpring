@@ -100,6 +100,6 @@ public class UserDao {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<User> findByUnAssignedStudentClass(){
-		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=null");
+		return (List<User>) hibernateTemplate.find("FROM User u WHERE u.studentClass=null AND u.type=0");
 	}
 }

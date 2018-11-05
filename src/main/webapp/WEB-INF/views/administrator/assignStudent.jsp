@@ -34,7 +34,7 @@
 			<td><fmt:formatDate type="date" value="${user.birthdate}"/></td>
 			<td><c:out value="${user.type}"></c:out></td>
 				<spring:url value="/administrator/assignStudent/${user.id}/delete/${classe.id}" var="delUrl" />
-			<td><a href="${delUrl}" class="btn btn-danger <c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Enlever</a></td>
+			<td><a href="${delUrl}" class="btn btn-danger btn-sm <c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Enlever</a></td>
 		</tr>
 	</c:forEach>
 			<c:forEach items="${unasssignedusers}" var="useru">
@@ -45,7 +45,7 @@
 			<td><fmt:formatDate type="date" value="${useru.birthdate}"/></td>
 			<td><c:out value="${useru.type}"></c:out></td>
 			 <spring:url value="/administrator/assignStudent/${useru.id}/add/${classe.id}" var="addUrl" />
-			<td><a href="${addUrl}" class="btn btn-success<c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Ajouter</a></td>
+			<td><a href="${addUrl}" class="btn btn-success btn-sm <c:if test="${fn:length(classe.quizzes) gt 0}"> disabled</c:if>" role="button">Ajouter</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

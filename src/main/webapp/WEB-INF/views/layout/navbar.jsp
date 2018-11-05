@@ -13,17 +13,17 @@
 		
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/administrator/administatorDashboard" />">Dashboard</a>
+				</li>
+			</c:if>
+			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
+				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/administrator/user?page=1&max=10" />">Gérer les utilisateurs</a>
 				</li>
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/administrator/studentclass?page=1&max=5" />">Gérer les classes</a>
-				</li>
-			</c:if>
-			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">
-				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/administrator/add_students" />">Ajouter des étudiants</a>
+					<a class="nav-link" href="<c:url value="/administrator/studentclass?page=1&max=10" />">Gérer les classes</a>
 				</li>
 			</c:if>
 			<c:if test="${ sessionScope.user != null && sessionScope.user.type == 'ADMINISTRATOR' }">

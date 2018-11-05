@@ -10,6 +10,7 @@ import fr.dawan.autoquiz3000.beans.QuizQuestion;
 import fr.dawan.autoquiz3000.beans.QuizResponse;
 import fr.dawan.autoquiz3000.beans.QuizTest;
 import fr.dawan.autoquiz3000.beans.StudentClass;
+import fr.dawan.autoquiz3000.beans.UserType;
 
 public class QuizDao {
 	
@@ -92,5 +93,11 @@ public class QuizDao {
 	@Transactional(readOnly=true)
 	public List<Quiz> findEndQuiz(){
 		return (List<Quiz>) hibernateTemplate.find("FROM Quiz q WHERE q.endDate < NOW() ");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public Long count(){
+		return (Long) hibernateTemplate.find("SELECT COUNT(q.id)FROM Quiz q").get(0);
 	}
 }

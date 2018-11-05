@@ -60,7 +60,7 @@
 	<table class="table">
 		<tr>
 			<c:forEach var="skill" items="${ sessionScope.user.skills }" varStatus="status">
-				<td>${ skill.name }</td>
+				<td class="badge badge-success">${ skill.name }</td>
 				<c:if test="${ status.count%4 == 0 }">
 					</tr><tr>
 				</c:if>

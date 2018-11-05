@@ -12,7 +12,10 @@
 </head>
 <body>
 	<h1 class="pt-1">Gestion des utilisateurs</h1>
-	<input class="form-control my-4 " id="searchInput" type="text" placeholder="Recherche">
+	<div class="row">
+	<input class="form-control my-4 col-9" id="searchInput" type="text" placeholder="Recherche">
+		<a href="<c:url value="/administrator/add_students" />" class="btn btn-primary ml-5 my-4 "  role="button">Ajouter des utilisateurs</a>
+	</div>
 	<table id="userTable" class="table table table-striped">
 		<thead class="thead-light">
 			<tr>

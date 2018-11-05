@@ -64,7 +64,7 @@
 					<small>Minimun: ${stat.minScore}%</small>,<small> Maximum: ${stat.maxScore}%</small>
 				</li>
 				<li class="list-group-item">
-					<h5>Compétence acquise <span class="badge badge-secondary float-right">${stat.quiz.skill.name}</span></h5>
+					<h5>Compétence <span class="badge badge-secondary float-right">${stat.quiz.skill.name}</span></h5>
 					
 					<div class="progress">
   						<div class="progress-bar bg-success" role="progressbar" style="width: <c:out value="${stat.countSkill*100/nbStudent }"></c:out>%" aria-valuenow="<c:out value="${stat.countSkill*100/nbStudent }"></c:out>" aria-valuemin="0" aria-valuemax="100">${stat.countSkill}</div>

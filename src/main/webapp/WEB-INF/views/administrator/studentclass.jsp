@@ -18,24 +18,26 @@
 		<thead class="thead-light">
 			<tr>
 				<th onclick="sortTable(0,'studentTable')">Nom<i class="pl-1 fa fa-sort"></i></th>
-				<th onclick="sortTable(1,'studentTable')">Date début<i class="pl-1 fa fa-sort"></i></th>
-				<th onclick="sortTable(2,'studentTable')">Date fin<i class="pl-1 fa fa-sort"></i></th>
+				<th onclick="sortTable(1,'studentTable')">Effectif<i class="pl-1 fa fa-sort"></i></th>
+				<th onclick="sortTable(2,'studentTable')">Date début<i class="pl-1 fa fa-sort"></i></th>
+				<th onclick="sortTable(3,'studentTable')">Date fin<i class="pl-1 fa fa-sort"></i></th>
 				<th> </th>
 			</tr>
 		</thead>
 		<tbody id="studentTableBody">
 			<c:forEach items="${stclasses}" var="classe">
 				<tr>
-					<td class="col-4 "><c:out value="${classe.name}"></c:out></td>
+					<td><c:out value="${classe.name}"></c:out></td>
+					<td>${fn:length(classe.students)}</td>
 					<td><fmt:formatDate type="date" value="${classe.startDate}" /></td>
 					<td><fmt:formatDate type="date" value="${classe.endDate}" /></td>
 					<spring:url value="/administrator/studentclass/${classe.id}/delete" var="delUrl" />
 					<spring:url value="/administrator/studentclass/${classe.id}/update" var="updateUrl" />
 					<spring:url value="/administrator/assignStudent/${classe.id}" var="assignUrl" />
 					<td>
-						<a href="${assignUrl}" class="btn btn-success" role="button">Assigner</a>
-						<a href="${updateUrl}" class="btn btn-info " role="button">Modifier</a>	
-						<a href="${delUrl}" class="btn btn-danger " <c:if test="${fn:length(classe.students) gt 0}">disabled</c:if>" role="button" aria-disabled="true">Supprimer</a>					
+						<a href="${assignUrl}" class="btn btn-success btn-sm"" role="button">Assigner</a>
+						<a href="${updateUrl}" class="btn btn-info btn-sm"" role="button">Modifier</a>	
+						<a href="${delUrl}" class="btn btn-danger btn-sm"" <c:if test="${fn:length(classe.students) gt 0}">disabled</c:if>" role="button" aria-disabled="true">Supprimer</a>					
 					</td>					
 				</tr>
 			</c:forEach>
@@ -62,7 +64,7 @@
 			<c:out value="${message}"></c:out>
 		</div>
 	</c:if>
-	<form:form class="border p-2 rounded border-secondary" method="POST" action="/AutoQuiz3000/administrator/studentclass" modelAttribute="studentclass-form">
+	<form:form method="POST" action="/AutoQuiz3000/administrator/studentclass" modelAttribute="studentclass-form">
 		<div class="form-group ">
 			<form:label  path="name" >Nom</form:label>
 			<form:input path="name" type="text" placeholder="Entrer le nom de la classe" class="form-control"/>
